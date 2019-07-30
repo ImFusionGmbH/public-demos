@@ -4,6 +4,9 @@
 This tutorial will explain how to build a simple standalone application for displaying medical DICOM data.
 We will use Qt widgets for the user interface.
 
+![Screenshot of the Example Standalone Application in Action](screenshot.png)
+
+
 ## Requirements and Build Instructions
 - Installed ImFusion SDK including the ImFusionDicom plugin
 - Qt5 (at least the version that the ImFusion SDK comes with)

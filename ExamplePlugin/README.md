@@ -4,6 +4,9 @@
 This tutorial will explain how to build a simple custom plugin for the ImFusion SDK.
 This plugin will extend the ImFusionLib with a custom algorithm and a custom algorithm GUI. 
 
+![Screenshot of the Example Plugin in Action](screenshot.png)
+
+
 ## Requirements and Build Instructions
 - Installed ImFusion SDK
 - Qt5 (at least the version that the ImFusion SDK comes with)
@@ -12,6 +15,7 @@ This plugin will extend the ImFusionLib with a custom algorithm and a custom alg
 Use CMake to generate build/project files for your build system of choice.
 If you are using Visual Studio the CMake scripts will automatically configure the generated Solution with the correct environment parameters so that you can launch the ImFusion Suite including your plugin directly from Visual Studio.
 If the ImFusion Suite does not pick up the built plugin on start, configure the `IMFUSION_PLUGIN_PATH` environment variable to contain .dll/.so directory.
+
 
 ## The Anatomy of an ImFusion Plugin
 
