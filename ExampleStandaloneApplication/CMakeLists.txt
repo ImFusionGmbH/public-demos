@@ -25,7 +25,7 @@ target_include_directories(DemoApplication PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-# Link agains the ImFusionLib and selected modules/plugins
+# Link against the ImFusionLib and selected modules/plugins
 target_link_libraries(DemoApplication PRIVATE
 	ImFusionLib
 	ImFusionDicom
