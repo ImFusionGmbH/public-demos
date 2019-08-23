@@ -4,6 +4,8 @@
 #include <ImFusion/Base/Algorithm.h>
 #include <ImFusion/Base/AlgorithmListener.h>
 
+#include <memory>
+
 namespace ImFusion
 {
 	class SharedImageSet;
@@ -38,8 +40,8 @@ namespace ImFusion
 		//\}
 
 	private:
-		SharedImageSet* m_imgIn;     ///< Input image to process
-		SharedImageSet* m_imgOut;    ///< Output image after processing
-		int m_factor;                ///< Downsampling factor
+		SharedImageSet* m_imgIn = nullptr;           ///< Input image to process
+		std::unique_ptr<SharedImageSet> m_imgOut;    ///< Output image after processing
+		int m_factor = 2;                            ///< Downsampling factor
 	};
 }
