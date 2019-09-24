@@ -2,6 +2,7 @@
 
 #include <ImFusion/Base/Algorithm.h>
 #include <ImFusion/Base/Mat.h>
+#include <ImFusion/Base/ParameterMixin.h>
 
 namespace ImFusion
 {
@@ -9,7 +10,7 @@ namespace ImFusion
 
 	/** \brief	Algorithm to detect edges using Canny
 	 */
-	class CannyEdgeAlgorithm : public Algorithm
+	class CannyEdgeAlgorithm : public ParameterMixin<Algorithm>
 	{
 	public:
 		CannyEdgeAlgorithm(SharedImage* image);
@@ -23,16 +24,13 @@ namespace ImFusion
 
 		virtual void compute() override;
 
-		void configure(const Properties* p) override;
-		void configuration(Properties* p) const override;
-
 		virtual void output(DataList& data) override;
 
 	protected:
 		SharedImage* m_inputImage;
 		std::unique_ptr<SharedImageSet> m_outputImage;
 
-		double m_threshold = 100.0;
-		int m_ratio = 3;
+		Parameter<double> m_threshold = Parameter<double>("threshold", 100.0, *this);
+		Parameter<int> m_ratio = Parameter<int>("ratio", 3, *this);
 	};
 }

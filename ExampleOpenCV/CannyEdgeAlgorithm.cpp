@@ -11,7 +11,6 @@ namespace ImFusion
 {
 	CannyEdgeAlgorithm::CannyEdgeAlgorithm(SharedImage* image)
 		: m_inputImage(image)
-		, m_outputImage(std::make_unique<SharedImageSet>())
 	{
 		configureDefaults();
 	}
@@ -21,20 +20,23 @@ namespace ImFusion
 
 	bool CannyEdgeAlgorithm::createCompatible(const DataList& data, Algorithm** a)
 	{
+		// check that there is only one data selected
 		if (data.size() != 1)
 			return false;
 
+		// check that it is a shared image set, and contains exactly one image
 		SharedImageSet* is = data.getImage(Data::IMAGE);
-		if (is)
+		if (is && is->images().size() == 1)
 		{
-			if (!is->images().empty())
+			// retrieves the first image, and creates the algorithm
+			SharedImage* image = is->get();
+			if (image)
 			{
-				if (is->images().front())
+				if (a)
 				{
-					if (a)
-						* a = new CannyEdgeAlgorithm(is->images().front());
-					return true;
+					*a = new CannyEdgeAlgorithm(image);
 				}
+				return true;
 			}
 		}
 
@@ -53,41 +55,29 @@ namespace ImFusion
 	}
 
 
-	void CannyEdgeAlgorithm::configure(const Properties* p)
-	{
-		if (!p)
-			return;
-
-		p->param("threshold", m_threshold);
-		p->param("ratio", m_ratio);
-	}
-
-
-	void CannyEdgeAlgorithm::configuration(Properties* p) const
-	{
-		if (!p)
-			return;
-
-		p->setParam("threshold", m_threshold);
-		p->setParam("ratio", m_ratio);
-	}
-
-
 	void CannyEdgeAlgorithm::compute()
 	{
 		cv::Mat input, output;
 
-		// conver to OpenCV
+		// prepare output Shared Image Set
+		m_outputImage = std::make_unique<SharedImageSet>();
+
+		// prepare status as error in case the computation fails
+		m_status = static_cast<int>(Algorithm::Status::Error);
+
+		// convert to OpenCV
 		input = OpenCV::convert(m_inputImage->mem());
 
+		// run opencv canny
 		cv::Canny(input, output, m_threshold, m_threshold * m_ratio, 3);
 
 		// convert to ImFusion
-
 		std::unique_ptr<TypedImage<double>> image = OpenCV::convert(output);
 
+		// add the transformed image to the output shared image set
 		m_outputImage->add(image.release());
 
+		// change status to success
 		m_status = static_cast<int>(Algorithm::Status::Success);
 	}
 }
