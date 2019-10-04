@@ -6,7 +6,7 @@
 #include <ImFusion/Base/IoAlgorithmFactory.h>
 #include <ImFusion/Base/Log.h>
 #include <ImFusion/GL/GlContextManager.h>
-#include <ImFusion/GUI/GlQtContext.h>
+#include <ImFusion/GUI/GlContextQt.h>
 
 #include <QFileInfo>
 
@@ -88,7 +88,7 @@ bool ImFusionClient::loadImage(const QString& filename)
 
 void ImFusionClient::qtQuickOpenglContextCreated(QOpenGLContext* context)
 {
-	Framework::init(std::make_unique<GlQtContext>(context));
+	Framework::init(std::make_unique<GlContextQt>(0, 0, false, context));
 
 	// Load ImFusion plugins found in the search paths.
 	// Note: you might need to adjust this for your platform
