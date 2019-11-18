@@ -19,6 +19,7 @@
 #include <ImFusion/GUI/QtHelpers.h>
 
 #include <QOpenGLContext>
+#include <QOpenGLFunctions>
 #include <QQuickWindow>
 
 
@@ -78,6 +79,12 @@ void ImFusionViewRenderer::render()
 		try
 		{
 			ImFusion::GlUtils::resetOpenGlStateDefaults();
+
+			// QML disables GL_POINT_SPRITE by default while the ImFusion SDK expects it to be enabled
+			// Since older versions of resetOpenGlStateDefaults() do not do enable it, we do it here manually.
+			QOpenGLFunctions* glFuncs = QOpenGLContext::currentContext()->functions();
+			glFuncs->glEnable(GL_POINT_SPRITE);
+
 			m_disp->render(false);
 			GLCHECK;
 		}
@@ -143,7 +150,18 @@ bool ImFusionFboView::event(QEvent* e)
 	if (m_renderer == nullptr)
 		return false;
 
-	return QApplication::sendEvent(&m_renderer->disp(), e);
+	if (e->type() == QEvent::HoverMove)
+	{
+		// transform QtQuick QHoverEvent into a QMouseEvent that QtWidgets on the ImFusion SDK side understands.
+		IMFUSION_ASSERT(dynamic_cast<QHoverEvent*>(e) != nullptr);
+		QHoverEvent* he = static_cast<QHoverEvent*>(e);
+		QMouseEvent mouseEvent(QEvent::MouseMove, he->posF(), Qt::NoButton, Qt::NoButton, he->modifiers());
+		return QApplication::sendEvent(&m_renderer->disp(), &mouseEvent);
+	}
+	else
+	{
+		return QApplication::sendEvent(&m_renderer->disp(), e);
+	}
 }
 
 
