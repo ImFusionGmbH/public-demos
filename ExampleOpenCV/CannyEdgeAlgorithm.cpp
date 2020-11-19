@@ -49,9 +49,9 @@ namespace ImFusion
 	void CannyEdgeAlgorithm::setRatio(int ratio) { m_ratio = ratio; }
 
 
-	void CannyEdgeAlgorithm::output(DataList& data)
+	OwningDataList CannyEdgeAlgorithm::takeOutput()
 	{
-		data.add(m_outputImage.release());    // give ownership to data
+		return OwningDataList(std::move(m_outputImage));
 	}
 
 
@@ -75,7 +75,7 @@ namespace ImFusion
 		std::unique_ptr<TypedImage<double>> image = OpenCV::convert(output);
 
 		// add the transformed image to the output shared image set
-		m_outputImage->add(image.release());
+		m_outputImage->add(std::move(image));
 
 		// change status to success
 		m_status = static_cast<int>(Algorithm::Status::Success);

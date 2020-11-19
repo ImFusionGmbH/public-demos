@@ -1,6 +1,7 @@
 #include "DemoAlgorithm.h"
 
 #include <ImFusion/Base/DataList.h>
+#include <ImFusion/Base/ImageProcessing.h>
 #include <ImFusion/Base/MemImage.h>
 #include <ImFusion/Base/SharedImage.h>
 #include <ImFusion/Base/SharedImageSet.h>
@@ -27,7 +28,6 @@ namespace ImFusion
 		if (a)
 		{
 			*a = new DemoAlgorithm(img);
-			(*a)->setInput(data);
 		}
 		return true;
 	}
@@ -41,23 +41,19 @@ namespace ImFusion
 		m_imgOut = std::make_unique<SharedImageSet>();
 		for (int i = 0; i < m_imgIn->size(); i++)
 		{
-			// clone raw memory image
-			// (we could also clone m_imgIn directly, but this is for demo purposes)
-			std::unique_ptr<MemImage> newMem(m_imgIn->mem(i)->clone());
-
-			// perform the downsampling
-			newMem->downsample(m_factor, m_factor, m_factor);
+			// Use ImageProcessing functions to perform the downsampling
+			std::unique_ptr<MemImage> newMem = ImageProcessing::createDownsampled(*m_imgIn->mem(i), m_factor, m_factor);
 
 			// create a SharedImage to hold newMem and copy over modality and transformation matrix
 			// NOTE: if we had cloned m_imgIn initially, we would not need to to these steps
-			auto sharedImage = std::make_unique<SharedImage>(*newMem.release());
+			auto sharedImage = std::make_unique<SharedImage>(std::move(newMem));
 			sharedImage->setModality(m_imgIn->get(i)->modality());
 			sharedImage->setMatrix(m_imgIn->get(i)->matrix());
 
 			// compute never returns data directly - instead,
 			// the output method needs to be called, which
 			// fills a list of output data - see below
-			m_imgOut->add(sharedImage.release());
+			m_imgOut->add(std::move(sharedImage));
 		}
 
 		// set algorithm status to success
@@ -65,12 +61,10 @@ namespace ImFusion
 	}
 
 
-	void DemoAlgorithm::output(DataList& dataOut)
+	OwningDataList DemoAlgorithm::takeOutput()
 	{
 		// if we have produced some output, add it to the list
-		// attention: membership is hereby transferred to the one calling output()
-		if (m_imgOut)
-			dataOut.add(m_imgOut.release());
+		return OwningDataList(std::move(m_imgOut));
 	}
 
 
@@ -81,8 +75,7 @@ namespace ImFusion
 			return;
 
 		p->param("factor", m_factor);
-		for (int i = 0; i < (int)m_listeners.size(); ++i)
-			m_listeners[i]->algorithmParametersChanged();
+		signalParametersChanged.emitSignal();
 	}
 
 

@@ -22,7 +22,9 @@ namespace ImFusion
 		static bool createCompatible(const DataList& data, Algorithm** a = 0);
 
 		virtual void compute() override;
-		virtual void output(DataList& data) override;
+		virtual OwningDataList takeOutput() override;
+
+
 	private:
 		std::unique_ptr<TypedImage<double>> m_input;
 		std::unique_ptr<TypedImage<double>> m_output;
@@ -30,6 +32,5 @@ namespace ImFusion
 		Parameter<int> m_variance = Parameter<int>("variance", 0, *this);
 		Parameter<double> m_threshold = Parameter<double>("threshold", 60.0f, *this);
 		Parameter<int> m_ratio = Parameter<int>("ratio", 3, *this);
-
 	};
 }

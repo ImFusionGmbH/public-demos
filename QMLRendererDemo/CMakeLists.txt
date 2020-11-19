@@ -2,7 +2,7 @@ project(QMLRendererDemo)
 cmake_minimum_required(VERSION 3.10.0)
 
 find_package(Qt5 COMPONENTS Core Quick Gui Widgets OpenGL REQUIRED)
-find_package(ImFusionLib 2.14.0 REQUIRED)
+find_package(ImFusionLib REQUIRED)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)

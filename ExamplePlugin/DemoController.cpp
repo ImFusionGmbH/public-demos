@@ -31,9 +31,6 @@ namespace ImFusion
 	{
 		m_alg->setFactor(m_ui->spinBoxFactor->value());
 		m_alg->compute();
-		DataList d;
-		m_alg->output(d);
-		for (auto i : d.getImages(Data::UNKNOWN))
-			m_main->dataModel()->add(i);
+		m_main->dataModel()->add(m_alg->takeOutput());
 	}
 }

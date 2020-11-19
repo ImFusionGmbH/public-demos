@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.2.0)
 
 # Locate the ImFusion SDK.
 # List required modules/plugins in the COMPONENTS section (e.g. COMPONENTS ImFusionSeg ImFusionReg).
-find_package(ImFusionLib 2.13.2 REQUIRED)
+find_package(ImFusionLib REQUIRED)
 
 # Locate OpenCV. We are using core and imgproc for this example
 find_package(OpenCV REQUIRED COMPONENTS core imgproc)

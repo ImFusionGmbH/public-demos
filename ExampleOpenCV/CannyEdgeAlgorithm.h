@@ -24,7 +24,7 @@ namespace ImFusion
 
 		virtual void compute() override;
 
-		virtual void output(DataList& data) override;
+		virtual OwningDataList takeOutput() override;
 
 	protected:
 		SharedImage* m_inputImage;
