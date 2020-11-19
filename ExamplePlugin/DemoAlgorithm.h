@@ -30,7 +30,7 @@ namespace ImFusion
 		void compute() override;
 
 		/// If new data was created, make it available here
-		void output(DataList& dataOut) override;
+		OwningDataList takeOutput() override;
 		//\}
 
 		/// \name	Methods implementing the Configurable interface

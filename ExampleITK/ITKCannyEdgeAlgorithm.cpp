@@ -1,3 +1,4 @@
+#include <ImFusion/Base/ImageProcessing.h>
 #include <ImFusion/Base/Log.h>
 #include <ImFusion/Base/TypedImage.h>
 #include <ImFusion/Base/SharedImageSet.h>
@@ -15,7 +16,7 @@ namespace ImFusion
 {
 	ITKCannyEdgeAlgorithm::ITKCannyEdgeAlgorithm(const SharedImage& image)
 	{
-		m_input = std::unique_ptr<TypedImage<double>>(image.mem()->createFloat()->convert<double>(0.0f, 1.0f));
+		m_input.reset(ImageProcessing::createFloat(*image.mem(), ImageProcessing::Normalization::ValueRange)->convert<double>(0.0f, 1.0f));
 
 		configureDefaults();
 		m_variance.setRange(0, 2);
@@ -111,12 +112,8 @@ namespace ImFusion
 		m_status = static_cast<int>(Algorithm::Status::Success);
 	}
 
-	void ITKCannyEdgeAlgorithm::output(DataList& data)
+	OwningDataList ITKCannyEdgeAlgorithm::takeOutput()
 	{
-		if (m_output)
-		{
-			data.add(new SharedImageSet(m_output.release()));
-		}
-
+		return OwningDataList(std::make_unique<SharedImageSet>(std::move(m_output)));
 	}
 }
