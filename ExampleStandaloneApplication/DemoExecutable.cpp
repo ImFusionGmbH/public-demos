@@ -39,8 +39,9 @@ namespace ImFusion
 		auto dispWrapper = QWidget::createWindowContainer(m_disp.get(), this);
 		this->setCentralWidget(dispWrapper);
 
-		// add default MPR and 3D views and make them visible
-		auto viewGroup = m_disp->addViewGroup3D(false);
+		// add 2D view as well as default MPR and 3D view group and make them visible
+		m_disp->addView2D(false);
+		m_disp->addViewGroup3D(false);
 		for (auto v : m_disp->views())
 			v->setVisible(true);
 
@@ -57,7 +58,9 @@ namespace ImFusion
 			dl.add(sis.get());
 			dataModel()->add(sis.release());
 		}
-		viewGroup->setVisibleData(dl);
+
+		// show the data, DisplayWidget takes care of distributing them to the compatible views
+		m_disp->showData(dl);
 	}
 
 
