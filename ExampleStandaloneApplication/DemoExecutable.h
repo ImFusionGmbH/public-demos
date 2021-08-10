@@ -18,6 +18,6 @@ namespace ImFusion
 		virtual ~DemoExecutable();
 
 	private:
-		std::unique_ptr<DisplayWidgetMulti> m_disp;    ///< Widget for displaying the image data
+		std::unique_ptr<DisplayWidgetMulti> m_display;    ///< Widget for displaying the image data
 	};
 }
