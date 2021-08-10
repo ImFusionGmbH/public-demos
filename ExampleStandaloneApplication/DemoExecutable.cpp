@@ -35,14 +35,31 @@ namespace ImFusion
 #endif
 
 		// create a new DisplayWidget and assign it to the QMainWindow
-		m_disp = std::make_unique<DisplayWidgetMulti>();
-		auto dispWrapper = QWidget::createWindowContainer(m_disp.get(), this);
+		// pass `false` to not initialize the DisplayWidget yet (we do this explicitly below)
+		m_display = std::make_unique<DisplayWidgetMulti>(false);
+
+		// Qt 5.9 changed some internals on how it creates a QWindow.
+		// Older versions need to initialize the DisplayWidget *before* wrapping it in a QWidget,
+		// otherwise there will be "CreateWindowEx failed (Cannot create a top-level child window)" errors.
+#if QT_VERSION < QT_VERSION_CHECK(5, 9, 0)
+		m_display->init();
+#endif
+
+		auto dispWrapper = QWidget::createWindowContainer(m_display.get(), this);
 		this->setCentralWidget(dispWrapper);
+		this->setMinimumSize(800, 600);
+
+		// Qt 5.9 changed some internals on how it creates a QWindow.
+		// Newer versions need to initialize the DisplayWidget *after* wrapping it in a QWidget,
+		// otherwise there will be weird offsets in the rendering and in the mouse event positions.
+#if QT_VERSION >= QT_VERSION_CHECK(5, 9, 0)
+		m_display->init();
+#endif
 
 		// add 2D view as well as default MPR and 3D view group and make them visible
-		m_disp->addView2D(false);
-		m_disp->addViewGroup3D(false);
-		for (auto v : m_disp->views())
+		m_display->addView2D(false);
+		m_display->addViewGroup3D(false);
+		for (auto v : m_display->views())
 			v->setVisible(true);
 
 		// Use the DicomLoader to load DICOM data from the disk
@@ -60,14 +77,14 @@ namespace ImFusion
 		}
 
 		// show the data, DisplayWidget takes care of distributing them to the compatible views
-		m_disp->showData(dl);
+		m_display->showData(dl);
 	}
 
 
 	DemoExecutable::~DemoExecutable()
 	{
 		// clean up before the ImFusion SDK is deinitalized
-		for (auto v : m_disp->views())
+		for (auto v : m_display->views())
 			v->setVisibleData({});
 	}
 }
