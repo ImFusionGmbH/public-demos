@@ -1,0 +1,43 @@
+Version: 4.0
+Type: NeuralNetwork
+Name: fcn_resnet101_segmentation
+Description: Generated from the Python script `generate_demo_model.py`
+Engine: torch
+ModelFile: demo_model_traced.pt # Path to the actual model file 
+ForceCPU: false # Set it to true if you want to perform the inference on the CPU instead of the GPU
+Verbose: false # Print many info messages
+MaxBatchSize: 1 # Maximum number of images to run through the network simulatenously
+LabelNames: [aeroplane, bicycle, bird, boat, bottle, bus, car, cat, chair, cow, diningtable, dog, horse, motorbike, person, pottedplant, sheep, sofa, train, tvmonitor ]
+
+#############################################################################################
+# Sequence of preprocessing operations run before the network
+# (all available operations are available in the Python documentation of the SDK)
+#############################################################################################
+PreProcessing:    
+  - MakeFloat: {} # We always need to make sure the images are float, but the rest of the preprocessing will be done directly by the algorithm  
+  - AdjustShiftScale: # Normalize intensities from [0;255] to [0;1]
+      scale: 255.0
+      shift: 0.0 
+  - ResampleDims: # Resample to the standard dimension of ImageNet networks
+      target_dims: 228 228 1
+
+#############################################################################################
+# For pixelwise (fully convolutional) models, it might be necessary to split the input in sub-images
+# because of GPU memory constraints, especially for 3D volumes.
+# Each of those images will be fed into the network and the predictions will be recombined.
+# This section can be removed for imagewise models.
+#############################################################################################
+Sampling:
+  # We do not want to split the image (a whole 2D image should fit on the GPU)
+  - MaxSizeSubdivision: -1
+  # Some network architectures require each sub-image dimension to be a multiple of this number
+  - DimensionDivisor: 64
+
+#############################################################################################
+# Sequence of preprocessing operations run
+# after the network and the recombination of the sub-images
+# (all available operations are available in the Python documentation of the SDK)
+#############################################################################################
+PostProcessing:
+  - ResampleToInput: {}  # Resize the prediction to the original prediction      
+  - ArgMax: {}           # Convert to a label map using the label with the highest probability      
