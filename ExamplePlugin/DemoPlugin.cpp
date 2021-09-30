@@ -18,18 +18,14 @@ extern "C" ImFusion::ImFusionPlugin* createPlugin()
 
 namespace ImFusion
 {
-	DemoPlugin::DemoPlugin()
-	{
-		m_algFactory = new DemoAlgorithmFactory;
-		m_algCtrlFactory = new DemoControllerFactory;
-	}
+	DemoPlugin::DemoPlugin() {}
 
 
 	DemoPlugin::~DemoPlugin() {}
 
 
-	const ImFusion::AlgorithmFactory* DemoPlugin::getAlgorithmFactory() { return m_algFactory; }
+	const ImFusion::AlgorithmFactory* DemoPlugin::getAlgorithmFactory() { return new DemoAlgorithmFactory; }
 
 
-	const ImFusion::AlgorithmControllerFactory* DemoPlugin::getAlgorithmControllerFactory() { return m_algCtrlFactory; }
+	const ImFusion::AlgorithmControllerFactory* DemoPlugin::getAlgorithmControllerFactory() { return new DemoControllerFactory; }
 }
