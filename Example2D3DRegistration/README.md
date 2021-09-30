@@ -6,7 +6,7 @@ This tutorial will explain how to use and customize the x-ray 2D/3D registration
 
 ![Screenshot of the 2D/3D Registration Plugin in Action](screenshot2d3d.png)
 
-The screenshot above uses a (Creative Commons Attribution-ShareAlike 4.0, see https://osf.io/amh4f/) license CT volume from the 2020 VerSe Challenge (see citations below).
+The screenshot above uses a Creative Commons Attribution-ShareAlike 4.0 (see https://osf.io/amh4f/ ) licensed CT volume from the 2020 VerSe Challenge (see citations below).
 
 ## Requirements and Build Instructions
 
