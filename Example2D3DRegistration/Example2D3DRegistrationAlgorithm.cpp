@@ -66,9 +66,10 @@ namespace ImFusion
 
 		// We create some simulated X-ray images.
 		ConeBeamSimulation simulation(*m_volumeIn->get(0));
-		// Use the current pose of the volume for the X-ray images by setting
-		// the iso matrix of the cone-beam geometry accordingly.
-		simulation.geometry().setIsoMatrix(m_volumeIn->matrixToWorld());
+                // This is the pose of the simulated X-ray images relative to the volume.
+                mat4 groundTruthIso = Pose::eulerToMat(vec3(30.0,70.0,3.0), vec3(5.0,-5.0,2.0));
+		simulation.geometry().setIsoMatrix(groundTruthIso);
+
 		auto& geom = simulation.geometry();
 		geom.sourceDetDistance = 1000.0;
 		geom.sourcePatDistance = 500.0;
@@ -87,21 +88,17 @@ namespace ImFusion
 
 		// We save the result
 		m_projections = simulation.takeOutput().extractFirst<ConeBeamData>();
-		// Reset the iso parameters
-		m_projections->geometry().setIsoMatrix(mat4::Identity());
 
-		// Save the ground truth pose of the matrix, and then move the volume
+		// Reset the iso parameters to a different pose differing from the ground truth.
+		m_projections->geometry().setIsoMatrix(Pose::eulerToMat(vec3(200,2.0,3.0),vec3(-10.0,0.0,0.0)));
 
-		mat4 groundTruth = m_volumeIn->matrixToWorld();
-		// Translate by (2,1,1) and rotate by (0,5,1)
-		m_volumeIn->setMatrixToWorld(Pose::eulerToMat(vec3(30.0, 70.0, 1.0), vec3(0.0, 5.0, 1.0)) * groundTruth);
 
 		// Start an instance of XRay2D3DRegistrationAlgorithm with the volume and the projections.
 		// We set a custom initialization mode with an instance of Custom2D3DRegistrationInitialization
 		// that implements the initialization of the registration.
 		m_regAlg = std::make_unique<XRay2D3DRegistrationAlgorithm>(*m_projections, *m_volumeIn);
 		m_regAlg->p_initializationMode = XRay2D3DRegistrationAlgorithm::InitializationMode::Custom;
-		auto customInit = std::make_unique<Custom2D3DRegistrationInitialization>(*m_regAlg, groundTruth);
+		auto customInit = std::make_unique<Custom2D3DRegistrationInitialization>(*m_regAlg, groundTruthIso);
 		m_customInit = customInit.get();
 		m_regAlg->setCustomInitialization(std::move(customInit));
 	}
