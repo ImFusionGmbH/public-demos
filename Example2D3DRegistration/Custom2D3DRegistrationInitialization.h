@@ -14,7 +14,7 @@ public:
 
 	// Implement XRay2D3DRegistrationInitialization interface
 	bool canInitialize() const override { return true; }
-	Utils::Optional<mat4> initialize(ConeBeamGeometry& geom, SharedImageSet& shots, const SharedImageSet& volume, MaskEditor* maskAlgorithm) override;
+	Utils::Optional<XRay2D3DRegistrationInitialization::InitializationResult> initialize(ConeBeamGeometry& geom, SharedImageSet& shots, const SharedImageSet& volume, MaskEditor* maskAlgorithm) override;
 
 	// Additional getter method
 	XRay2D3DRegistrationInitializationKeyPoints* kpAlg() { return m_kpAlg.get(); };
