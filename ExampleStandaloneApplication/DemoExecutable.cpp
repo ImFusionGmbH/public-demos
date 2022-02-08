@@ -25,7 +25,7 @@ namespace ImFusion
 {
 	DemoExecutable::DemoExecutable()
 		// Construct the ApplicationController with a Qt OpenGL context so that we can use a DisplayWidget later on.
-		: ApplicationController(std::make_unique<ImFusion::DataModel>(), std::make_unique<ImFusion::GlQtContext>())
+		: ApplicationController(std::make_unique<ImFusion::DataModel>(), std::make_unique<ImFusion::GlContextQt>())
 	{
 		// Load ImFusion plugins. Adjust path to your local machine if needed!
 #ifdef _DEBUG
@@ -64,7 +64,7 @@ namespace ImFusion
 
 		// Use the DicomLoader to load DICOM data from the disk
 		DicomLoader dicomLoader("C:/path/to/your/DICOM/data");
-		auto images = dicomLoader.loadImages();
+		std::vector<std::unique_ptr<SharedImageSet>> images = dicomLoader.loadImages();
 
 		// Handle loaded images:
 		// - Move them to the ApplicationController's DataModel (transfer ownership)
@@ -73,11 +73,11 @@ namespace ImFusion
 		for (auto& sis : images)
 		{
 			dl.add(sis.get());
-			dataModel()->add(sis.release());
+			dataModel()->add(std::move(sis));
 		}
 
 		// show the data, DisplayWidget takes care of distributing them to the compatible views
-		m_display->showData(dl);
+		m_display->setVisibleData(dl);
 	}
 
 

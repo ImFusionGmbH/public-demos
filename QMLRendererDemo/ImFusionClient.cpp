@@ -60,19 +60,7 @@ bool ImFusionClient::loadImage(const QString& filename)
 		std::unique_ptr<IoAlgorithm> alg(static_cast<IoAlgorithm*>(FactoryRegistry::get().createIoAlgorithm(algorithmName, dl)));
 		alg->setLocation(filename.toStdString());
 		alg->compute();
-		alg->output(dl);
-
-		for (Data* d : dl)
-		{
-			if (auto sis = dynamic_cast<SharedImageSet*>(d))
-			{
-				m_images.emplace_back(sis);
-			}
-			else
-			{
-				delete d;
-			}
-		}
+		m_images = alg->takeOutput().extractAllImages();
 	}
 	else
 	{
@@ -88,7 +76,9 @@ bool ImFusionClient::loadImage(const QString& filename)
 
 void ImFusionClient::qtQuickOpenglContextCreated(QOpenGLContext* context)
 {
-	Framework::init(std::make_unique<GlContextQt>(0, 0, false, context));
+	Framework::InitConfig initConfig;
+	initConfig.glContext = std::make_unique<GlContextQt>(0, 0, false, context);
+	Framework::init(std::move(initConfig));
 
 	// Load ImFusion plugins found in the search paths.
 	// Note: you might need to adjust this for your platform

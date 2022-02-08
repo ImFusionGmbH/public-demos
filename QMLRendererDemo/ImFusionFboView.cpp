@@ -41,7 +41,7 @@ ImFusionViewRenderer::ImFusionViewRenderer(ImFusionFboView* parentView)
 ImFusionViewRenderer::~ImFusionViewRenderer()
 {
 	// remove any data that might still be shown in one of the views.
-	m_disp->showData(ImFusion::DataList());
+	m_disp->setVisibleData(ImFusion::DataList());
 }
 
 
@@ -170,7 +170,7 @@ void ImFusionFboView::setVisibleData(const ImFusion::DataList& dataList)
 	if (m_renderer == nullptr)
 		return;
 
-	m_renderer->disp().showData(dataList);
+	m_renderer->disp().setVisibleData(dataList);
 }
 
 
