@@ -1,6 +1,7 @@
 #include "DemoExecutable.h"
 
 #include <ImFusion/Base/DataModel.h>
+#include <ImFusion/Core/Log.h>
 #include <ImFusion/Dicom/DicomLoader.h>
 #include <ImFusion/GL/SharedImageSet.h>
 #include <ImFusion/GUI/GlQtContext.h>
@@ -27,6 +28,19 @@ namespace ImFusion
 		// Construct the ApplicationController with a Qt OpenGL context so that we can use a DisplayWidget later on.
 		: ApplicationController(std::make_unique<ImFusion::DataModel>(), std::make_unique<ImFusion::GlContextQt>())
 	{
+		// Enable logging
+		try
+		{
+			Log::init(Log::Level::Debug, ImFusion::Log::Mode::Synchronous);
+			Log::addSink(std::make_unique<ImFusion::Log::ConsoleSink>(ImFusion::Log::ConsoleSink::UseColor));
+			// Log::addSink(std::make_unique<ImFusion::Log::FileSink>(logPath));
+		}
+		catch (const std::exception& e)
+		{
+			std::cout << "Could not initialize logging: " << e.what() << "\n";
+		}
+
+			
 		// Load ImFusion plugins. Adjust path to your local machine if needed!
 #ifdef _DEBUG
 		loadPlugins({"C:/Program Files/ImFusion/ImFusion Suite/SuiteDev/plugins"});
