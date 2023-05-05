@@ -127,15 +127,15 @@ PostProcessing:
 
 ## Step 3a: Executing a model in the ImFusion Suite
 
-The two main algorithms are `Apply Imagewise Model` and `Apply Pixelwise Model`.
-Both of them take a single dataset as input and are available in the *Machine Learning* sub-menu of the algorithm list.
+The algorithm that runs a Machine Learning model in the Suite is `Run Machine Learning Model`.
+It is available in the *Machine Learning* sub-menu of the algorithm list.
 
 Select the path to the YAML model configuration file, and click on _Compute_.
 
 
 ## Step 3b: Executing a model from the ImFusion SDK
 
-The two aforementioned algorithms are also available via our C++ SDK.
+The aforementioned algorithm is a UI wrapper of the class `MachineLearningModel` which is available via our C++ SDK.
 For more details, have a look at the source code of this sample plugin (in particular `RunPretrainedModelAlgorithm`), which consists in running a segmentation model after pre-processing the input.
 
 In order to reproduce what is shown in the screenshot, build the `MachineLearningInferencePlugin` and start the ImFusionSuite.
