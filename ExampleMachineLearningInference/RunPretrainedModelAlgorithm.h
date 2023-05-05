@@ -2,8 +2,7 @@
 #pragma once
 
 #include <ImFusion/Base/Algorithm.h>
-#include <ImFusion/Base/AlgorithmListener.h>
-#include <ImFusion/Base/ParameterMixin.h>
+#include <ImFusion/Core/Parameter.h>
 
 #include <memory>
 
@@ -13,12 +12,11 @@ namespace ImFusion
 
 	/// Simple demo of a custom algorithm using a pre-trained segmentation model on Imagenet.
 	/// The input is expected to have values in [0;255], the algorithm will take care of pre-processing the image.
-	/// The class derives from ParameterMixin<Algorithm> so that we can easily use Parameters
-	class RunPretrainedModelAlgorithm : public ParameterMixin<Algorithm>
+	class RunPretrainedModelAlgorithm : public Algorithm
 	{
 	public:
 		/// Creates the algorithm instance with an image
-		RunPretrainedModelAlgorithm(SharedImageSet* img);
+		RunPretrainedModelAlgorithm(const SharedImageSet* img);
 
 		/// \name	Methods implementing the algorithm interface
 		//\{
@@ -36,7 +34,7 @@ namespace ImFusion
 		Parameter<std::string>	modelPath = { "modelPath" /* string ID of the parameter*/ , "" /* default value*/, *this /* automatically register this parameter to the class */ };
 
 	private:
-		SharedImageSet* m_imgIn = nullptr;           ///< Input image to process
+		const SharedImageSet* m_imgIn = nullptr;           ///< Input image to process
 		std::unique_ptr<SharedImageSet> m_imgOut;    ///< Result of the neural network
 	};
 }

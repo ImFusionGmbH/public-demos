@@ -2,6 +2,8 @@ Version: 4.0
 Type: NeuralNetwork
 Name: fcn_resnet101_segmentation
 Description: Generated from the Python script `generate_demo_model.py`
+PredictionType: Classification
+PredictionOutput: Image
 Engine: torch
 ModelFile: demo_model_traced.pt # Path to the actual model file 
 ForceCPU: false # Set it to true if you want to perform the inference on the CPU instead of the GPU

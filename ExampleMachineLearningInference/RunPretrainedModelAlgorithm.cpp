@@ -1,17 +1,15 @@
 #include "RunPretrainedModelAlgorithm.h"
 
-#include <ImFusion/Base/DataList.h>
 #include <ImFusion/Base/Log.h>
+#include <ImFusion/Base/OwningDataList.h>
 #include <ImFusion/Base/SharedImageSet.h>
-#include <ImFusion/ImageMath/SharedImageSetArithmetic.h>
-#include <ImFusion/ML/PixelwiseLearningModel.h>
-#include <ImFusion/ML/Operations.h>
+#include <ImFusion/ML/DataItem.h>
+#include <ImFusion/ML/MachineLearningModel.h>
 
-namespace IM = ImFusion::ImageMath;
 
 namespace ImFusion
 {
-	RunPretrainedModelAlgorithm::RunPretrainedModelAlgorithm(SharedImageSet* img)
+	RunPretrainedModelAlgorithm::RunPretrainedModelAlgorithm(const SharedImageSet* img)
 		: m_imgIn(img)
 	{
 		// we define the parameter as Path so that the controller includes a button to open an OpenDialog
@@ -50,17 +48,23 @@ namespace ImFusion
 		// set generic error status until we have finished
 		m_status = Status::Error;
 
-		// create the machine learning model
-		ML::PixelwiseLearningModel model(modelPath);
-
-		if (!model.isInitialized())
+		if (!m_imgIn)
 		{
-			LOG_ERROR("RunPretrainedModelAlgorithm", "Model could not be initialized");
+			LOG_ERROR("RunPretrainedModelAlgorithm", "Invalid input image.");
 			return;
 		}
 
-		// run the model and retrieve its output	
-		m_imgOut = model.predict(m_imgIn);
+		// create the machine learning model
+		auto model = ML::MachineLearningModel::create(modelPath);
+
+		if (!model)
+		{
+			LOG_ERROR("RunPretrainedModelAlgorithm", "Model could not be initialized.");
+			return;
+		}
+
+		// run the model and retrieve its output
+		m_imgOut = model->predict(*m_imgIn);
 
 		// set algorithm status to success
 		if (m_imgOut)
