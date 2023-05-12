@@ -16,6 +16,5 @@ namespace ImFusion
 		virtual ~Example2D3DRegistrationPlugin();
 		virtual const AlgorithmFactory* getAlgorithmFactory();
 		virtual const AlgorithmControllerFactory* getAlgorithmControllerFactory();
-
 	};
 }

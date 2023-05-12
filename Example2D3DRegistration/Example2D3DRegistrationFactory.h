@@ -1,5 +1,6 @@
 /* Copyright (c) 2012-2019 ImFusion GmbH, Munich, Germany. All rights reserved. */
 #pragma once
+
 #include <ImFusion/Base/AlgorithmControllerFactory.h>
 #include <ImFusion/Base/AlgorithmFactory.h>
 
