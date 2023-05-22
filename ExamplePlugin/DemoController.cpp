@@ -21,10 +21,15 @@ namespace ImFusion
 	}
 
 
-	DemoController::~DemoController() { delete m_ui; }
+	DemoController::~DemoController()
+	{
+		delete m_ui;
+	}
 
 
-	void DemoController::init() { addToAlgorithmDock(); }
+	void DemoController::init()
+	{
+	}
 
 
 	void DemoController::onApply()

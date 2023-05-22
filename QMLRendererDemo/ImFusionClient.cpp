@@ -4,8 +4,8 @@
 #include <ImFusion/Base/Framework.h>
 #include <ImFusion/Base/IoAlgorithm.h>
 #include <ImFusion/Base/IoAlgorithmFactory.h>
-#include <ImFusion/Base/Log.h>
-#include <ImFusion/GL/GlContextManager.h>
+#include <ImFusion/Core/GL/ContextManager.h>
+#include <ImFusion/Core/Log.h>
 #include <ImFusion/GUI/GlContextQt.h>
 
 #include <QFileInfo>
@@ -15,7 +15,7 @@ using namespace ImFusion;
 
 namespace
 {
-	// Utility function to gather all available IoAlgorithmFactories 
+	// Utility function to gather all available IoAlgorithmFactories
 	// (each loaded ImFusion plugin can have their own)
 	std::vector<const IoAlgorithmFactory*> getIoAlgorithmFactories()
 	{
@@ -99,7 +99,7 @@ void ImFusionClient::qtQuickOpenglContextCreated(QOpenGLContext* context)
 void ImFusionClient::qtQuickOpenglContextAboutToBeDestroyed()
 {
 	// delete everything that has references to OpenGL.
-	GlContextManager::makeCurrent();
+	GL::ContextManager::makeCurrent();
 	m_images.clear();
 	Framework::deinit();
 }

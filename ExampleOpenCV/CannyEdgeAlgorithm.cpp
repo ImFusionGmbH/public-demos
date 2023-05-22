@@ -1,5 +1,5 @@
 #include <CannyEdgeAlgorithm.h>
-#include <ImFusion/Base/Log.h>
+#include <ImFusion/Core/Log.h>
 #include <ImFusion/Base/OpenCV.h>
 #include <ImFusion/Base/SharedImage.h>
 #include <ImFusion/Base/SharedImageSet.h>

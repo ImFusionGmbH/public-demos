@@ -2,7 +2,7 @@
 #pragma once
 
 #include <ImFusion/Base/Algorithm.h>
-#include <ImFusion/Base/ParameterMixin.h>
+#include <ImFusion/Core/Parameter.h>
 
 namespace ImFusion
 {
@@ -13,7 +13,7 @@ namespace ImFusion
 
 	/// Canny edge algorithm showcasing ITK integration in ImFusion SDK
 	/// This algorithm will extract the edges of the input image using ITK filters
-	class ITKCannyEdgeAlgorithm : public ParameterMixin<Algorithm>
+	class ITKCannyEdgeAlgorithm : public Algorithm
 	{
 	public:
 		ITKCannyEdgeAlgorithm(const SharedImage& image);

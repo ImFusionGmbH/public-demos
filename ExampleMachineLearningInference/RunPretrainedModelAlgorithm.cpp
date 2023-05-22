@@ -1,8 +1,8 @@
 #include "RunPretrainedModelAlgorithm.h"
 
-#include <ImFusion/Base/Log.h>
 #include <ImFusion/Base/OwningDataList.h>
 #include <ImFusion/Base/SharedImageSet.h>
+#include <ImFusion/Core/Log.h>
 #include <ImFusion/ML/DataItem.h>
 #include <ImFusion/ML/MachineLearningModel.h>
 

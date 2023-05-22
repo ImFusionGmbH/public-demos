@@ -1,8 +1,8 @@
 #pragma once
 
 #include <ImFusion/Base/Algorithm.h>
-#include <ImFusion/Base/Mat.h>
-#include <ImFusion/Base/ParameterMixin.h>
+#include <ImFusion/Core/Mat.h>
+#include <ImFusion/Core/Parameter.h>
 
 namespace ImFusion
 {
@@ -10,7 +10,7 @@ namespace ImFusion
 
 	/** \brief	Algorithm to detect edges using Canny
 	 */
-	class CannyEdgeAlgorithm : public ParameterMixin<Algorithm>
+	class CannyEdgeAlgorithm : public Algorithm
 	{
 	public:
 		CannyEdgeAlgorithm(SharedImage* image);

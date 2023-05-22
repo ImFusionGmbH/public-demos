@@ -4,9 +4,10 @@
 
 #include <ImFusion/Base/Assert.h>
 #include <ImFusion/Base/DisplayOptions3d.h>
-#include <ImFusion/Base/Log.h>
-#include <ImFusion/GL/GlContext.h>
-#include <ImFusion/GL/GlFramebuffer.h>
+#include <ImFusion/Core/Log.h>
+#include <ImFusion/Core/GL/Context.h>
+#include <ImFusion/Core/GL/Debug.h>
+#include <ImFusion/Core/GL/Framebuffer.h>
 #include <ImFusion/GL/GlSliceView.h>
 #include <ImFusion/GL/GlUtils.h>
 #include <ImFusion/GL/GlVolumeRendererGlobalIllum.h>
@@ -21,10 +22,6 @@
 #include <QOpenGLContext>
 #include <QOpenGLFunctions>
 #include <QQuickWindow>
-
-
-// needed for GLCHECK macro
-using ImFusion::GlContext;
 
 
 // ================================================================================================

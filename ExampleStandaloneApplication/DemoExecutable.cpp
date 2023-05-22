@@ -3,7 +3,7 @@
 #include <ImFusion/Base/DataModel.h>
 #include <ImFusion/Dicom/DicomLoader.h>
 #include <ImFusion/GL/SharedImageSet.h>
-#include <ImFusion/GUI/GlQtContext.h>
+#include <ImFusion/GUI/GlContextQt.h>
 #include <ImFusion/GUI/InteractiveView.h>
 #include <ImFusion/GUI/ViewGroup.h>
 
@@ -25,7 +25,13 @@ namespace ImFusion
 {
 	DemoExecutable::DemoExecutable()
 		// Construct the ApplicationController with a Qt OpenGL context so that we can use a DisplayWidget later on.
-		: ApplicationController(std::make_unique<ImFusion::DataModel>(), std::make_unique<ImFusion::GlContextQt>())
+		: ApplicationController(std::make_unique<ImFusion::DataModel>(),
+								[]()
+								{
+									ImFusion::Framework::InitConfig initConfig;
+									initConfig.glContext = std::make_unique<ImFusion::GlContextQt>();
+									return initConfig;
+								}())
 	{
 		// Load ImFusion plugins. Adjust path to your local machine if needed!
 #ifdef _DEBUG

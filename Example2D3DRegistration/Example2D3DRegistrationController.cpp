@@ -4,8 +4,8 @@
 
 #include <ImFusion/Base/DataModel.h>
 #include <ImFusion/Base/FactoryRegistry.h>
-#include <ImFusion/Base/Log.h>
 #include <ImFusion/Base/SharedImageSet.h>
+#include <ImFusion/Core/Log.h>
 #include <ImFusion/CT/GUI/XRay2D3DRegistrationAlgorithmController.h>
 #include <ImFusion/CT/GUI/XRay2D3DRegistrationInitializationController.h>
 #include <ImFusion/CT/GUI/XRay2D3DRegistrationInitializationKeyPointsController.h>
