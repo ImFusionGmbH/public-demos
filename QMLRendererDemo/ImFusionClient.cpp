@@ -4,8 +4,8 @@
 #include <ImFusion/Base/Framework.h>
 #include <ImFusion/Base/IoAlgorithm.h>
 #include <ImFusion/Base/IoAlgorithmFactory.h>
-#include <ImFusion/Base/Log.h>
-#include <ImFusion/GL/GlContextManager.h>
+#include <ImFusion/Core/GL/ContextManager.h>
+#include <ImFusion/Core/Log.h>
 #include <ImFusion/GUI/GlContextQt.h>
 
 #include <QFileInfo>
@@ -15,7 +15,7 @@ using namespace ImFusion;
 
 namespace
 {
-	// Utility function to gather all available IoAlgorithmFactories 
+	// Utility function to gather all available IoAlgorithmFactories
 	// (each loaded ImFusion plugin can have their own)
 	std::vector<const IoAlgorithmFactory*> getIoAlgorithmFactories()
 	{
@@ -60,19 +60,7 @@ bool ImFusionClient::loadImage(const QString& filename)
 		std::unique_ptr<IoAlgorithm> alg(static_cast<IoAlgorithm*>(FactoryRegistry::get().createIoAlgorithm(algorithmName, dl)));
 		alg->setLocation(filename.toStdString());
 		alg->compute();
-		alg->output(dl);
-
-		for (Data* d : dl)
-		{
-			if (auto sis = dynamic_cast<SharedImageSet*>(d))
-			{
-				m_images.emplace_back(sis);
-			}
-			else
-			{
-				delete d;
-			}
-		}
+		m_images = alg->takeOutput().extractAllImages();
 	}
 	else
 	{
@@ -88,7 +76,9 @@ bool ImFusionClient::loadImage(const QString& filename)
 
 void ImFusionClient::qtQuickOpenglContextCreated(QOpenGLContext* context)
 {
-	Framework::init(std::make_unique<GlContextQt>(0, 0, false, context));
+	Framework::InitConfig initConfig;
+	initConfig.glContext = std::make_unique<GlContextQt>(0, 0, false, context);
+	Framework::init(std::move(initConfig));
 
 	// Load ImFusion plugins found in the search paths.
 	// Note: you might need to adjust this for your platform
@@ -109,7 +99,7 @@ void ImFusionClient::qtQuickOpenglContextCreated(QOpenGLContext* context)
 void ImFusionClient::qtQuickOpenglContextAboutToBeDestroyed()
 {
 	// delete everything that has references to OpenGL.
-	GlContextManager::makeCurrent();
+	GL::ContextManager::makeCurrent();
 	m_images.clear();
 	Framework::deinit();
 }

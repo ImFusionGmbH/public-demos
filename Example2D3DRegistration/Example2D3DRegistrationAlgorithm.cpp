@@ -2,11 +2,11 @@
 
 #include <ImFusion/Base/DataList.h>
 #include <ImFusion/Base/ImageProcessing.h>
-#include <ImFusion/Base/Log.h>
 #include <ImFusion/Base/MemImage.h>
 #include <ImFusion/Base/Pose.h>
 #include <ImFusion/Base/SharedImage.h>
 #include <ImFusion/Base/SharedImageSet.h>
+#include <ImFusion/Core/Log.h>
 #include <ImFusion/CT/ConeBeamData.h>
 #include <ImFusion/CT/ConeBeamSimulation.h>
 #include <ImFusion/CT/XRay2D3DRegistrationAlgorithm.h>

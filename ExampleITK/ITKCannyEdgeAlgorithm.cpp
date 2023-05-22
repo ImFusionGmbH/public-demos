@@ -1,7 +1,7 @@
 #include <ImFusion/Base/ImageProcessing.h>
-#include <ImFusion/Base/Log.h>
 #include <ImFusion/Base/TypedImage.h>
 #include <ImFusion/Base/SharedImageSet.h>
+#include <ImFusion/Core/Log.h>
 #include "ITKCannyEdgeAlgorithm.h"
 #include "ITK.h"
 

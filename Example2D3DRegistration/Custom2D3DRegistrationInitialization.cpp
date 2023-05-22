@@ -1,10 +1,10 @@
 
 #include "Custom2D3DRegistrationInitialization.h"
 
-#include <ImFusion/Base/Log.h>
 #include <ImFusion/CT/XRay2D3DRegistrationInitialization.h>
 #include <ImFusion/CT/XRay2D3DRegistrationInitializationKeyPoints.h>
 #include <ImFusion/CT/ConeBeamData.h>
+#include <ImFusion/Core/Log.h>
 #include <ImFusion/Core/Utils/Optional.h>
 
 #undef IMFUSION_LOG_DEFAULT_CATEGORY

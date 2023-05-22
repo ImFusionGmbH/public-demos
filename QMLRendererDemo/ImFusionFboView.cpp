@@ -4,9 +4,10 @@
 
 #include <ImFusion/Base/Assert.h>
 #include <ImFusion/Base/DisplayOptions3d.h>
-#include <ImFusion/Base/Log.h>
-#include <ImFusion/GL/GlContext.h>
-#include <ImFusion/GL/GlFramebuffer.h>
+#include <ImFusion/Core/Log.h>
+#include <ImFusion/Core/GL/Context.h>
+#include <ImFusion/Core/GL/Debug.h>
+#include <ImFusion/Core/GL/Framebuffer.h>
 #include <ImFusion/GL/GlSliceView.h>
 #include <ImFusion/GL/GlUtils.h>
 #include <ImFusion/GL/GlVolumeRendererGlobalIllum.h>
@@ -23,10 +24,6 @@
 #include <QQuickWindow>
 
 
-// needed for GLCHECK macro
-using ImFusion::GlContext;
-
-
 // ================================================================================================
 
 
@@ -41,7 +38,7 @@ ImFusionViewRenderer::ImFusionViewRenderer(ImFusionFboView* parentView)
 ImFusionViewRenderer::~ImFusionViewRenderer()
 {
 	// remove any data that might still be shown in one of the views.
-	m_disp->showData(ImFusion::DataList());
+	m_disp->setVisibleData(ImFusion::DataList());
 }
 
 
@@ -170,7 +167,7 @@ void ImFusionFboView::setVisibleData(const ImFusion::DataList& dataList)
 	if (m_renderer == nullptr)
 		return;
 
-	m_renderer->disp().showData(dataList);
+	m_renderer->disp().setVisibleData(dataList);
 }
 
 

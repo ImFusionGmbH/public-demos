@@ -2,7 +2,6 @@
 #pragma once
 
 #include <ImFusion/Base/Algorithm.h>
-#include <ImFusion/Base/AlgorithmListener.h>
 
 #include <memory>
 

@@ -4,7 +4,6 @@
 #include "Custom2D3DRegistrationInitialization.h"
 
 #include <ImFusion/Base/Algorithm.h>
-#include <ImFusion/Base/AlgorithmListener.h>
 #include <ImFusion/CT/ConeBeamData.h>
 
 #include <memory>
