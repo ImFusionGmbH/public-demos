@@ -1,6 +1,8 @@
-#include <ITK.h>
-#include <ImFusion/Base/TypedImage.h>
 #include "itkImageRegionIterator.h"
+
+#include <ImFusion/Base/TypedImage.h>
+
+#include <ITK.h>
 
 namespace ImFusion
 {
@@ -31,7 +33,7 @@ namespace ImFusion
 			origin[1] = 0;
 			itkImage->SetOrigin(origin);
 
-			typedef itk::ImageRegionIterator< RGBImageType > IteratorType;
+			typedef itk::ImageRegionIterator<RGBImageType> IteratorType;
 			IteratorType it(itkImage, region);
 			it.GoToBegin();
 			const double* data = img.pointer();
@@ -59,7 +61,7 @@ namespace ImFusion
 			region = image->GetLargestPossibleRegion();
 			itk::Size<2> size = region.GetSize();
 
-			std::unique_ptr<TypedImage<double>> output = std::make_unique<TypedImage<double>>(Image::Type::DOUBLE, size[0], size[1], 1, 3);
+			std::unique_ptr<TypedImage<double>> output = std::make_unique<TypedImage<double>>(vec3i(size[0], size[1], 1), 3);
 
 			typedef itk::ImageRegionConstIterator<RGBImageType> IteratorType;
 			IteratorType it(image, region);
