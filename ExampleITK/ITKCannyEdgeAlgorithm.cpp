@@ -16,7 +16,7 @@ namespace ImFusion
 {
 	ITKCannyEdgeAlgorithm::ITKCannyEdgeAlgorithm(const SharedImage& image)
 	{
-		m_input.reset(ImageProcessing::createFloat(*image.mem(), ImageProcessing::Normalization::ValueRange)->convert<double>(0.0f, 1.0f));
+		m_input = ImageProcessing::createConverted<double>(*image.mem(), image.mem()->getRangeDouble(), std::make_pair(0.0, 1.0));
 
 		configureDefaults();
 		m_variance.setRange(0, 2);
