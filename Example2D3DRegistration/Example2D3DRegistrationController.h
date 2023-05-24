@@ -2,6 +2,7 @@
 #pragma once
 
 #include <ImFusion/GUI/AlgorithmController.h>
+#include <ImFusion/CT/GUI/XRay2D3DRegistrationAlgorithmController.h>
 
 #include <QtWidgets/QWidget>
 
@@ -9,8 +10,9 @@ class QPushButton;
 
 namespace ImFusion
 {
+	using namespace CT;
+
 	class Example2D3DRegistrationAlgorithm;
-	class XRay2D3DRegistrationAlgorithmController;
 
 	// This class implements the GUI controller for the Example2D3DRegistrationAlgorithm.
 	class Example2D3DRegistrationController : public QWidget, public AlgorithmController

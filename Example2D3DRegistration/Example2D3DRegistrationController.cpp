@@ -22,6 +22,8 @@
 // This class implements the GUI controller for the Example2D3DRegistrationAlgorithm.
 namespace ImFusion
 {
+	using namespace CT;
+
 	Example2D3DRegistrationController::Example2D3DRegistrationController(Example2D3DRegistrationAlgorithm* algorithm)
 		: AlgorithmController(algorithm)
 		, m_alg(algorithm)
@@ -64,5 +66,4 @@ namespace ImFusion
 	Example2D3DRegistrationController::~Example2D3DRegistrationController() {}
 
 	void Example2D3DRegistrationController::init() { addToAlgorithmDock(); }
-
 }

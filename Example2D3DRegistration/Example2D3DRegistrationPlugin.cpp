@@ -4,12 +4,12 @@
 
 // Export free factory function to instantiate plugin
 #ifdef WIN32
-extern "C" __declspec(dllexport) ImFusion::ImFusionPlugin* createPlugin()
+extern "C" __declspec(dllexport) ImFusion::ImFusionPlugin * createPlugin()
 {
 	return new ImFusion::Example2D3DRegistrationPlugin;
 }
 #else
-extern "C" ImFusion::ImFusionPlugin* createPlugin()
+extern "C" ImFusion::ImFusionPlugin * createPlugin()
 {
 	return new ImFusion::Example2D3DRegistrationPlugin;
 }

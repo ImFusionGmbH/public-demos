@@ -66,8 +66,8 @@ namespace ImFusion
 
 		// We create some simulated X-ray images.
 		ConeBeamSimulation simulation(*m_volumeIn->get(0));
-                // This is the pose of the simulated X-ray images relative to the volume.
-                mat4 groundTruthIso = Pose::eulerToMat(vec3(30.0,70.0,3.0), vec3(5.0,-5.0,2.0));
+		// This is the pose of the simulated X-ray images relative to the volume.
+		mat4 groundTruthIso = Pose::eulerToMat(vec3(30.0, 70.0, 3.0), vec3(5.0, -5.0, 2.0));
 		simulation.geometry().setIsoMatrix(groundTruthIso);
 
 		auto& geom = simulation.geometry();
@@ -90,7 +90,7 @@ namespace ImFusion
 		m_projections = simulation.takeOutput().extractFirst<ConeBeamData>();
 
 		// Reset the iso parameters to a different pose differing from the ground truth.
-		m_projections->geometry().setIsoMatrix(Pose::eulerToMat(vec3(200,2.0,3.0),vec3(-10.0,0.0,0.0)));
+		m_projections->geometry().setIsoMatrix(Pose::eulerToMat(vec3(200, 2.0, 3.0), vec3(-10.0, 0.0, 0.0)));
 
 
 		// Start an instance of XRay2D3DRegistrationAlgorithm with the volume and the projections.
@@ -109,5 +109,4 @@ namespace ImFusion
 		// if we have produced some output, add it to the list
 		return OwningDataList(std::move(m_projections));
 	}
-
 }
