@@ -6,6 +6,7 @@
 #include <ImFusion/Base/Pose.h>
 #include <ImFusion/Base/SharedImage.h>
 #include <ImFusion/Base/SharedImageSet.h>
+#include <ImFusion/Base/Utils/Images.h>
 #include <ImFusion/Core/Log.h>
 #include <ImFusion/CT/ConeBeamData.h>
 #include <ImFusion/CT/ConeBeamSimulation.h>
@@ -20,7 +21,7 @@ namespace ImFusion
 	Example2D3DRegistrationAlgorithm::Example2D3DRegistrationAlgorithm(SharedImageSet* volumeIn)
 		: m_volumeIn(volumeIn)
 	{
-		//  Convert the volume to use unsigned values internally.
+		// Convert the volume to use unsigned values internally.
 		// ConeBeamSimulation currently uses the storage values of the volume,
 		// so this is needed to avoid negative values.
 		m_volumeIn->prepare();
@@ -65,7 +66,7 @@ namespace ImFusion
 		}
 
 		// We create some simulated X-ray images.
-		ConeBeamSimulation simulation(*m_volumeIn->get(0));
+		CT::ConeBeamSimulation simulation(*m_volumeIn->get(0));
 		// This is the pose of the simulated X-ray images relative to the volume.
 		mat4 groundTruthIso = Pose::eulerToMat(vec3(30.0, 70.0, 3.0), vec3(5.0, -5.0, 2.0));
 		simulation.geometry().setIsoMatrix(groundTruthIso);
@@ -87,17 +88,17 @@ namespace ImFusion
 		simulation.compute();    //<This runs the simulation
 
 		// We save the result
-		m_projections = simulation.takeOutput().extractFirst<ConeBeamData>();
+		m_projections = simulation.takeOutput().extractFirst<CT::ConeBeamData>();
+		Utils::autoWindow(*m_projections);
 
 		// Reset the iso parameters to a different pose differing from the ground truth.
 		m_projections->geometry().setIsoMatrix(Pose::eulerToMat(vec3(200, 2.0, 3.0), vec3(-10.0, 0.0, 0.0)));
 
-
 		// Start an instance of XRay2D3DRegistrationAlgorithm with the volume and the projections.
 		// We set a custom initialization mode with an instance of Custom2D3DRegistrationInitialization
 		// that implements the initialization of the registration.
-		m_regAlg = std::make_unique<XRay2D3DRegistrationAlgorithm>(*m_projections, *m_volumeIn);
-		m_regAlg->p_initializationMode = XRay2D3DRegistrationAlgorithm::InitializationMode::Custom;
+		m_regAlg = std::make_unique<CT::XRay2D3DRegistrationAlgorithm>(*m_projections, *m_volumeIn);
+		m_regAlg->p_initializationMode = CT::XRay2D3DRegistrationAlgorithm::InitializationMode::Custom;
 		auto customInit = std::make_unique<Custom2D3DRegistrationInitialization>(*m_regAlg, groundTruthIso);
 		m_customInit = customInit.get();
 		m_regAlg->setCustomInitialization(std::move(customInit));

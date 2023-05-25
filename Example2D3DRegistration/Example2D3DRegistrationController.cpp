@@ -22,7 +22,6 @@
 // This class implements the GUI controller for the Example2D3DRegistrationAlgorithm.
 namespace ImFusion
 {
-	using namespace CT;
 
 	Example2D3DRegistrationController::Example2D3DRegistrationController(Example2D3DRegistrationAlgorithm* algorithm)
 		: AlgorithmController(algorithm)
@@ -41,14 +40,12 @@ namespace ImFusion
 		if (m_computeButton)
 			m_computeButton->setEnabled(false);
 
-		// Call compute on the algorithm, and take the output
+		// Call compute on the algorithm
 		m_alg->compute();
-		OwningDataList outputOwningDataList = m_alg->takeOutput();
-		m_main->dataModel()->add(std::move(outputOwningDataList));
 
-		// Initialize the controller for the XRay2D3DRegistrationAlgorithm created in m_alg->compute() above
-		m_regAlgCtrl.reset(dynamic_cast<XRay2D3DRegistrationAlgorithmController*>(FactoryRegistry::get().createAlgorithmController(m_alg->regAlg())));
-		m_regAlgCtrl->setMainWindow(m_main);
+		// Initialize the controller for the XRay2D3DRegistrationAlgorithm created in m_alg->compute() above 
+		m_regAlgCtrl.reset(dynamic_cast<CT::XRay2D3DRegistrationAlgorithmController*>(FactoryRegistry::get().createAlgorithmController(m_alg->regAlg())));
+		m_main->addController(m_regAlgCtrl.get());
 
 		// Add controller for the custom initialization method. Since the custom initialization method internally
 		// uses the KeyPoints initialization method, we simply use the controller from that method.
@@ -57,13 +54,13 @@ namespace ImFusion
 		// Warning: the widget will become visible if the initialization mode is changed in the controller.
 		// you can taylor your own class derived from XRay2D3DRegistrationInitializationController to fit more specific requirements.
 		Custom2D3DRegistrationInitialization* customInit = m_alg->customInit();
-		XRay2D3DRegistrationInitializationController* kpCtrl = new XRay2D3DRegistrationInitializationKeyPointsController(
+		CT::XRay2D3DRegistrationInitializationController* kpCtrl = new CT::XRay2D3DRegistrationInitializationKeyPointsController(
 			nullptr, *m_regAlgCtrl->shotsView(), *m_regAlgCtrl->regViewGroup(), *customInit->kpAlg(), *m_main);
-		m_regAlgCtrl->setCustomInitializationController(std::unique_ptr<XRay2D3DRegistrationInitializationController>(kpCtrl));
+		m_regAlgCtrl->setCustomInitializationController(std::unique_ptr<CT::XRay2D3DRegistrationInitializationController>(kpCtrl));
 		kpCtrl->setVisible(false);
 	}
 
 	Example2D3DRegistrationController::~Example2D3DRegistrationController() {}
 
-	void Example2D3DRegistrationController::init() { addToAlgorithmDock(); }
+	void Example2D3DRegistrationController::init() {}
 }
