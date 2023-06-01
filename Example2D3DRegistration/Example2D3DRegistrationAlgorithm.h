@@ -11,8 +11,6 @@
 
 namespace ImFusion
 {
-	using namespace CT;
-
 	class SharedImageSet;
 
 	// Demonstration of how to use the 2D/3D Registration algorithm from the SDK.
@@ -36,14 +34,14 @@ namespace ImFusion
 		//\}
 
 		// Getter and setter methods required by the controller.
-		XRay2D3DRegistrationAlgorithm* regAlg() { return m_regAlg.get(); }
+		CT::XRay2D3DRegistrationAlgorithm* regAlg() { return m_regAlg.get(); }
 		Custom2D3DRegistrationInitialization* customInit() { return m_customInit; };
 
 
 	private:
 		SharedImageSet* m_volumeIn = nullptr;                            //< Volume
-		std::unique_ptr<ConeBeamData> m_projections;                     //< Projections
-		std::unique_ptr<XRay2D3DRegistrationAlgorithm> m_regAlg;         //< Nested Registration Algorithm
+		std::unique_ptr<CT::ConeBeamData> m_projections;                 //< Projections
+		std::unique_ptr<CT::XRay2D3DRegistrationAlgorithm> m_regAlg;     //< Nested Registration Algorithm
 		Custom2D3DRegistrationInitialization* m_customInit = nullptr;    //< Pointer to custom initialization object.
 	};
 }

@@ -10,8 +10,6 @@ class QPushButton;
 
 namespace ImFusion
 {
-	using namespace CT;
-
 	class Example2D3DRegistrationAlgorithm;
 
 	// This class implements the GUI controller for the Example2D3DRegistrationAlgorithm.
@@ -33,8 +31,8 @@ namespace ImFusion
 		void onCompute();
 
 	protected:
-		Example2D3DRegistrationAlgorithm* m_alg;                                   //< The algorithm instance
-		std::unique_ptr<XRay2D3DRegistrationAlgorithmController> m_regAlgCtrl;    //< Controller for the registration algorithm
-		QPushButton* m_computeButton = nullptr;                                   //< Button that is clicked to launch onCompute
+		Example2D3DRegistrationAlgorithm* m_alg;                                       //< The algorithm instance
+		std::unique_ptr<CT::XRay2D3DRegistrationAlgorithmController> m_regAlgCtrl;     //< Controller for the registration algorithm
+		QPushButton* m_computeButton = nullptr;                                        //< Button that is clicked to launch onCompute
 	};
 }
