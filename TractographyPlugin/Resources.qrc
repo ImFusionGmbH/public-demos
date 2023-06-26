@@ -1,0 +1,6 @@
+<RCC>
+	<qresource prefix="/">
+		<file>icons/IconFiberTract.png</file>
+		<file>icons/IconFiberTract@2x.png</file>
+	</qresource>
+</RCC>
