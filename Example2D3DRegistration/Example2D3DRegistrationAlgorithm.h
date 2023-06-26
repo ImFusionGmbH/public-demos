@@ -4,7 +4,6 @@
 #include "Custom2D3DRegistrationInitialization.h"
 
 #include <ImFusion/Base/Algorithm.h>
-#include <ImFusion/CT/ConeBeamData.h>
 #include <ImFusion/CT/XRay2D3DRegistrationAlgorithm.h>
 
 #include <memory>
@@ -40,7 +39,7 @@ namespace ImFusion
 
 	private:
 		SharedImageSet* m_volumeIn = nullptr;                            //< Volume
-		std::unique_ptr<CT::ConeBeamData> m_projections;                 //< Projections
+		std::unique_ptr<SharedImageSet> m_projections;                   //< Projections
 		std::unique_ptr<CT::XRay2D3DRegistrationAlgorithm> m_regAlg;     //< Nested Registration Algorithm
 		Custom2D3DRegistrationInitialization* m_customInit = nullptr;    //< Pointer to custom initialization object.
 	};

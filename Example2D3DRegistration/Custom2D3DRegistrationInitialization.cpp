@@ -3,7 +3,7 @@
 
 #include <ImFusion/CT/XRay2D3DRegistrationInitialization.h>
 #include <ImFusion/CT/XRay2D3DRegistrationInitializationKeyPoints.h>
-#include <ImFusion/CT/ConeBeamData.h>
+#include <ImFusion/CT/ConeBeamMetadata.h>
 #include <ImFusion/Core/Log.h>
 
 #undef IMFUSION_LOG_DEFAULT_CATEGORY
@@ -44,7 +44,7 @@ namespace ImFusion {
 		// We calculate the forward projection of the points with the "ground Truth" pose we are given
 		// To do this, the `toGroundTruth` function calculates the locations of these points so that the
 		// images with the current pose are the same as the images of the key points under the ground truth pose.
-		mat4 currentIsoMatrix = m_regAlg->shotsWithGeom().geometry().isoMatrix();
+		mat4 currentIsoMatrix = m_regAlg->shotsWithGeom().components().getOrCreate<CT::ConeBeamMetadata>().geometry().isoMatrix();
 		auto toGroundTruth = [this, &currentIsoMatrix](vec3 inputPoint) -> vec3 { return (currentIsoMatrix.inverse() * m_groundTruthPose * inputPoint.homogeneous()).hnormalized().eval(); };
 
 		// Temporary volume keypoints to compute forward projections onto the x-ray images  

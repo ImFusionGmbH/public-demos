@@ -8,7 +8,7 @@
 #include <ImFusion/Base/SharedImageSet.h>
 #include <ImFusion/Base/Utils/Images.h>
 #include <ImFusion/Core/Log.h>
-#include <ImFusion/CT/ConeBeamData.h>
+#include <ImFusion/CT/ConeBeamMetadata.h>
 #include <ImFusion/CT/ConeBeamSimulation.h>
 #include <ImFusion/CT/XRay2D3DRegistrationAlgorithm.h>
 
@@ -88,11 +88,11 @@ namespace ImFusion
 		simulation.compute();    //<This runs the simulation
 
 		// We save the result
-		m_projections = simulation.takeOutput().extractFirst<CT::ConeBeamData>();
+		m_projections = simulation.takeOutput().extractFirst<SharedImageSet>();
 		Utils::autoWindow(*m_projections);
 
 		// Reset the iso parameters to a different pose differing from the ground truth.
-		m_projections->geometry().setIsoMatrix(Pose::eulerToMat(vec3(200, 2.0, 3.0), vec3(-10.0, 0.0, 0.0)));
+		m_projections->components().getOrCreate<CT::ConeBeamMetadata>().geometry().setIsoMatrix(Pose::eulerToMat(vec3(200, 2.0, 3.0), vec3(-10.0, 0.0, 0.0)));
 
 		// Start an instance of XRay2D3DRegistrationAlgorithm with the volume and the projections.
 		// We set a custom initialization mode with an instance of Custom2D3DRegistrationInitialization
