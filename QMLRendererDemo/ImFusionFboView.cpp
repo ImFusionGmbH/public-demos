@@ -89,6 +89,9 @@ void ImFusionViewRenderer::render()
 		{
 			LOG_ERROR("Rendering error: " << e.what());
 		}
+
+		// make sure to reset the global OpenGL state to what QML expects.
+		m_parentView->window()->resetOpenGLState();
 	}
 }
 
