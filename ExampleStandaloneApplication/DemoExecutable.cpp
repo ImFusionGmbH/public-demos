@@ -1,5 +1,6 @@
 #include "DemoExecutable.h"
 
+#include <ImFusion/Core/Platform.h>
 #include <ImFusion/Base/DataModel.h>
 #include <ImFusion/Dicom/DicomLoader.h>
 #include <ImFusion/GL/SharedImageSet.h>
@@ -34,10 +35,14 @@ namespace ImFusion
 								}())
 	{
 		// Load ImFusion plugins. Adjust path to your local machine if needed!
-#ifdef _DEBUG
+#ifdef _WIN32
+#	ifdef _DEBUG
 		loadPlugins({"C:/Program Files/ImFusion/ImFusion Suite/SuiteDev/plugins"});
-#else
+#	else
 		loadPlugins({"C:/Program Files/ImFusion/ImFusion Suite/Suite/plugins"});
+#	endif
+#else
+		loadPlugins({Platform::libraryPath("ImFusionLib").parentPath() / "../lib/ImFusionLib/plugins"});
 #endif
 
 		// create a new DisplayWidget and assign it to the QMainWindow
