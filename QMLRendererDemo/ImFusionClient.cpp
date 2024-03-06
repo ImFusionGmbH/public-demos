@@ -7,26 +7,12 @@
 #include <ImFusion/Core/GL/ContextManager.h>
 #include <ImFusion/Core/Log.h>
 #include <ImFusion/GUI/GlContextQt.h>
+#include <ImFusion/IO/FileLoader.h>
 
 #include <QFileInfo>
 
 
 using namespace ImFusion;
-
-namespace
-{
-	// Utility function to gather all available IoAlgorithmFactories
-	// (each loaded ImFusion plugin can have their own)
-	std::vector<const IoAlgorithmFactory*> getIoAlgorithmFactories()
-	{
-		std::vector<const IoAlgorithmFactory*> factories;
-		for (auto f : FactoryRegistry::get().getAlgorithmFactories())
-			if (const IoAlgorithmFactory* ioaf = dynamic_cast<const IoAlgorithmFactory*>(f))
-				factories.push_back(ioaf);
-
-		return factories;
-	}
-}
 
 
 ImFusionClient& ImFusionClient::instance()
@@ -40,31 +26,15 @@ bool ImFusionClient::loadImage(const QString& filename)
 {
 	m_images.clear();
 
-	QFileInfo fi(filename);
-	std::string extension = fi.suffix().toStdString();
-	if (extension == "gz")
-		extension = fi.completeSuffix().toStdString();
-
-	auto iof = getIoAlgorithmFactories();
-	std::string algorithmName;
-	for (auto& f : iof)
+	IO::FileLoader loader;
+	std::optional<OwningDataList> dl = loader.load(filename.toStdString(), IO::FileLoader::Options::AllowSpawnGUI);
+	if (dl && loader.status() == IO::FileLoader::Status::Success)
 	{
-		algorithmName = f->idFromExtension(extension);
-		if (!algorithmName.empty())
-			break;
-	}
-
-	if (!algorithmName.empty())
-	{
-		DataList dl;
-		std::unique_ptr<IoAlgorithm> alg(static_cast<IoAlgorithm*>(FactoryRegistry::get().createIoAlgorithm(algorithmName, dl)));
-		alg->setLocation(filename.toStdString());
-		alg->compute();
-		m_images = alg->takeOutput().extractAllImages();
+		m_images = dl->extractAllImages();
 	}
 	else
 	{
-		LOG_ERROR("Could not find compatible IO algorithm to load file " << filename.toStdString());
+		LOG_ERROR("Could not find compatible IO algorithm to load file " << filename.toStdString() << ", error code: " << int(loader.status()));
 	}
 
 	return !m_images.empty();
