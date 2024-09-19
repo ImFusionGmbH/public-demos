@@ -1,8 +1,8 @@
 # Example StreamData
 
 ## Summary
-Within this tutorial you will learn how to use a `LiveTrackingStream`, e.g. coming for our NDIPlugin or any other source of tracking data, and use it in you `Algorithm`.
-In this simple example we will simply print the tracking data to the console.
+In this tutorial, you will learn how to use a `LiveTrackingStream`, such as one from our NDIPlugin or any other tracking data source, and integrate it into your `Algorithm`.
+In this simple example, we will print the tracking data to the console.
 
 ![Screenshot of the plugin in action](screenshot.png)
 

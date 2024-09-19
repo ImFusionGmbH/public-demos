@@ -2,7 +2,7 @@
 
 ## Summary
 
-This tutorial describes how to use within the ImFusion framework a deep learning model that has been trained independently from Python.
+This tutorial explains how to integrate a deep learning model, trained independently using Python, into the ImFusion framework.
 The C++ plugin included in this repo will define a demo algorithm that runs such a model in the Suite.
 
 ![Screenshot of the demo algorithm running a segmentation model](demo_algorithm.png "Screenshot of the demo algorithm running a segmentation model")
