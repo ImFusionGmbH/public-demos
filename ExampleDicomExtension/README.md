@@ -1,7 +1,7 @@
 # Dicom Extension Example
 
 ## Summary
-This tutorial will explain how to implement a `DicomExtention` to read and write custom DICOM tags.
+This tutorial will explain how to implement a `DicomExtension` to read and write custom DICOM tags.
 Furthermore you will learn how you can attach the information read from the tags to the corresponding dataset using a `DataComponent`.
 
 ![Screenshot of the plugin in action](screenshot.png)
