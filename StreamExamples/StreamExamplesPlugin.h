@@ -10,12 +10,12 @@ namespace ImFusion
 	class AlgorithmControllerFactory;
 
 	/// Minimal example for defining a custom plugin for the ImFusion SDK
-	class DemoStreamDataPlugin : public ImFusionPlugin
+	class StreamExamplesPlugin : public ImFusionPlugin
 	{
 	public:
-		DemoStreamDataPlugin();
-		virtual ~DemoStreamDataPlugin();
-		virtual const AlgorithmFactory* getAlgorithmFactory();
-		virtual const AlgorithmControllerFactory* getAlgorithmControllerFactory();
+		StreamExamplesPlugin();
+		~StreamExamplesPlugin() override;
+		const AlgorithmFactory* getAlgorithmFactory() override;
+		const AlgorithmControllerFactory* getAlgorithmControllerFactory() override;
 	};
 }

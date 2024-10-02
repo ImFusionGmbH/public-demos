@@ -9,17 +9,17 @@ namespace ImFusion
 	class Algorithm;
 
 	/// AlgorithmFactory for demo plugin
-	class DemoStreamDataAlgorithmFactory : public AlgorithmFactory
+	class StreamExamplesAlgorithmFactory : public AlgorithmFactory
 	{
 	public:
-		DemoStreamDataAlgorithmFactory();
+		StreamExamplesAlgorithmFactory();
 	};
 
 	/// AlgorithmControllerFactory for demo plugin
-	class DemoStreamDataControllerFactory : public AlgorithmControllerFactory
+	class StreamExamplesControllerFactory : public AlgorithmControllerFactory
 	{
 	public:
-		DemoStreamDataControllerFactory();
+		StreamExamplesControllerFactory();
 
 		AlgorithmController* create(Algorithm* a) const override;
 	};

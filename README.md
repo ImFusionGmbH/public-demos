@@ -13,7 +13,7 @@ You can find more information on our company and what we do on our [website](htt
 ## Examples
 
 - **Example2D3DRegistration**: Demonstrates how to use and customize the x-ray 2D/3D registration algorithm in an example plugin.
-- **ExampleAnatomyPlugin**: Shows how you can use the AnatomyPlugin to represent `AnatomicalStructures` (AS) and combine them in a `AnatomicalStructureCollection` (ASC).
+- **ExampleAnatomyPlugin**: Shows how you can use the AnatomyPlugin to represent `AnatomicalStructures` and combine them in a `AnatomicalStructureCollection`.
 - **ExampleDicomBrowser**: Explains how to build a simple DICOM browser using the ImFusionDicom plugin.
 - **ExampleDicomExtension**: Implements a sample `DicomExtension` to read and write custom DICOM tags.
 - **ExampleImageMath**: Contains basic examples on how to use our ImageMath plugin.
@@ -24,9 +24,9 @@ You can find more information on our company and what we do on our [website](htt
 - **ExampleOpenGL**: Shows how to use OpenGL for rendering and image processing.
 - **ExamplePlugin**: Provides a template for creating new plugins.
 - **ExampleStandaloneApplication**: Builds a standalone application using the SDK.
-- **ExampleStreamData**: Shows how to work with data on input streams on the example of a tracking device.
 - **QMLRendererDemo**: Explains how to natively integrate the ImFusionLib rendering stack into a QML application.
 - **SlicerExtension**: Basic example demonstrating how the ImFusion SDK can be integrated into 3D-Slicer via an Extension module..
+- **StreamExample**: Shows how to create `Stream`s and to work with their data.
 - **TotalSegmentatorAnatomyPlugin**: Explains how to build a simple custom plugin for the ImFusion SDK, on the example of the TotalMeshSegmentator that creates anatomical structure descriptions.
 - **TractographyPlugin**: Demonstrates how to create a custom data type (fiber tracts, used for instance in Diffusion Tensor Imaging) in the ImFusion SDK and integrate it into the visualization stack using the `GlObject` and `DataDisplayHandler` interfaces.
 

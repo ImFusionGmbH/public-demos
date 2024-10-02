@@ -1,6 +1,6 @@
 # Define a new CMake project for the demo plugin
-project(StreamDataDemo)
-cmake_minimum_required(VERSION 3.2.0)
+cmake_minimum_required(VERSION 3.8.0)
+project(StreamExamples)
 
 # Locate the ImFusion SDK.
 # List required modules/plugins in the COMPONENTS section (e.g. COMPONENTS ImFusionSeg ImFusionReg).
@@ -14,14 +14,16 @@ set(CMAKE_AUTOUIC ON)
 
 # Define and configure the CMake target
 set(Sources
+	DemoInputImageStream.cpp
     DemoStreamDataAlgorithm.cpp
-    DemoStreamDataFactory.cpp
-    DemoStreamDataPlugin.cpp
+    StreamExamplesFactory.cpp
+    StreamExamplesPlugin.cpp
 )
 set(Headers
+	DemoInputImageStream.h
 	DemoStreamDataAlgorithm.h
-	DemoStreamDataFactory.h
-	DemoStreamDataPlugin.h
+	StreamExamplesFactory.h
+	StreamExamplesPlugin.h
 )
 set(UiSources
 )
@@ -29,12 +31,12 @@ set(Shaders
 )
 
 # Define target library
-add_library(StreamDataDemo SHARED ${Sources} ${UiHeaders} ${Headers} ${Shaders})
-target_include_directories(StreamDataDemo PRIVATE
+add_library(StreamExamples SHARED ${Sources} ${UiHeaders} ${Headers} ${Shaders})
+target_include_directories(StreamExamples PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}
 )
 # Link agains the ImFusionLib and selected modules/plugins
-target_link_libraries(StreamDataDemo PRIVATE
+target_link_libraries(StreamExamples PRIVATE
 	ImFusionLib
 	ImFusionStream
 )
