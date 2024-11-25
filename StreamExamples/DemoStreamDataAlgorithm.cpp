@@ -23,14 +23,14 @@ namespace ImFusion
 				return;
 			}
 
-			auto instruments = tsd->instruments();
+			const std::vector<ImFusion::TrackingInstrument> instruments = tsd->instruments();
 			if (instruments.empty())
 				return;
 
 			for (const auto& ti : instruments)
 			{
 				LOG_INFO("DemoStreamDataAlgorithm",
-						 "Instrument: " + ti.name << "\n"
+						 "Instrument: " + ti.id.string() << "\n"
 												  << "Matrix:\n"
 												  << ti.matrix << "\n"
 												  << "Quality:\n"
