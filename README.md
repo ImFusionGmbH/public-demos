@@ -12,6 +12,7 @@ You can find more information on our company and what we do on our [website](htt
 
 ## Examples
 
+- **BrushStandaloneApplication**: Builds a standalone application with an interactive Brush tool for labeling image-data.
 - **Example2D3DRegistration**: Demonstrates how to use and customize the x-ray 2D/3D registration algorithm in an example plugin.
 - **ExampleAnatomyPlugin**: Shows how you can use the AnatomyPlugin to represent `AnatomicalStructures` and combine them in a `AnatomicalStructureCollection`.
 - **ExampleDicomBrowser**: Explains how to build a simple DICOM browser using the ImFusionDicom plugin.
