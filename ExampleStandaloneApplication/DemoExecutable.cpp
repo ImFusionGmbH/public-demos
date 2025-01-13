@@ -72,7 +72,7 @@ namespace ImFusion
 
 		// Use the DicomLoader to load DICOM data from the disk
 		DicomLoader dicomLoader("C:/path/to/your/DICOM/data");
-		auto images = dicomLoader.loadImages();
+		std::vector<std::unique_ptr<SharedImageSet>> images = dicomLoader.loadImages();
 
 		// Handle loaded images:
 		// - Move them to the ApplicationController's DataModel (transfer ownership)
