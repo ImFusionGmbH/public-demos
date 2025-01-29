@@ -1,11 +1,10 @@
-# Example Interactive Overlay Plugin
-
+# Example Annotation Handle
 ## Summary
 This tutorial will explain how to build a simple interactive overlay for the ImFusion SDK.
 It shows how to add overlay buttons to every point of a GlPointBasedAnnotation which can then be clicked by the user to move the associated annotation point.
 Clicking an overlay button moves the associated annotation point with respect to the viewport space of the button. 
 
-![Screenshot of the Interactive Overlay Example in Action](screenshot.png)
+![Screenshot of the Annotation Handle Example in Action](screenshot.png)
 
 **Note:** This demo plugin is built upon the ExamplePlugin. Please refer to the README.md there for more details on setting up an ImFusionPlugin.
 

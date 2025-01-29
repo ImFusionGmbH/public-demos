@@ -3,7 +3,7 @@
 ## Summary
 Within this tutorial you will learn how to create `Stream`s and to work with their data.
 
-The `DemoStreamDataAlgorithm` connects to a `LiveTrackingStream`, e.g. coming for our NDIPlugin or any other source of tracking data, and uses the incoming tracking data in the `Algorithm`.
+The `DemoStreamDataAlgorithm` connects to a `TrackingStream`, e.g. coming for our NDIPlugin or any other source of tracking data, and uses the incoming tracking data in the `Algorithm`.
 In this simple example we will simply print the tracking data to the console.
 
 The `DemoInputImageStream` is a simple example of how to create a custom input stream, in this case for images, that can then be used by other algorithms and displayed live in the ImFusion Suite.
@@ -16,7 +16,7 @@ The `DemoInputImageStream` is a simple example of how to create a custom input s
 
 ### DemoStreamDataAlgorithm
 
-In the constructor of the `DemoStreamDataAlgorithm` (in `DemoStreamDataAlgorithm.h`) we register to the `signalNewData` of the `LiveTrackingStream`. This signal is emitted whenever new tracking data is available.
+In the constructor of the `DemoStreamDataAlgorithm` (in `DemoStreamDataAlgorithm.h`) we register to the `signalNewData` of the `TrackingStream`. This signal is emitted whenever new tracking data is available.
 We print all instruments available in the stream and print the current matrix, the name, and the quality.
 
 Once the plugin is built, you can start the ImFusion Suite and create a tracking stream, e.g. the "Fake Tracking Stream" (Import -> Fake Tracking Stream).

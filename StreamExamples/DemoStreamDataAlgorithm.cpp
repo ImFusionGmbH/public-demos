@@ -6,13 +6,13 @@
 #include <ImFusion/Core/GL/ImageProgram.h>
 #include <ImFusion/Core/GL/Texture.h>
 #include <ImFusion/GL/GlImage.h>
-#include <ImFusion/Stream/LiveTrackingStream.h>
+#include <ImFusion/Stream/TrackingStream.h>
 #include <ImFusion/Stream/TrackingStreamData.h>
 
 
 namespace ImFusion
 {
-	DemoStreamDataAlgorithm::DemoStreamDataAlgorithm(LiveTrackingStream& trackingStream)
+	DemoStreamDataAlgorithm::DemoStreamDataAlgorithm(TrackingStream& trackingStream)
 		: m_trackingStream(trackingStream)
 	{
 		m_trackingStream.signalNewData.connect(this, [](auto& streamData) {
@@ -30,11 +30,11 @@ namespace ImFusion
 			for (const auto& ti : instruments)
 			{
 				LOG_INFO("DemoStreamDataAlgorithm",
-						 "Instrument: " + ti.id.string() << "\n"
-												  << "Matrix:\n"
-												  << ti.matrix << "\n"
-												  << "Quality:\n"
-												  << ti.quality);
+						 "Instrument: " + ti.id.toIDModelNameString() << "\n"
+																	  << "Matrix:\n"
+																	  << ti.matrix << "\n"
+																	  << "Quality:\n"
+																	  << ti.quality);
 			}
 		});
 	}
@@ -45,10 +45,10 @@ namespace ImFusion
 		// we expect exactly one tracking stream, and optionally one image
 		if (data.size() != 1)
 			return false;
-		std::vector<Data*> streams = data.getAll(Data::LIVETRACKINGSTREAM);
+		std::vector<Data*> streams = data.getAll(Data::TRACKINGSTREAM);
 		if (streams.empty())
 			return false;
-		auto ts = dynamic_cast<LiveTrackingStream*>(streams[0]);
+		auto ts = dynamic_cast<TrackingStream*>(streams[0]);
 		if (!ts)
 			return false;
 

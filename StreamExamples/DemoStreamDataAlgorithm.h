@@ -9,15 +9,15 @@
 
 namespace ImFusion
 {
-	class LiveTrackingStream;
+	class TrackingStream;
 
 	/// Simple demonstration of a custom Algorithm.
-	/// This algorithm will consume a LiveTrackingStream and print the tracking matrix to the console.
+	/// This algorithm will consume a TrackingStream and print the tracking matrix to the console.
 	class DemoStreamDataAlgorithm : public Algorithm, public SignalReceiver
 	{
 	public:
 		/// Creates the algorithm instance with an image
-		explicit DemoStreamDataAlgorithm(LiveTrackingStream& trackingStream);
+		explicit DemoStreamDataAlgorithm(TrackingStream& trackingStream);
 
 		/// \name	Methods implementing the algorithm interface
 		//\{
@@ -32,6 +32,6 @@ namespace ImFusion
 		//\}
 
 	private:
-		const LiveTrackingStream& m_trackingStream;    ///< Input tracking stream
+		const TrackingStream& m_trackingStream;    ///< Input tracking stream
 	};
 }
