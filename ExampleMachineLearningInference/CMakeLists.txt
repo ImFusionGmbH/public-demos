@@ -1,6 +1,7 @@
+cmake_minimum_required(VERSION 3.13.0)
+
 # Define a new CMake project for the MachineLearningInference plugin
 project(MachineLearningInferencePlugin)
-cmake_minimum_required(VERSION 3.2.0)
 
 # Locate the ImFusion SDK.
 # List required modules/plugins in the COMPONENTS section (e.g. COMPONENTS ImFusionSeg ImFusionReg).
@@ -18,11 +19,11 @@ set(Sources
 	MachineLearningInferencePlugin.cpp
 )
 set(Headers
-	RunPretrainedModelAlgorithm.h	
+	RunPretrainedModelAlgorithm.h
 	MachineLearningInferenceFactory.h
 	MachineLearningInferencePlugin.h
 )
-set(UiSources	
+set(UiSources
 )
 
 # Define target library
@@ -38,7 +39,7 @@ target_link_libraries(MachineLearningInferencePlugin PRIVATE
 
 # Define output target directories and provide instructions on how to launch
 # the ImFusion Suite with the built custom plugin.
-# These functions are provided by the ImFusionLib target config. 
+# These functions are provided by the ImFusionLib target config.
 imfusion_set_common_target_properties()
 imfusion_provide_ide_instructions()
 

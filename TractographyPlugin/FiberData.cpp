@@ -66,7 +66,7 @@ namespace ImFusion
 		m_tangents.clear();
 		m_minAnisotropy = std::numeric_limits<float>::quiet_NaN();
 		m_maxAnisotropy = std::numeric_limits<float>::quiet_NaN();
-		m_bounds = Bounds();
+		m_bounds = Geometry::AlignedBox();
 		m_matrix = mat4::Identity();
 		signalFibersChanged.emitSignal();
 	}
@@ -102,11 +102,11 @@ namespace ImFusion
 	}
 
 
-	Bounds FiberData::bounds() const
+	Geometry::AlignedBox FiberData::bounds() const
 	{
 		if (m_boundsDirty)
 		{
-			m_bounds = Bounds();
+			m_bounds = Geometry::AlignedBox();
 			for (auto& v : m_vertices)
 			{
 				// a vertex is a vec4, however the fourth coordinate is not the homogeneous coordinate but the anisotropy value.

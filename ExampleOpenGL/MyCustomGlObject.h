@@ -12,7 +12,7 @@ public:
 	// This function returns the world extent of the rendered object so that the
 	// view architecture can automatically determine proper scaling etc.
 	// For now we return an default (empty) extent.
-	ImFusion::Bounds bounds() const override
+	ImFusion::Geometry::AlignedBox bounds() const override
 	{
 		return {};
 	}

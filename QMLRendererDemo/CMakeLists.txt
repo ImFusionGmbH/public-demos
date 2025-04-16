@@ -1,5 +1,5 @@
+cmake_minimum_required(VERSION 3.13.0)
 project(QMLRendererDemo)
-cmake_minimum_required(VERSION 3.10.0)
 
 find_package(Qt5 COMPONENTS Core Quick Gui Widgets OpenGL REQUIRED)
 find_package(ImFusionLib REQUIRED)
@@ -10,9 +10,9 @@ set(CMAKE_AUTOUIC ON)
 
 # define and configure the target
 set(Sources
-	ImFusionClient.cpp	
-	ImFusionFboView.cpp	
-	MainWindow.cpp	
+	ImFusionClient.cpp
+	ImFusionFboView.cpp
+	MainWindow.cpp
 	main.cpp
 )
 
@@ -26,7 +26,7 @@ set(UiSources
 	main.qml
 )
 
-set(ResourceFiles 
+set(ResourceFiles
 	standalone.qrc
 )
 
@@ -48,7 +48,7 @@ imfusion_set_common_target_properties()
 if(MSVC)
 	# install a post-build step to deploy Qt stuff: https://doc.qt.io/qt-5/windows-deployment.html
 	option(IMFUSION_RUN_WINDEPLOYQT "Install Qt dependencies in binary dir" ON)
-	
+
 	get_target_property(_qmake_executable Qt5::qmake IMPORTED_LOCATION)
 	get_filename_component(_qt_bin_dir "${_qmake_executable}" DIRECTORY)
 	find_program(WINDEPLOYQT_EXECUTABLE windeployqt HINTS "${_qt_bin_dir}")

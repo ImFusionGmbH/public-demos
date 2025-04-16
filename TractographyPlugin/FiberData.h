@@ -55,7 +55,7 @@ namespace ImFusion
 
 		virtual Kind kind() const override;
 		virtual Pose::TransformationConvention matrixConvention() const override;
-		virtual Bounds bounds() const override;
+		virtual Geometry::AlignedBox bounds() const override;
 		virtual void setMatrix(const mat4& m) override;
 		std::string describe() const override;
 
@@ -70,7 +70,7 @@ namespace ImFusion
 		float m_minAnisotropy;
 		float m_maxAnisotropy;
 
-		mutable Bounds m_bounds;
+		mutable Geometry::AlignedBox m_bounds;
 		mutable bool m_boundsDirty;
 	};
 

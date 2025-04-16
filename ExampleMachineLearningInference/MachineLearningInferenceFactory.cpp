@@ -1,4 +1,5 @@
 #include "MachineLearningInferenceFactory.h"
+
 #include "RunPretrainedModelAlgorithm.h"
 
 #include <ImFusion/GUI/DefaultAlgorithmController.h>
@@ -6,9 +7,10 @@
 namespace ImFusion
 {
 	MachineLearningInferenceAlgorithmFactory::MachineLearningInferenceAlgorithmFactory()
+		: AlgorithmFactory("MachineLearningInferencePlugin", false)
 	{
 		// register the RunPretrainedModelAlgorithm in the sub-category "Machine Learning"
-		registerAlgorithm<RunPretrainedModelAlgorithm>("Machine Learning;My Demo Machine Learning Algorithm");
+		registerAlgorithm<RunPretrainedModelAlgorithm>("RunPretrainedModel", "Machine Learning;My Demo Machine Learning Algorithm");
 	}
 
 

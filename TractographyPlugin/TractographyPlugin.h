@@ -14,7 +14,6 @@ namespace ImFusion
 		TractographyPlugin();
 		virtual ~TractographyPlugin();
 		const AlgorithmFactory* getAlgorithmFactory() override;
-		const IoAlgorithmFactory* getIoAlgorithmFactory() override;
 		const AlgorithmControllerFactory* getAlgorithmControllerFactory() override;
 		const DataAnnotationFactory* getDataAnnotationFactory() override;
 

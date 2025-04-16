@@ -1,6 +1,6 @@
 # Define a new CMake project for the demo application
+cmake_minimum_required(VERSION 3.13.0)
 project(DemoMainWindowBase)
-cmake_minimum_required(VERSION 3.2.0)
 
 # Locate the ImFusion SDK. List required modules/plugins in the COMPONENTS section.
 find_package(ImFusionLib COMPONENTS ImFusionDicom REQUIRED)

@@ -1,5 +1,5 @@
-project(TractographyPlugin)
 cmake_minimum_required(VERSION 3.13.0)
+project(TractographyPlugin)
 
 # Locate the ImFusion SDK, .
 # List required modules/plugins in the COMPONENTS section (e.g. COMPONENTS ImFusionSeg ImFusionReg).

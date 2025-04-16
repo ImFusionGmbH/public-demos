@@ -14,13 +14,13 @@ IMFUSION_REGISTER_PLUGIN(ImFusion::TractographyPlugin)
 
 namespace ImFusion
 {
-	class FiberTractAlgorithmFactory : public IoAlgorithmFactory
+	class FiberTractAlgorithmFactory : public AlgorithmFactory
 	{
 	public:
 		FiberTractAlgorithmFactory()
-			: IoAlgorithmFactory("")
+			: AlgorithmFactory("TractographyPlugin", false)
 		{
-			registerAlgorithm<FiberDataIoAlgorithm>("Fiber Tracts");
+			registerAlgorithm<FiberDataIoAlgorithm>("FiberDataIo", "Fiber Tracts");
 		}
 	};
 
@@ -75,33 +75,16 @@ namespace ImFusion
 	}
 
 
-	TractographyPlugin::~TractographyPlugin()
-	{
-	}
+	TractographyPlugin::~TractographyPlugin() {}
 
 
-	const AlgorithmFactory* TractographyPlugin::getAlgorithmFactory()
-	{
-		return nullptr;
-	}
+	const AlgorithmFactory* TractographyPlugin::getAlgorithmFactory() { return nullptr; }
 
 
-	const IoAlgorithmFactory* TractographyPlugin::getIoAlgorithmFactory()
-	{
-		return new FiberTractAlgorithmFactory();
-	}
+	const AlgorithmControllerFactory* TractographyPlugin::getAlgorithmControllerFactory() { return new FiberTractAlgorithmControllerFactory; }
 
 
-	const AlgorithmControllerFactory* TractographyPlugin::getAlgorithmControllerFactory()
-	{
-		return new FiberTractAlgorithmControllerFactory;
-	}
-
-
-	const DataAnnotationFactory* TractographyPlugin::getDataAnnotationFactory()
-	{
-		return new FiberTractDataAnnotationFactory();
-	}
+	const DataAnnotationFactory* TractographyPlugin::getDataAnnotationFactory() { return new FiberTractDataAnnotationFactory(); }
 
 
 }

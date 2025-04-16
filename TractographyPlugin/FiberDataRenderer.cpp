@@ -78,7 +78,7 @@ namespace ImFusion
 	}
 
 
-	Bounds FiberDataRenderer::bounds() const
+	Geometry::AlignedBox FiberDataRenderer::bounds() const
 	{
 		return m_fiberData.bounds();
 	}

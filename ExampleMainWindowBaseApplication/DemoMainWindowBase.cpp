@@ -30,14 +30,13 @@ namespace ImFusion
 
 	DemoMainWindowBase::DemoMainWindowBase()
 		// Construct the ApplicationController with a Qt OpenGL context so that we can use a DisplayWidget later on.
-		: MainWindowBase(
-			  []() {
-				  ImFusion::Framework::InitConfig initConfig;
-				  initConfig.glContext = std::make_unique<ImFusion::GlContextQt>();
-				  return initConfig;
-			  }(),
-			  "ImFusion GmbH",
-			  "DemoMainWindowBase")
+		: MainWindowBase([]() {
+			ImFusion::Framework::InitConfig initConfig;
+			initConfig.glContext = std::make_unique<ImFusion::GlContextQt>();
+			initConfig.organizationName = "ImFusion GmbH";
+			initConfig.applicationName = "DemoMainWindowBase";
+			return initConfig;
+		}())
 	{
 		// Load ImFusion plugins. Adjust path to your local machine if needed!
 #ifdef _WIN32

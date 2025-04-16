@@ -7,14 +7,14 @@
 namespace ImFusion
 {
 	DemoImageMathAlgorithmFactory::DemoImageMathAlgorithmFactory()
-		: AlgorithmFactory("ExampleImageMath")
+		: AlgorithmFactory("ExampleImageMath", false)
 	{
 		// register the DemoImageMathAlgorithm
 		registerAlgorithm<DemoImageMathAlgorithm>("DemoImageMathAlgorithm", "Demo;Demo ImageMath algorithm");
 	}
 
 	DemoImageMathControllerFactory::DemoImageMathControllerFactory()
-		: AlgorithmControllerFactory("ExampleImageMath")
+		: AlgorithmControllerFactory("ExampleImageMath", false)
 	{
 	}
 

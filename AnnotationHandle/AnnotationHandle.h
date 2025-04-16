@@ -19,7 +19,7 @@ namespace ImFusion
 		/// The actual rendering takes place here. The method is called during every draw call.
 		void draw(const GlView& view) override;
 		/// We return an empty (default-constructed) Bounds object because the GlOverlayHandle does not reside in world space.
-		Bounds bounds() const override { return {}; }
+		Geometry::AlignedBox bounds() const override { return {}; }
 		/// Return unique identifier for this object class used for serialization
 		std::string typeName() const override { return "GlOverlayHandle"; }
 

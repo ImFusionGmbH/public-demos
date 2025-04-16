@@ -393,7 +393,7 @@ namespace ImFusion
 		m_labelPainter->setAdaptiveness(0.1f);
 
 		// Setup the brush itself from the painter
-		m_brush = std::make_unique<Seg::Brush>(*m_labelPainter, *m_display);
+		m_brush = std::make_unique<Seg::Brush>(*m_labelPainter, m_display.get());
 		m_brush->setShowCirclePreview(false);
 		m_brush->setShowIsolinePreview(true);
 		// use the same color for the preview (circle and isoline)

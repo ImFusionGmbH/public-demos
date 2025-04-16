@@ -68,7 +68,7 @@ namespace ImFusion
 
 		virtual void draw(const GlView& view) override;
 		virtual std::string typeName() const override;
-		virtual Bounds bounds() const override;
+		virtual Geometry::AlignedBox bounds() const override;
 
 
 	private:
