@@ -1,5 +1,5 @@
 # Define a new CMake project for the brush application
-cmake_minimum_required(VERSION 3.2.0)
+cmake_minimum_required(VERSION 3.13.0)
 project(BrushApplication)
 
 # Locate the ImFusion SDK. List required modules/plugins in the COMPONENTS section.

@@ -6,8 +6,9 @@
 namespace ImFusion
 {
 	ITKAlgorithmFactory::ITKAlgorithmFactory()
+		: AlgorithmFactory("ITKPlugin", false)
 	{
-		registerAlgorithm<ITKCannyEdgeAlgorithm>("ITK;Canny Edge");
+		registerAlgorithm<ITKCannyEdgeAlgorithm>("ITKCannyEdge", "ITK;Canny Edge");
 	}
 
 	AlgorithmController* ITKControllerFactory::create(Algorithm* a) const

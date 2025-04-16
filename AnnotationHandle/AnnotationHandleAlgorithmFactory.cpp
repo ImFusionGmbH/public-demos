@@ -6,14 +6,14 @@
 namespace ImFusion
 {
 	AnnotationHandleAlgorithmFactory::AnnotationHandleAlgorithmFactory()
-		: AlgorithmFactory("AnnotationHandle")
+		: AlgorithmFactory("AnnotationHandle", false)
 	{
 		// register the AnnotationHandleAlgorithm
 		registerAlgorithm<AnnotationHandleAlgorithm>("AnnotationHandleAlgorithm", "Demo;Handle for Annotations");
 	}
 
 	AnnotationHandleControllerFactory::AnnotationHandleControllerFactory()
-		: AlgorithmControllerFactory("AnnotationHandle")
+		: AlgorithmControllerFactory("AnnotationHandle", false)
 	{
 	}
 

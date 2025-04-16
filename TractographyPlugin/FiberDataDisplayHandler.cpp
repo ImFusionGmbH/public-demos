@@ -17,15 +17,14 @@ namespace ImFusion
 	}
 
 
-	bool FiberDataDisplayHandler::canBeShownInView(const Data* data, const InteractiveView& view) const
+	bool FiberDataDisplayHandler::canBeShownInView(const Data* data, const GUI::View& view) const
 	{
 		// show only in MPR and 3D views
-		return (dynamic_cast<const ImageView2D*>(&view) != nullptr && view.view()->type() == GlView::SLICE3D) ||
-			   (dynamic_cast<const ImageView3D*>(&view) != nullptr);
+		return (view.view()->type() == GlView::SLICE3D) || (view.view()->type() == GlView::SPACE3D);
 	}
 
 
-	void FiberDataDisplayHandler::show(Data* data, InteractiveView& view)
+	void FiberDataDisplayHandler::show(Data* data, GUI::View& view)
 	{
 		IMFUSION_ASSERT(canBeShownInView(data, view));
 
@@ -50,7 +49,7 @@ namespace ImFusion
 	}
 
 
-	void FiberDataDisplayHandler::hide(Data* data, InteractiveView& view)
+	void FiberDataDisplayHandler::hide(Data* data, GUI::View& view)
 	{
 		auto it = m_displayInfos.find(static_cast<FiberData*>(data));
 		if (it == m_displayInfos.end())
@@ -68,7 +67,7 @@ namespace ImFusion
 	}
 
 
-	std::unique_ptr<QWidget> FiberDataDisplayHandler::createDisplayOptionsWidget(Data* data, DisplayWidgetMulti& display, InteractiveView&) const
+	std::unique_ptr<QWidget> FiberDataDisplayHandler::createDisplayOptionsWidget(Data* data, GUI::DisplayBase& display, GUI::View&) const
 	{
 		IMFUSION_ASSERT(handlesType(data));
 		FiberData* sweep = static_cast<FiberData*>(data);

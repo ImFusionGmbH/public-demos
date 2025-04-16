@@ -7,14 +7,14 @@
 namespace ImFusion
 {
 	DemoAnatomyAlgorithmFactory::DemoAnatomyAlgorithmFactory()
-	: AlgorithmFactory("DemoAnatomy")
+	: AlgorithmFactory("DemoAnatomy", false)
 	{
 		// register the DemoAlgorithm
 		registerAlgorithm<DemoAnatomyAlgorithm>("DemoAnatomy", "Demo;Anatomy Demo algorithm");
 	}
 
 	DemoAnatomyControllerFactory::DemoAnatomyControllerFactory()
-		: AlgorithmControllerFactory("DemoAnatomy")
+		: AlgorithmControllerFactory("DemoAnatomy", false)
 	{
 	}
 

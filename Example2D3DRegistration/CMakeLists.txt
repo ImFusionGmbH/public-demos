@@ -1,6 +1,7 @@
+cmake_minimum_required(VERSION 3.13.0)
+
 # Define a new CMake project for the demo plugin
 project(Example2D3DRegistrationPlugin)
-cmake_minimum_required(VERSION 3.2.0)
 
 
 # Locate the ImFusion SDK. We require the CT component to
@@ -42,7 +43,7 @@ target_link_libraries(Example2D3DRegistrationPlugin PRIVATE
 
 # Define output target directories and provide instructions on how to launch
 # the ImFusion Suite with the built custom plugin.
-# These functions are provided by the ImFusionLib target config. 
+# These functions are provided by the ImFusionLib target config.
 imfusion_set_common_target_properties()
 imfusion_provide_ide_instructions()
 

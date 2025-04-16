@@ -1,7 +1,8 @@
 # [CMake Header]
+cmake_minimum_required(VERSION 3.13.0)
+
 # Define a new CMake project for the ITK plugin
 project(ITKPlugin)
-cmake_minimum_required(VERSION 3.2.0)
 
 # Locate the ImFusion SDK.
 # List required modules/plugins in the COMPONENTS section (e.g. COMPONENTS ImFusionSeg ImFusionReg).
@@ -47,6 +48,6 @@ target_link_libraries(ITKPlugin PRIVATE
 
 # Define output target directories and provide instructions on how to launch
 # the ImFusion Suite with the built custom plugin.
-# These functions are provided by the ImFusionLib target config. 
+# These functions are provided by the ImFusionLib target config.
 imfusion_set_common_target_properties()
 imfusion_provide_ide_instructions()

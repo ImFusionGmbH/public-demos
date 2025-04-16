@@ -13,8 +13,11 @@ class QComboBox;
 
 namespace ImFusion
 {
-	class DisplayWidgetMulti;
 	class DoubleAdjusterWidget;
+	namespace GUI
+	{
+		class DisplayBase;
+	}
 
 	/// Qt widget to configure a FiberDataRenderer::Options instance.
 	/// This class is instantiated by FiberDataDisplayHandler::createDisplayOptionsWidget() and shown in
@@ -24,7 +27,7 @@ namespace ImFusion
 		Q_OBJECT
 
 	public:
-		explicit FiberDataRenderOptionsWidget(FiberDataRenderer::Options* renderOptions, DisplayWidgetMulti* display);
+		explicit FiberDataRenderOptionsWidget(FiberDataRenderer::Options* renderOptions, GUI::DisplayBase* display);
 		virtual ~FiberDataRenderOptionsWidget();
 
 		FiberDataRenderer::Options* renderOptions() const { return m_renderOptions; }
@@ -34,7 +37,7 @@ namespace ImFusion
 		void initGUI();
 		void updateDisplay();
 
-		DisplayWidgetMulti* m_display;
+		GUI::DisplayBase* m_display;
 		FiberDataRenderer::Options* m_renderOptions;
 
 		QComboBox* m_cbRenderMode = nullptr;

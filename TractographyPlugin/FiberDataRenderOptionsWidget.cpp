@@ -14,7 +14,7 @@
 
 namespace ImFusion
 {
-	FiberDataRenderOptionsWidget::FiberDataRenderOptionsWidget(FiberDataRenderer::Options* renderOptions, DisplayWidgetMulti* display)
+	FiberDataRenderOptionsWidget::FiberDataRenderOptionsWidget(FiberDataRenderer::Options* renderOptions, GUI::DisplayBase* display)
 		: m_display(display)
 	{
 		initGUI();
@@ -125,6 +125,6 @@ namespace ImFusion
 	void FiberDataRenderOptionsWidget::updateDisplay()
 	{
 		if (m_display)
-			m_display->update();
+			m_display->requestUpdate();
 	}
 }

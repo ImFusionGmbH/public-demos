@@ -17,17 +17,17 @@ namespace ImFusion
 	{
 	public:
 		bool handlesType(const Data* data) const override;
-		bool canBeShownInView(const Data* data, const InteractiveView& view) const override;
-		void show(Data* data, InteractiveView& view) override;
-		void hide(Data* data, InteractiveView& view) override;
-		std::unique_ptr<QWidget> createDisplayOptionsWidget(Data* data, DisplayWidgetMulti& display, InteractiveView& view) const override;
+		bool canBeShownInView(const Data* data, const GUI::View& view) const override;
+		void show(Data* data, GUI::View& view) override;
+		void hide(Data* data, GUI::View& view) override;
+		std::unique_ptr<QWidget> createDisplayOptionsWidget(Data* data, GUI::DisplayBase& display, GUI::View& view) const override;
 
 	private:
 		void onDataDeleted(const Data* data);
 
 		struct DisplayInfo
 		{
-			std::set<InteractiveView*> views;                 ///< Keeps track in which views the FiberData instance is currently shown
+			std::set<GUI::View*> views;                       ///< Keeps track in which views the FiberData instance is currently shown
 			std::unique_ptr<FiberDataRenderer> m_renderer;    ///< The actual renderer instance
 		};
 		std::unordered_map<const FiberData*, DisplayInfo> m_displayInfos;

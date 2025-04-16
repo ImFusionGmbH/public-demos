@@ -1,5 +1,5 @@
 # Define a new CMake project for the demo plugin
-cmake_minimum_required(VERSION 3.8.0)
+cmake_minimum_required(VERSION 3.13.0)
 project(StreamExamples)
 
 # Locate the ImFusion SDK.
@@ -43,7 +43,7 @@ target_link_libraries(StreamExamples PRIVATE
 
 # Define output target directories and provide instructions on how to launch
 # the ImFusion Suite with the built custom plugin.
-# These functions are provided by the ImFusionLib target config. 
+# These functions are provided by the ImFusionLib target config.
 imfusion_set_common_target_properties()
 imfusion_provide_ide_instructions()
 
