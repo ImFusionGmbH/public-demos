@@ -1,9 +1,9 @@
 #include "ImFusionClient.h"
 
+#include <ImFusion/Base/AlgorithmFactory.h>
 #include <ImFusion/Base/FactoryRegistry.h>
 #include <ImFusion/Base/Framework.h>
 #include <ImFusion/Base/IoAlgorithm.h>
-#include <ImFusion/Base/IoAlgorithmFactory.h>
 #include <ImFusion/Core/GL/ContextManager.h>
 #include <ImFusion/Core/Log.h>
 #include <ImFusion/GUI/GlContextQt.h>

@@ -7,9 +7,10 @@
 namespace ImFusion
 {
 	Example2D3DRegistrationAlgorithmFactory::Example2D3DRegistrationAlgorithmFactory()
+		: AlgorithmFactory("Example2D3DRegistrationPlugin", false)
 	{
 		// register the Example2D3DRegistrationAlgorithm
-		registerAlgorithm<Example2D3DRegistrationAlgorithm>("Example2D3DRegistration;Example2D3DRegistration algorithm");
+		registerAlgorithm<Example2D3DRegistrationAlgorithm>("Example2D3DRegistration", "Example2D3DRegistration;Example2D3DRegistration algorithm");
 	}
 
 	AlgorithmController* Example2D3DRegistrationControllerFactory::create(Algorithm* a) const
