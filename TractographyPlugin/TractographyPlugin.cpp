@@ -4,9 +4,9 @@
 #include "FiberDataIoAlgorithm.h"
 
 #include <ImFusion/Base/AlgorithmControllerFactory.h>
+#include <ImFusion/Base/AlgorithmFactory.h>
 #include <ImFusion/Base/DataAnnotationFactory.h>
 #include <ImFusion/Base/DataComponentFactory.h>
-#include <ImFusion/Base/IoAlgorithmFactory.h>
 #include <ImFusion/GUI/IoController.h>
 
 
