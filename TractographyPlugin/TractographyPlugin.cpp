@@ -78,7 +78,7 @@ namespace ImFusion
 	TractographyPlugin::~TractographyPlugin() {}
 
 
-	const AlgorithmFactory* TractographyPlugin::getAlgorithmFactory() { return nullptr; }
+	const AlgorithmFactory* TractographyPlugin::getAlgorithmFactory() { return new FiberTractAlgorithmFactory; }
 
 
 	const AlgorithmControllerFactory* TractographyPlugin::getAlgorithmControllerFactory() { return new FiberTractAlgorithmControllerFactory; }
