@@ -16,6 +16,10 @@ Use CMake to generate build/project files for your build system of choice.
 If you are using Visual Studio the CMake scripts will automatically configure the generated Solution with the correct environment parameters so that you can launch the ImFusion Suite including your plugin directly from Visual Studio.
 If the ImFusion Suite does not pick up the built plugin on start, configure the `IMFUSION_PLUGIN_PATH` environment variable to contain .dll/.so directory.
 
+---
+> [!NOTE]
+> Windows users should not mix Debug and Release builds. Therefore, if you are building your plugin in Debug, and you pointed `IMFUSION_PLUGIN_PATH` to its location, make sure you start the Debug executable of the ImFusion Suite inside the `SuiteDev` folder and not the Release one inside the `Suite` folder. 
+---
 
 ## The Anatomy of an ImFusion Plugin
 
