@@ -22,6 +22,10 @@ If you are using Visual Studio, the CMake scripts will automatically configure t
 The RGBDReconstruction target links directly against `ImFusionRGBD` and `ImFusionLib`, which are ImFusion plugins.
 To make sure that these plugins are loaded at runtime, we need to set the `loadPlugins` boolean member of `Framework::InitConfig` to `true` or you could directly load the respective plugin as done in the code.
 
+### Running the example
+
+Please set the environment variable `IMFUSION_LICENSE_KEY` to your license key or take a look at the sdk documentation for other ways to provide a license key to your application.
+
 
 ## Standalone Application
 
