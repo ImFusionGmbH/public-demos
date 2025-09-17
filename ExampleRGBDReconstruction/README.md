@@ -19,10 +19,10 @@ If you are using Visual Studio, the CMake scripts will automatically configure t
 
 ### Linking directly against ImFusion plugins
 
-The BrushApplication target links directly against `ImFusionRGBD` and `ImFusionLib`, which are ImFusion plugins.
-To make sure that these plugins are loaded at runtime, we need to set the `loadPlugins` boolean member of `Framework::InitConfig` to `true`.
-Although you could initialize the plugin by instantiating its corresponding ImFusionPlugin class, this will not ensure that dependent parts or even the core ImFusionLib are initialized correctly.
+The RGBDReconstruction target links directly against `ImFusionRGBD` and `ImFusionLib`, which are ImFusion plugins.
+To make sure that these plugins are loaded at runtime, we need to set the `loadPlugins` boolean member of `Framework::InitConfig` to `true` or you could directly load the respective plugin as done in the code.
+
 
 ## Standalone Application
 
-The application allows reconstruction 3D surfaces in the form of a Mesh from RGBD sensor streams or playbacks. 
+The application allows reconstruction of 3D surfaces in the form of a Mesh from RGBD sensor streams or playbacks. 
