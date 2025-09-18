@@ -25,6 +25,7 @@ You can find more information on our company and what we do on our [website](htt
 - **ExampleOpenCV**: Demonstrates integration with OpenCV for computer vision tasks.
 - **ExampleOpenGL**: Shows how to use OpenGL for rendering and image processing.
 - **ExamplePlugin**: Provides a template for creating new plugins.
+- **ExampleRGBDReconstruction**: Demonstrates how to use the RGBD plugin for 3D reconstruction from RGB-D data.
 - **ExampleStandaloneApplication**: Builds a standalone application using the SDK.
 - **QMLRendererDemo**: Explains how to natively integrate the ImFusionLib rendering stack into a QML application.
 - **SlicerExtension**: Basic example demonstrating how the ImFusion SDK can be integrated into 3D-Slicer via an Extension module..
