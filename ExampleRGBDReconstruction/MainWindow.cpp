@@ -48,7 +48,6 @@ MainWindow::MainWindow()
 	addAction(a);
 	toolbar->addAction(a);
 	
-	setFixedSize(size());
 	setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint & ~Qt::WindowMinMaxButtonsHint);
 
 	// Use RGBDIoAlgorithm to enumerate available RGB-D sensors
@@ -172,7 +171,7 @@ void MainWindow::onStreamData(std::shared_ptr<const StreamData> streamData)
 			auto image = imageStream->colorImage();
 			QImage qtImage(static_cast<const uchar*>(image->data()), image->width(), image->height(), QImage::Format_RGB888);
 			m_imgLabel->setPixmap(
-				QPixmap::fromImage(qtImage).scaled(image->width() / 2, image->height() / 2, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+				QPixmap::fromImage(qtImage).scaled(image->width() , image->height() , Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
 			update();
 		}
 		catch (const std::exception& e)
