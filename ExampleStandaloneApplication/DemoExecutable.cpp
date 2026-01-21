@@ -2,6 +2,7 @@
 
 #include <ImFusion/Core/Platform.h>
 #include <ImFusion/Base/DataModel.h>
+#include <ImFusion/Core/Log.h>
 #include <ImFusion/Dicom/DicomLoader.h>
 #include <ImFusion/GL/SharedImageSet.h>
 #include <ImFusion/Core/GL/ContextManager.h>
@@ -35,6 +36,19 @@ namespace ImFusion
 									return initConfig;
 								}())
 	{
+		// Enable logging
+		try
+		{
+			Log::init(Log::Level::Debug, ImFusion::Log::Mode::Synchronous);
+			Log::addSink(std::make_unique<ImFusion::Log::ConsoleSink>(ImFusion::Log::ConsoleSink::UseColor));
+			// Log::addSink(std::make_unique<ImFusion::Log::FileSink>(logPath));
+		}
+		catch (const std::exception& e)
+		{
+			std::cout << "Could not initialize logging: " << e.what() << "\n";
+		}
+
+			
 		// Load ImFusion plugins. Adjust path to your local machine if needed!
 #ifdef _WIN32
 		loadPlugins({Platform::libraryPath("ImFusionLib").parentPath() / "plugins"});
