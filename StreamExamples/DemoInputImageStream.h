@@ -8,17 +8,16 @@
 
 namespace ImFusion
 {
-	class DemoInputImageStream : public ImageStream, public SignalReceiver
+	/// Demonstrates how to implement a custom ImageStream that produces synthetic images.
+	class DemoInputImageStream : public ImageStream
 	{
 	public:
 		explicit DemoInputImageStream();
 
 		~DemoInputImageStream() override;
 
-		// Inherited via ImageStream
-		std::string uuid() override;
-
-		// For the parametrization of the stream, you can use members of type Parameter<T>
+		/// Configuration exposed in the GUI automatically. Parameter<T> provides type-safe
+		/// serialization and property change notifications.
 		Parameter<std::string> p_streamUrl{"streamUrl", "<default-url>", *this};
 
 	protected:
@@ -30,7 +29,7 @@ namespace ImFusion
 		bool startImpl() override;
 		bool stopImpl() override;
 
-		// Each Stream has a statemachine, that changes with the open, start, stop and close methods.
+		// Each Stream has a state machine, that changes with the open, start, stop and close methods.
 		// When the stream is running, this method is called in a loop by the Stream base class, on it's own thread, allowing the class to poll for new data and then emit the signal with it.
 		// Note: But Streams are not limited to this. The signalNewData can also be emitted from any other thread / callback.
 		//       In that case you only have to ensure that the thread has an OpenGL context associated with it, see

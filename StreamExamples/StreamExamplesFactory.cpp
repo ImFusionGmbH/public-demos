@@ -12,10 +12,12 @@ namespace ImFusion
 	StreamExamplesAlgorithmFactory::StreamExamplesAlgorithmFactory()
 		: AlgorithmFactory("StreamExamples", false)
 	{
-		// register the DemoStreamDataAlgorithm
+		// Second arg is the menu path: "Category;Display Name" -> appears under Demo menu
 		registerAlgorithm<DemoStreamDataAlgorithm>("DemoStreamDataAlgorithm", "Demo;Demo Stream Data Algorithm");
 
-		// register the Stream. The last two template argument (false, false) set the stream to not be opened or connected on creation
+		// CreateStreamIoAlgorithm wraps a Stream as an Algorithm for the data model.
+		// Template args: <StreamType, autoOpen, autoConnect>
+		// false, false = user must manually open/connect the stream after creation
 		registerAlgorithm<CreateStreamIoAlgorithm<DemoInputImageStream, false, false>>("DemoInputImageStream",
 																								 "IO;Demo Input Image Stream");
 	}
@@ -31,7 +33,8 @@ namespace ImFusion
 		if (auto alg = dynamic_cast<DemoStreamDataAlgorithm*>(a))
 			return new DefaultAlgorithmController(alg);
 
-		// use a default controller (which is a simple GUI for all Parameters) for the DemoInputImageStream
+		// StreamControllerBase provides start/stop/open/close controls.
+		// Second arg (true) = show Properties panel alongside stream controls.
 		if (auto alg = dynamic_cast<CreateStreamIoAlgorithm<DemoInputImageStream, false, false>*>(a))
 			return new StreamControllerBase(alg, true);
 		return nullptr;

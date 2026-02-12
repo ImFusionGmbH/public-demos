@@ -15,8 +15,11 @@ namespace ImFusion
 	DemoStreamDataAlgorithm::DemoStreamDataAlgorithm(TrackingStream& trackingStream)
 		: m_trackingStream(trackingStream)
 	{
-		m_trackingStream.signalNewData.connect(this, [](auto& streamData) {
-			auto tsd = streamData.template typed<TrackingStreamData>();
+		// Connect to stream's signalStreamData. The callback runs on the stream's worker thread,
+		// so avoid blocking operations or UI updates here.
+		m_trackingStream.signalStreamData.connect(this, [](std::shared_ptr<const StreamData> streamData) {
+			// typed<T>() safely casts the base StreamData to the expected type
+			auto tsd = streamData->typed<TrackingStreamData>();
 			if (!tsd)
 			{
 				LOG_ERROR("DemoStreamDataAlgorithm", "Tracking Stream data is null");
@@ -42,7 +45,7 @@ namespace ImFusion
 
 	bool DemoStreamDataAlgorithm::createCompatible(const DataList& data, Algorithm** a)
 	{
-		// we expect exactly one tracking stream, and optionally one image
+		// we expect exactly one tracking stream
 		if (data.size() != 1)
 			return false;
 		std::vector<Data*> streams = data.getAll(Data::TRACKINGSTREAM);
