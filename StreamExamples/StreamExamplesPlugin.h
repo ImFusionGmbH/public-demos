@@ -10,12 +10,20 @@ namespace ImFusion
 	class AlgorithmControllerFactory;
 
 	/// Minimal example for defining a custom plugin for the ImFusion SDK
-	class StreamExamplesPlugin : public ImFusionPlugin
+	class StreamExamplesPlugin : public ImFusionLibPlugin
 	{
 	public:
 		StreamExamplesPlugin();
 		~StreamExamplesPlugin() override;
-		const AlgorithmFactory* getAlgorithmFactory() override;
-		const AlgorithmControllerFactory* getAlgorithmControllerFactory() override;
+
+		static const char* id() { return "StreamExamples"; }
+
+		std::string author() const override { return ""; }
+
+		std::string description() const override { return ""; }
+
+		std::vector<std::string> dependencies() const override { return {"ImFusion.Stream"}; }
+
+		Status init() override;
 	};
 }

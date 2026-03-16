@@ -16,6 +16,8 @@ namespace ImFusion
 	}
 
 
+	// Always call close() in destructor to ensure proper cleanup and state transition
+	// before member destruction.
 	DemoInputImageStream::~DemoInputImageStream() { close(); }
 
 
@@ -56,11 +58,12 @@ namespace ImFusion
 		TypedImage<uint8_t> memImage(vec3i{64, 128, 1}, /*numChannels = */ 1);
 
 		// In this demo, we simply fill a single pixel in the image with a color based on the frame counter
-		memImage.fill(0); // Fill the image with zeros (black)
-		memImage.pointer()[m_frameCounter % (64 * 128)] = 255; // Set one pixel to white
+		memImage.fill(0);                                         // Fill the image with zeros (black)
+		memImage.pointer()[m_frameCounter % (64 * 128)] = 255;    // Set one pixel to white
 		m_frameCounter++;
 
-		// Prepare the shared image (container for memory, GL, etc. image data)
+		// SharedImage is a unified container that can hold CPU (MemImage), GPU (GlImage),
+		// or both representations. Consumers can request the format they need.
 		auto sharedImage = std::make_unique<SharedImage>(std::move(memImage));
 
 		// Set the metadata for the image, e.g. spacing, modality, etc.
@@ -70,14 +73,11 @@ namespace ImFusion
 		// Emit the image
 		// Note how we do not reuse the memImage or the sharedImage after this point.
 		// This is required, because we might otherwise modify data a consumers of this stream is working with.
-		ImageStreamData streamData(this, std::move(sharedImage));
-		signalNewData.emitSignal(streamData);
+		auto streamData = std::make_shared<ImageStreamData>(this, std::move(sharedImage));
+		signalStreamData.emitSignal(streamData);
 
 		// This will trigger the next iteration at the specified time.
 		// Alternatively you can also return `WorkContinuation{}` to run the next iteration as soon as possible
 		return WorkContinuation{nextIterationTime};
 	}
-
-
-	std::string DemoInputImageStream::uuid() { return "DemoInputImageStream"; }
 }
