@@ -19,6 +19,8 @@ namespace ImFusion
 	class MachineLearningInferenceControllerFactory : public AlgorithmControllerFactory
 	{
 	public:
+		MachineLearningInferenceControllerFactory();
+
 		virtual AlgorithmController* create(Algorithm* a) const;
 	};
 }

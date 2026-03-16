@@ -1,16 +1,18 @@
 #include "AnnotationHandlePlugin.h"
 
-#include "AnnotationHandleAlgorithmFactory.h"
-
-// Export free factory function to instantiate plugin
+// This macro creates the entry point allowing the ImFusion SDK to discover
+// and load this plugin at runtime.
 IMFUSION_REGISTER_PLUGIN(ImFusion::AnnotationHandlePlugin)
 
 namespace ImFusion
 {
 	AnnotationHandlePlugin::AnnotationHandlePlugin() = default;
+
 	AnnotationHandlePlugin::~AnnotationHandlePlugin() = default;
 
-	const AlgorithmFactory* AnnotationHandlePlugin::getAlgorithmFactory() { return new AnnotationHandleAlgorithmFactory; }
-
-	const AlgorithmControllerFactory* AnnotationHandlePlugin::getAlgorithmControllerFactory() { return new AnnotationHandleControllerFactory; }
+	PluginBase::Status AnnotationHandlePlugin::init()
+	{
+		registerFactories(std::make_unique<AnnotationHandleAlgorithmFactory>(), std::make_unique<AnnotationHandleControllerFactory>(), nullptr);
+		return Status::Success;
+	};
 }

@@ -30,7 +30,7 @@ namespace ImFusion
 		std::unique_ptr<TypedImage<double>> m_output;
 
 		Parameter<int> m_variance = Parameter<int>("variance", 0, *this);
-		Parameter<double> m_threshold = Parameter<double>("threshold", 60.0f, *this);
+		Parameter<double> m_threshold = Parameter<double>("threshold", 60.0, *this);
 		Parameter<int> m_ratio = Parameter<int>("ratio", 3, *this);
 	};
 }

@@ -1,11 +1,12 @@
-#include <CannyEdgeAlgorithm.h>
-#include <ImFusion/Core/Log.h>
 #include <ImFusion/Base/OpenCV.h>
 #include <ImFusion/Base/SharedImage.h>
 #include <ImFusion/Base/SharedImageSet.h>
 #include <ImFusion/Base/TypedImage.h>
+#include <ImFusion/Core/Log.h>
 
 #include <opencv2/opencv.hpp>
+
+#include <CannyEdgeAlgorithm.h>
 
 namespace ImFusion
 {
@@ -13,6 +14,12 @@ namespace ImFusion
 		: m_inputImage(image)
 	{
 		configureDefaults();
+
+		// Configure the limits and display options of the algorithm parameters in the DefaultAlgorithmController
+		m_ratio.setRange(1, 10);
+		m_threshold.setRange(0, 255);
+		m_threshold.setAttribute("decimals", "2");
+		m_threshold.setAttribute("step", "0.5");
 	}
 
 	CannyEdgeAlgorithm::~CannyEdgeAlgorithm() {}
@@ -49,10 +56,7 @@ namespace ImFusion
 	void CannyEdgeAlgorithm::setRatio(int ratio) { m_ratio = ratio; }
 
 
-	OwningDataList CannyEdgeAlgorithm::takeOutput()
-	{
-		return OwningDataList(std::move(m_outputImage));
-	}
+	OwningDataList CannyEdgeAlgorithm::takeOutput() { return OwningDataList(std::move(m_outputImage)); }
 
 
 	void CannyEdgeAlgorithm::compute()

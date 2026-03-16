@@ -17,8 +17,6 @@ In order to launch the application, you will need to make sure that it finds all
 For this, your options include copying them next to your executable file, configuring the `PATH` environment variable correctly, or using the ImFusion Suite directory as working directory when executing the application.
 If you are using Visual Studio the CMake scripts will automatically configure the generated Solution with the correct environment parameters so that you can launch the example application directly from Visual Studio.
 
-**Note:** You may need to adjust the directory you load the plugins from to your local machine in the constructor of the `DemoMainWindowBase` class.
-
 
 ## The Standalone Application
 
@@ -49,5 +47,6 @@ Finally, we also need to define a main function as entry point to our standalone
 
 ### Linking directly against ImFusion plugins
 The DemoMainWindowBase links directly against `ImFusionDicom`, which itself is an ImFusion plugin.
-Also in cases like these, you will still need to properly initialize all plugins using either `Framework::loadPlugins()` or `ApplicationController::loadPlugins()`.
+Also in cases like these, you will still need to properly initialize all plugins using `PluginManager::registerPlugins()` and `PluginManager::initAllRegisteredPlugins()`.
+
 Though technically, you can initialize the plugin by instantiating its corresponding ImFusionPlugin class, this will not ensure that dependent parts or even the core ImFusionLib are initialized correctly.

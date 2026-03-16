@@ -1,23 +1,22 @@
 #pragma once
 
-#include <ImFusion/Base/ImFusionPlugin.h>
+#include <ImFusion/Base/ImFusionLibPlugin.h>
 
 namespace ImFusion
 {
-	class AlgorithmFactory;
-	class AlgorithmControllerFactory;
-
 	/// Minimal example for defining a custom plugin for the ImFusion SDK
-	class ITKPlugin : public ImFusionPlugin
+	class ITKPlugin : public ImFusionLibPlugin
 	{
 	public:
 		ITKPlugin();
 		virtual ~ITKPlugin();
-		virtual const AlgorithmFactory* getAlgorithmFactory();
-		virtual const AlgorithmControllerFactory* getAlgorithmControllerFactory();
 
-	private:
-		AlgorithmFactory* m_algFactory;
-		AlgorithmControllerFactory* m_algCtrlFactory;
+		static const char* id() { return "Demo.ITK"; }
+
+		std::string author() const override { return ""; }
+
+		std::string description() const override { return ""; }
+
+		PluginBase::Status init() override;
 	};
 }

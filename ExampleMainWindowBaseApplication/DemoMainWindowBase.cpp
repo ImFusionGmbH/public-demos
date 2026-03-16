@@ -38,16 +38,9 @@ namespace ImFusion
 			return initConfig;
 		}())
 	{
-		// Load ImFusion plugins. Adjust path to your local machine if needed!
-#ifdef _WIN32
-#	ifdef _DEBUG
-		loadPlugins({"C:/Program Files/ImFusion/ImFusion Suite/SuiteDev/plugins"});
-#	else
-		loadPlugins({"C:/Program Files/ImFusion/ImFusion Suite/Suite/plugins"});
-#	endif
-#else
-		loadPlugins({Platform::libraryPath("ImFusionLib").parentPath() / "../lib/ImFusionLib/plugins"});
-#endif
+		loadStyleSheet();
+		PluginManager::get().registerPlugins();
+		PluginManager::get().initAllRegisteredPlugins();
 
 		// create a new DisplayWidget and assign it to the QMainWindow
 		// pass `false` to not initialize the DisplayWidget yet (we do this explicitly below)

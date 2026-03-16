@@ -9,21 +9,27 @@
 
 #include <memory>
 
+// This macro creates the entry point allowing the ImFusion SDK to discover
+// and load this plugin at runtime.
 IMFUSION_REGISTER_PLUGIN(ImFusion::DemoDicomExtensionPlugin)
 
 namespace ImFusion
 {
-	DemoDicomExtensionPlugin::DemoDicomExtensionPlugin()
+	DemoDicomExtensionPlugin::DemoDicomExtensionPlugin() = default;
+
+	DemoDicomExtensionPlugin::~DemoDicomExtensionPlugin() = default;
+
+	PluginBase::Status DemoDicomExtensionPlugin::init()
 	{
 		// Register DataComponent
 		DataComponentFactory::get().registerComponent(DemoDataComponent().id(), []() { return std::make_unique<DemoDataComponent>(); });
 		// Register DICOM extension
 		Dicom::IOD_Registry::registerDefaultExtension(std::make_unique<DemoExtension>());
+
+		registerFactories(std::make_unique<DemoDicomExtensionAlgorithmFactory>(), std::make_unique<DemoDicomExtensionControllerFactory>(), nullptr);
+
+		return Status::Success;
 	}
 
-	DemoDicomExtensionPlugin::~DemoDicomExtensionPlugin() = default;
 
-	const AlgorithmFactory* DemoDicomExtensionPlugin::getAlgorithmFactory() { return new DemoDicomExtensionAlgorithmFactory; }
-
-	const AlgorithmControllerFactory* DemoDicomExtensionPlugin::getAlgorithmControllerFactory() { return new DemoDicomExtensionControllerFactory; }
 }

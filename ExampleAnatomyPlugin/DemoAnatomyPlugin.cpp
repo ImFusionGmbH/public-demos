@@ -2,18 +2,19 @@
 
 #include "DemoAnatomyFactory.h"
 
+// This macro creates the entry point allowing the ImFusion SDK to discover
+// and load this plugin at runtime.
 IMFUSION_REGISTER_PLUGIN(ImFusion::DemoAnatomyPlugin)
 
 namespace ImFusion
 {
 	DemoAnatomyPlugin::DemoAnatomyPlugin() = default;
 
-
 	DemoAnatomyPlugin::~DemoAnatomyPlugin() = default;
 
-
-	const ImFusion::AlgorithmFactory* DemoAnatomyPlugin::getAlgorithmFactory() { return new DemoAnatomyAlgorithmFactory; }
-
-
-	const ImFusion::AlgorithmControllerFactory* DemoAnatomyPlugin::getAlgorithmControllerFactory() { return new DemoAnatomyControllerFactory; }
+	PluginBase::Status DemoAnatomyPlugin::init()
+	{
+		registerFactories(std::make_unique<DemoAnatomyAlgorithmFactory>(), std::make_unique<DemoAnatomyControllerFactory>(), nullptr);
+		return Status::Success;
+	}
 }

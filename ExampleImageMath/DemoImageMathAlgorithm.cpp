@@ -38,6 +38,13 @@ namespace ImFusion
 		// set generic error status until we have finished
 		m_status = static_cast<int>(Status::Error);
 
+		const auto& descIn = m_imgIn->get()->descriptor();
+		if (descIn.channels != 3)
+		{
+			LOG_ERROR("Expected an RGB image with 3 channels, but got " << descIn.channels << " channel(s)!");
+			return;
+		}
+
 		// ImageMath enables arithmetic operations on images supporting GPU and CPU paths
 		// E.g. you can add two images with
 		// ImageMath::makeArray(*img1) + ImageMath::makeArray(*img2)

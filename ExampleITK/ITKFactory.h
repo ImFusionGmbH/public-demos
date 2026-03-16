@@ -19,6 +19,8 @@ namespace ImFusion
 	class ITKControllerFactory : public AlgorithmControllerFactory
 	{
 	public:
+		ITKControllerFactory();
+
 		virtual AlgorithmController* create(Algorithm* a) const;
 	};
 }

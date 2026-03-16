@@ -2,13 +2,9 @@
 
 #include "DemoFactory.h"
 
-// Export free factory function to instantiate plugin
-#ifdef WIN32
-extern "C" __declspec(dllexport) ImFusion::ImFusionPlugin* createPlugin() { return new ImFusion::DemoPlugin; }
-#else
-extern "C" ImFusion::ImFusionPlugin* createPlugin() { return new ImFusion::DemoPlugin; }
-#endif
-
+// This macro creates the entry point allowing the ImFusion SDK to discover
+// and load this plugin at runtime.
+IMFUSION_REGISTER_PLUGIN(ImFusion::DemoPlugin)
 
 namespace ImFusion
 {
@@ -17,9 +13,10 @@ namespace ImFusion
 
 	DemoPlugin::~DemoPlugin() = default;
 
+	PluginBase::Status DemoPlugin::init()
+	{
+		registerFactories(std::make_unique<DemoAlgorithmFactory>(), std::make_unique<DemoControllerFactory>(), nullptr);
 
-	const ImFusion::AlgorithmFactory* DemoPlugin::getAlgorithmFactory() { return new DemoAlgorithmFactory; }
-
-
-	const ImFusion::AlgorithmControllerFactory* DemoPlugin::getAlgorithmControllerFactory() { return new DemoControllerFactory; }
+		return Status::Success;
+	}
 }

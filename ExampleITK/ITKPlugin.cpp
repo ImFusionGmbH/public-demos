@@ -2,35 +2,20 @@
 
 #include "ITKFactory.h"
 
-//! [Export free factory function to instantiate plugin]
-#ifdef WIN32
-extern "C" __declspec(dllexport) ImFusion::ImFusionPlugin* createPlugin()
-{
-	return new ImFusion::ITKPlugin;
-}
-#else
-extern "C" ImFusion::ImFusionPlugin* createPlugin()
-{
-	return new ImFusion::ITKPlugin;
-}
-#endif
-//! [Export free factory function to instantiate plugin]
+// This macro creates the entry point allowing the ImFusion SDK to discover
+// and load this plugin at runtime.
+IMFUSION_REGISTER_PLUGIN(ImFusion::ITKPlugin)
 
 
 namespace ImFusion
 {
-	ITKPlugin::ITKPlugin()
+	ITKPlugin::ITKPlugin() = default;
+
+	ITKPlugin::~ITKPlugin() = default;
+
+	PluginBase::Status ITKPlugin::init()
 	{
-		m_algFactory = new ITKAlgorithmFactory;
-		m_algCtrlFactory = new ITKControllerFactory;
-	}
-
-
-	ITKPlugin::~ITKPlugin() {}
-
-
-	const ImFusion::AlgorithmFactory* ITKPlugin::getAlgorithmFactory() { return m_algFactory; }
-
-
-	const ImFusion::AlgorithmControllerFactory* ITKPlugin::getAlgorithmControllerFactory() { return m_algCtrlFactory; }
+		registerFactories(std::make_unique<ITKAlgorithmFactory>(), std::make_unique<ITKControllerFactory>(), nullptr);
+		return Status::Success;
+	};
 }

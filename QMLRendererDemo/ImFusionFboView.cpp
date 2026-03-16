@@ -4,10 +4,10 @@
 
 #include <ImFusion/Base/Assert.h>
 #include <ImFusion/Base/DisplayOptions3d.h>
-#include <ImFusion/Core/Log.h>
 #include <ImFusion/Core/GL/Context.h>
 #include <ImFusion/Core/GL/Debug.h>
 #include <ImFusion/Core/GL/Framebuffer.h>
+#include <ImFusion/Core/Log.h>
 #include <ImFusion/GL/GlSliceView.h>
 #include <ImFusion/GL/GlUtils.h>
 #include <ImFusion/GL/GlVolumeRendererGlobalIllum.h>
@@ -108,15 +108,13 @@ void ImFusionViewRenderer::synchronize(QQuickFramebufferObject* item)
 		{
 			m_disp->setCustomViewport(rect);
 		}
+		m_disp->layoutViews();
 		m_window = item->window();
 	}
 }
 
 
-ImFusion::DisplayWidgetMulti& ImFusionViewRenderer::disp()
-{
-	return *m_disp;
-}
+ImFusion::DisplayWidgetMulti& ImFusionViewRenderer::disp() { return *m_disp; }
 
 
 // ================================================================================================
@@ -133,9 +131,7 @@ ImFusionFboView::ImFusionFboView(QQuickItem* parent)
 }
 
 
-ImFusionFboView::~ImFusionFboView()
-{
-}
+ImFusionFboView::~ImFusionFboView() {}
 
 
 QQuickFramebufferObject::Renderer* ImFusionFboView::createRenderer() const

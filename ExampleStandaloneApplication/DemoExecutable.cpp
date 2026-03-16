@@ -1,10 +1,10 @@
 #include "DemoExecutable.h"
 
-#include <ImFusion/Core/Platform.h>
 #include <ImFusion/Base/DataModel.h>
+#include <ImFusion/Core/GL/ContextManager.h>
+#include <ImFusion/Core/Platform.h>
 #include <ImFusion/Dicom/DicomLoader.h>
 #include <ImFusion/GL/SharedImageSet.h>
-#include <ImFusion/Core/GL/ContextManager.h>
 #include <ImFusion/GUI/GlContextQt.h>
 #include <ImFusion/GUI/InteractiveView.h>
 #include <ImFusion/GUI/ViewGroup.h>
@@ -27,20 +27,14 @@ namespace ImFusion
 {
 	DemoExecutable::DemoExecutable()
 		// Construct the ApplicationController with a Qt OpenGL context so that we can use a DisplayWidget later on.
-		: ApplicationController(std::make_unique<ImFusion::DataModel>(),
-								[]()
-								{
-									ImFusion::Framework::InitConfig initConfig;
-									initConfig.glContext = std::make_unique<ImFusion::GlContextQt>();
-									return initConfig;
-								}())
+		: ApplicationController(std::make_unique<ImFusion::DataModel>(), []() {
+			ImFusion::Framework::InitConfig initConfig;
+			initConfig.glContext = std::make_unique<ImFusion::GlContextQt>();
+			return initConfig;
+		}())
 	{
-		// Load ImFusion plugins. Adjust path to your local machine if needed!
-#ifdef _WIN32
-		loadPlugins({Platform::libraryPath("ImFusionLib").parentPath() / "plugins"});
-#else
-		loadPlugins({Platform::libraryPath("ImFusionLib").parentPath() / "ImFusionLib/plugins"});
-#endif
+		PluginManager::get().registerPlugins();
+		PluginManager::get().initAllRegisteredPlugins();
 
 		// create a new DisplayWidget and assign it to the QMainWindow
 		// pass `false` to not initialize the DisplayWidget yet (we do this explicitly below)

@@ -1,23 +1,24 @@
 #pragma once
 
-#include <ImFusion/Base/ImFusionPlugin.h>
+#include <ImFusion/Base/ImFusionLibPlugin.h>
 
 namespace ImFusion
 {
-	class AlgorithmFactory;
-	class AlgorithmControllerFactory;
-
 	/// Minimal example for defining a custom plugin for the ImFusion SDK
-	class MachineLearningInferencePlugin : public ImFusionPlugin
+	class MachineLearningInferencePlugin : public ImFusionLibPlugin
 	{
 	public:
 		MachineLearningInferencePlugin();
 		virtual ~MachineLearningInferencePlugin();
-		virtual const AlgorithmFactory* getAlgorithmFactory();
-		virtual const AlgorithmControllerFactory* getAlgorithmControllerFactory();
 
-	private:
-		AlgorithmFactory* m_algFactory;
-		AlgorithmControllerFactory* m_algCtrlFactory;
+		static const char* id() { return "MachineLearningInference"; }
+
+		std::string author() const override { return ""; }
+
+		std::string description() const override { return ""; }
+
+		std::vector<std::string> dependencies() const override { return {"ImFusion.Torch", "ImFusion.OnnxRuntime"}; }
+
+		PluginBase::Status init() override;
 	};
 }

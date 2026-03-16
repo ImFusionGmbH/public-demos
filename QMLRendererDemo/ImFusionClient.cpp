@@ -41,29 +41,19 @@ bool ImFusionClient::loadImage(const QString& filename)
 }
 
 
-#define STRINGIFY2(s) #s
-#define STRINGIFY(s) STRINGIFY2(s)
-
 void ImFusionClient::qtQuickOpenglContextCreated(QOpenGLContext* context)
 {
 	Framework::InitConfig initConfig;
 	initConfig.glContext = std::make_unique<GlContextQt>(0, 0, false, context);
 	Framework::init(std::move(initConfig));
 
-	// Load ImFusion plugins found in the search paths.
-	// Note: you might need to adjust this for your platform
-#ifdef _DEBUG
-	Framework::loadPlugins({STRINGIFY(IMFUSIONLIB_DIR) "/../SuiteDev/plugins"});
-#else
-	Framework::loadPlugins({STRINGIFY(IMFUSIONLIB_DIR) "/../Suite/plugins"});
-#endif
+	// Load ImFusion plugins found in the default plugin search paths.
+	PluginManager::get().registerPlugins();
+	PluginManager::get().initAllRegisteredPlugins();
 
 	// Make sure to get notified *before* the QML context is destroyed, so that we can properly deinit the ImFusionLib
 	connect(context, &QOpenGLContext::aboutToBeDestroyed, this, &ImFusionClient::qtQuickOpenglContextAboutToBeDestroyed);
 }
-
-#undef STRINGIFY2
-#undef STRINGIFY
 
 
 void ImFusionClient::qtQuickOpenglContextAboutToBeDestroyed()

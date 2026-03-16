@@ -1,8 +1,9 @@
-#include <type_traits>
 #include "Example2D3DRegistrationFactory.h"
 
 #include "Example2D3DRegistrationAlgorithm.h"
 #include "Example2D3DRegistrationController.h"
+
+#include <type_traits>
 
 namespace ImFusion
 {
@@ -11,6 +12,11 @@ namespace ImFusion
 	{
 		// register the Example2D3DRegistrationAlgorithm
 		registerAlgorithm<Example2D3DRegistrationAlgorithm>("Example2D3DRegistration", "Example2D3DRegistration;Example2D3DRegistration algorithm");
+	}
+
+	Example2D3DRegistrationControllerFactory::Example2D3DRegistrationControllerFactory()
+		: AlgorithmControllerFactory("Example2D3DRegistration", false)
+	{
 	}
 
 	AlgorithmController* Example2D3DRegistrationControllerFactory::create(Algorithm* a) const
