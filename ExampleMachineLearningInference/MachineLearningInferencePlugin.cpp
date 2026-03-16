@@ -2,34 +2,22 @@
 
 #include "MachineLearningInferenceFactory.h"
 
-// Export free factory function to instantiate plugin
-#ifdef WIN32
-extern "C" __declspec(dllexport) ImFusion::ImFusionPlugin* createPlugin()
-{
-	return new ImFusion::MachineLearningInferencePlugin;
-}
-#else
-extern "C" ImFusion::ImFusionPlugin* createPlugin()
-{
-	return new ImFusion::MachineLearningInferencePlugin;
-}
-#endif
+// This macro creates the entry point allowing the ImFusion SDK to discover
+// and load this plugin at runtime.
+IMFUSION_REGISTER_PLUGIN(ImFusion::MachineLearningInferencePlugin)
 
 
 namespace ImFusion
 {
-	MachineLearningInferencePlugin::MachineLearningInferencePlugin()
+	MachineLearningInferencePlugin::MachineLearningInferencePlugin() = default;
+
+
+	MachineLearningInferencePlugin::~MachineLearningInferencePlugin() = default;
+
+	PluginBase::Status MachineLearningInferencePlugin::init()
 	{
-		m_algFactory = new MachineLearningInferenceAlgorithmFactory;
-		m_algCtrlFactory = new MachineLearningInferenceControllerFactory;
+		registerFactories(
+			std::make_unique<MachineLearningInferenceAlgorithmFactory>(), std::make_unique<MachineLearningInferenceControllerFactory>(), nullptr);
+		return Status::Success;
 	}
-
-
-	MachineLearningInferencePlugin::~MachineLearningInferencePlugin() {}
-
-
-	const ImFusion::AlgorithmFactory* MachineLearningInferencePlugin::getAlgorithmFactory() { return m_algFactory; }
-
-
-	const ImFusion::AlgorithmControllerFactory* MachineLearningInferencePlugin::getAlgorithmControllerFactory() { return m_algCtrlFactory; }
 }

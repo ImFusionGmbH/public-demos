@@ -31,6 +31,11 @@ namespace ImFusion
 	class FiberTractAlgorithmControllerFactory : public AlgorithmControllerFactory
 	{
 	public:
+		FiberTractAlgorithmControllerFactory()
+			: AlgorithmControllerFactory("TractographyPlugin", false)
+		{
+		}
+
 		AlgorithmController* create(Algorithm* a) const override
 		{
 			if (FiberDataIoAlgorithm* alg = dynamic_cast<FiberDataIoAlgorithm*>(a))
@@ -65,26 +70,23 @@ namespace ImFusion
 	};
 
 
-	TractographyPlugin::TractographyPlugin()
+	TractographyPlugin::TractographyPlugin() {}
+
+
+	TractographyPlugin::~TractographyPlugin() {}
+
+	PluginBase::Status TractographyPlugin::init()
 	{
 		DataDisplayHandlerFactory::registerHandler("TractographyPlugin.FiberDataDisplayHandler",
 												   []() { return std::make_unique<FiberDataDisplayHandler>(); });
 
 		DataComponentFactory::get().registerComponent(FiberDataRenderer::Options().id(),
 													  []() { return std::make_unique<FiberDataRenderer::Options>(); });
+
+		registerFactories(std::make_unique<FiberTractAlgorithmFactory>(),
+						  std::make_unique<FiberTractAlgorithmControllerFactory>(),
+						  std::make_unique<FiberTractDataAnnotationFactory>());
+
+		return Status::Success;
 	}
-
-
-	TractographyPlugin::~TractographyPlugin() {}
-
-
-	const AlgorithmFactory* TractographyPlugin::getAlgorithmFactory() { return new FiberTractAlgorithmFactory; }
-
-
-	const AlgorithmControllerFactory* TractographyPlugin::getAlgorithmControllerFactory() { return new FiberTractAlgorithmControllerFactory; }
-
-
-	const DataAnnotationFactory* TractographyPlugin::getDataAnnotationFactory() { return new FiberTractDataAnnotationFactory(); }
-
-
 }

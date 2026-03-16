@@ -13,6 +13,10 @@ namespace ImFusion
 		registerAlgorithm<CannyEdgeAlgorithm>("CannyEdge", "OpenCV;Canny edge detection");
 	}
 
+	OpenCVControllerFactory::OpenCVControllerFactory()
+		: AlgorithmControllerFactory("OpenCV", false)
+	{
+	}
 
 	AlgorithmController* OpenCVControllerFactory::create(Algorithm* a) const
 	{

@@ -1,5 +1,8 @@
 # Total Segmentator Demo Plugin
 
+**Note:**
+This demo requires the `ImFusion.TotalSegmentator` plugin, which is no longer part of the standard release of the ImFusion SDK. [Contact us](https://www.imfusion.com) for additional information.
+
 ## Summary
 This tutorial explains how to build a simple custom plugin for the ImFusion SDK.
 This plugin extends the ImFusionLib with a custom algorithm and a custom algorithm GUI. It performs the following operations:
@@ -35,19 +38,9 @@ This base class defines the interface so that the ImFusionLib and the plugin can
 If you need to do any initialization work (e.g. register device code repositories) you should do this in the `TotalSegmentatorDemoPlugin` constructor.
 See files [TotalSegmentatorDemoPlugin.h](TotalSegmentatorDemoPlugin.h) and [TotalSegmentatorDemoPlugin.cpp](TotalSegmentatorDemoPlugin.cpp)
 
-**Note:** In addition to defining the TotalSegmentatorDemoPlugin class, you must implement and export a factory function that will be called by the ImFusionLib in order to create the plugin. 
+**Note:** In addition to defining the TotalSegmentatorDemoPlugin class, you must register the Plugin via
 ```cpp
-#ifdef WIN32
-extern "C" __declspec(dllexport) ImFusion::ImFusionPlugin* createPlugin()
-{
-    return new ImFusion::TotalSegmentatorDemoPlugin;
-}
-#else
-extern "C" ImFusion::ImFusionPlugin* createPlugin()
-{
-    return new ImFusion::TotalSegmentatorDemoPlugin;
-}
-#endif
+IMFUSION_REGISTER_PLUGIN(ImFusion::TotalSegmentatorDemoPlugin)
 ```
 
 
@@ -68,4 +61,4 @@ Its controller is a generic class (`AlgorithmController`) provided by ImFusion S
 
 The demo relies on `DefaultAlgorithmController` provided by `ImFusion` SDK to provide a simple GUI using Qt Widgets.
 
-**Note:** Observe how both algorithm and controller are registered with the `DemoFactory` in [TotalSegmentatorDemoFactory.cpp](TotalSegmentatorDemoFactory.cpp). 
+**Note:** Observe how both algorithm and controller are registered with the `DemoFactory` in [TotalSegmentatorDemoFactory.cpp](TotalSegmentatorDemoFactory.cpp).

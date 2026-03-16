@@ -7,15 +7,15 @@
 
 namespace ImFusion
 {
-	TotalSegmentatorDemoAlgorithmFactory::TotalSegmentatorDemoAlgorithmFactory(const std::string& module)
-		: AlgorithmFactory{module}
+	TotalSegmentatorDemoAlgorithmFactory::TotalSegmentatorDemoAlgorithmFactory()
+		: AlgorithmFactory("TotalSegmentatorDemo", false)
 	{
 		// register the TotalSegmentatorDemoAlgorithm
 		registerAlgorithm<TotalSegmentatorDemoAlgorithm>("TotalSegmentatorDemoAlgorithm", "Demo Plugin; Total Segmentator Demo Algorithm");
 	}
 
-	TotalSegmentatorDemoControllerFactory::TotalSegmentatorDemoControllerFactory(std::string module)
-		: AlgorithmControllerFactory{module}
+	TotalSegmentatorDemoControllerFactory::TotalSegmentatorDemoControllerFactory()
+		: AlgorithmControllerFactory("TotalSegmentatorDemo", false)
 	{
 	}
 

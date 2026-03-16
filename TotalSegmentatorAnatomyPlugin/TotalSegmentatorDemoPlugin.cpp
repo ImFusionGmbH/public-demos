@@ -2,27 +2,21 @@
 
 #include "TotalSegmentatorDemoFactory.h"
 
-// Export free factory function to instantiate plugin
-#ifdef WIN32
-extern "C" __declspec(dllexport) ImFusion::ImFusionPlugin* createPlugin() { return new ImFusion::TotalSegmentatorDemoPlugin; }
-#else
-extern "C" ImFusion::ImFusionPlugin* createPlugin() { return new ImFusion::TotalSegmentatorDemoPlugin; }
-#endif
-
+// This macro creates the entry point allowing the ImFusion SDK to discover
+// and load this plugin at runtime.
+IMFUSION_REGISTER_PLUGIN(ImFusion::TotalSegmentatorDemoPlugin)
 
 namespace ImFusion
 {
-	TotalSegmentatorDemoPlugin::TotalSegmentatorDemoPlugin() {}
+	TotalSegmentatorDemoPlugin::TotalSegmentatorDemoPlugin() = default;
 
-	TotalSegmentatorDemoPlugin::~TotalSegmentatorDemoPlugin() {}
+	TotalSegmentatorDemoPlugin::~TotalSegmentatorDemoPlugin() = default;
 
-	const ImFusion::AlgorithmFactory* TotalSegmentatorDemoPlugin::getAlgorithmFactory()
+	PluginBase::Status TotalSegmentatorDemoPlugin::init()
 	{
-		return new TotalSegmentatorDemoAlgorithmFactory{"TotalSegmentatorDemo"};
-	}
+		registerFactories(
+			std::make_unique<TotalSegmentatorDemoAlgorithmFactory>(), std::make_unique<TotalSegmentatorDemoControllerFactory>(), nullptr);
 
-	const ImFusion::AlgorithmControllerFactory* TotalSegmentatorDemoPlugin::getAlgorithmControllerFactory()
-	{
-		return new TotalSegmentatorDemoControllerFactory("TotalSegmentatorDemo");
+		return Status::Success;
 	}
 }

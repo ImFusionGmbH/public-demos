@@ -48,5 +48,6 @@ Finally, we also need to define a main function as entry point to our standalone
 
 ### Linking directly against ImFusion plugins
 The DemoExecutable links directly against `ImFusionDicom`, which itself is an ImFusion plugin.
-Also in cases like these, you will still need to properly initialize all plugins using either `Framework::loadPlugins()` or `ApplicationController::loadPlugins()`.
+Also in cases like these, you will still need to properly initialize all plugins using `PluginManager::registerPlugins()` and `PluginManager::initAllRegisteredPlugins()`.
+
 Though technically, you can initialize the plugin by instantiating its corresponding ImFusionPlugin class, this will not ensure that dependent parts or even the core ImFusionLib are initialized correctly.

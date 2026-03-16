@@ -149,6 +149,6 @@ void main() {
 	geom_Position.w = vert_Position[1].w;
 	EmitVertex();
 
-	EndPrimitive;
+	EndPrimitive();
 #endif
 }

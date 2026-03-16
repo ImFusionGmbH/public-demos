@@ -93,7 +93,6 @@ namespace ImFusion
 
 	void FiberDataIoAlgorithm::compute()
 	{
-		m_fail = true;
 		if (m_location.empty())
 		{
 			LOG_ERROR("Filename empty");
@@ -104,7 +103,6 @@ namespace ImFusion
 		if (m_ioMode == Read)
 		{
 			m_output = readTrkFile(m_location);
-			m_fail = false;
 			m_status = Status::Success;
 		}
 		else if (m_ioMode == Write && m_input != nullptr)
@@ -113,21 +111,14 @@ namespace ImFusion
 			if (!ok)
 				return;
 		}
-		m_fail = false;
 		m_status = Status::Success;
 	}
 
 
-	OwningDataList FiberDataIoAlgorithm::takeOutput()
-	{
-		return OwningDataList(std::move(m_output));
-	}
+	OwningDataList FiberDataIoAlgorithm::takeOutput() { return OwningDataList(std::move(m_output)); }
 
 
-	std::vector<std::string> FiberDataIoAlgorithm::supportedFileExtensions() const
-	{
-		return {"trk"};
-	}
+	std::vector<std::string> FiberDataIoAlgorithm::supportedFileExtensions() const { return {"trk"}; }
 
 
 	std::unique_ptr<ImFusion::FiberData> FiberDataIoAlgorithm::readTrkFile(const Filesystem::Path& filename) const
@@ -198,10 +189,19 @@ namespace ImFusion
 
 		trk_header header{};
 		std::memset(&header, 0, sizeof(trk_header));
+#ifdef WIN32
 		strncpy_s(header.id_string, 6, "TRACK", 6);
+#else
+		strncpy(header.id_string, "TRACK", 6);
+#endif
 		header.n_count = fibers.size();
 		header.n_scalars = 1;
+#ifdef WIN32
 		strncpy_s(header.scalar_name[0], 20, "Anisotropy", 20);
+#else
+		strncpy(header.scalar_name[0], "Anisotropy", 20);
+#endif
+
 		header.version = 2;
 		mat4f matToWorld = fibers.matrixToWorld().cast<float>();
 		static_assert(sizeof(matToWorld) == 64);
@@ -226,5 +226,4 @@ namespace ImFusion
 		file.close();
 		return true;
 	}
-
 }

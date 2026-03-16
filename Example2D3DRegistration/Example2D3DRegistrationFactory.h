@@ -19,6 +19,8 @@ namespace ImFusion
 	class Example2D3DRegistrationControllerFactory : public AlgorithmControllerFactory
 	{
 	public:
-		virtual AlgorithmController* create(Algorithm* a) const;
+		Example2D3DRegistrationControllerFactory();
+
+		virtual AlgorithmController* create(Algorithm* a) const override;
 	};
 }

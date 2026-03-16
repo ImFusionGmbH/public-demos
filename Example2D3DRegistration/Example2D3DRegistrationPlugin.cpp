@@ -2,33 +2,20 @@
 
 #include "Example2D3DRegistrationFactory.h"
 
-// Export free factory function to instantiate plugin
-#ifdef WIN32
-extern "C" __declspec(dllexport) ImFusion::ImFusionPlugin * createPlugin()
-{
-	return new ImFusion::Example2D3DRegistrationPlugin;
-}
-#else
-extern "C" ImFusion::ImFusionPlugin * createPlugin()
-{
-	return new ImFusion::Example2D3DRegistrationPlugin;
-}
-#endif
-
+// This macro creates the entry point allowing the ImFusion SDK to discover
+// and load this plugin at runtime.
+IMFUSION_REGISTER_PLUGIN(ImFusion::Example2D3DRegistrationPlugin)
 
 namespace ImFusion
 {
-	Example2D3DRegistrationPlugin::Example2D3DRegistrationPlugin() {}
+	Example2D3DRegistrationPlugin::Example2D3DRegistrationPlugin() = default;
 
+	Example2D3DRegistrationPlugin::~Example2D3DRegistrationPlugin() = default;
 
-	Example2D3DRegistrationPlugin::~Example2D3DRegistrationPlugin() {}
-
-
-	const ImFusion::AlgorithmFactory* Example2D3DRegistrationPlugin::getAlgorithmFactory() { return new Example2D3DRegistrationAlgorithmFactory; }
-
-
-	const ImFusion::AlgorithmControllerFactory* Example2D3DRegistrationPlugin::getAlgorithmControllerFactory()
+	PluginBase::Status Example2D3DRegistrationPlugin::init()
 	{
-		return new Example2D3DRegistrationControllerFactory;
+		registerFactories(
+			std::make_unique<Example2D3DRegistrationAlgorithmFactory>(), std::make_unique<Example2D3DRegistrationControllerFactory>(), nullptr);
+		return Status::Success;
 	}
 }

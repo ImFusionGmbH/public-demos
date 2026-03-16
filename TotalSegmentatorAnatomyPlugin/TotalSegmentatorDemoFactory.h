@@ -12,14 +12,14 @@ namespace ImFusion
 	class TotalSegmentatorDemoAlgorithmFactory : public AlgorithmFactory
 	{
 	public:
-		TotalSegmentatorDemoAlgorithmFactory(const std::string& module);
+		TotalSegmentatorDemoAlgorithmFactory();
 	};
 
 	/// AlgorithmControllerFactory for demo plugin
 	class TotalSegmentatorDemoControllerFactory : public AlgorithmControllerFactory
 	{
 	public:
-		TotalSegmentatorDemoControllerFactory(std::string module);
+		TotalSegmentatorDemoControllerFactory();
 		virtual AlgorithmController* create(Algorithm* a) const;
 	};
 }

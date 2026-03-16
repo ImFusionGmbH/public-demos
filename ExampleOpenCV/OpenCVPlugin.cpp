@@ -2,34 +2,21 @@
 
 #include "OpenCVFactory.h"
 
-// Export free factory function to instantiate plugin
-#ifdef WIN32
-extern "C" __declspec(dllexport) ImFusion::ImFusionPlugin* createPlugin()
-{
-	return new ImFusion::OpenCVPlugin;
-}
-#else
-extern "C" ImFusion::ImFusionPlugin* createPlugin()
-{
-	return new ImFusion::OpenCVPlugin;
-}
-#endif
-
+// This macro creates the entry point allowing the ImFusion SDK to discover
+// and load this plugin at runtime.
+IMFUSION_REGISTER_PLUGIN(ImFusion::OpenCVPlugin)
 
 namespace ImFusion
 {
-	OpenCVPlugin::OpenCVPlugin()
+	OpenCVPlugin::OpenCVPlugin() = default;
+
+
+	OpenCVPlugin::~OpenCVPlugin() = default;
+
+	PluginBase::Status OpenCVPlugin::init()
 	{
-		m_algFactory = new OpenCVFactory;
-		m_algCtrlFactory = new OpenCVControllerFactory;
+		registerFactories(std::make_unique<OpenCVFactory>(), std::make_unique<OpenCVControllerFactory>(), nullptr);
+
+		return Status::Success;
 	}
-
-
-	OpenCVPlugin::~OpenCVPlugin() {}
-
-
-	const ImFusion::AlgorithmFactory* OpenCVPlugin::getAlgorithmFactory() { return m_algFactory; }
-
-
-	const ImFusion::AlgorithmControllerFactory* OpenCVPlugin::getAlgorithmControllerFactory() { return m_algCtrlFactory; }
 }

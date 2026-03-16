@@ -2,6 +2,8 @@
 
 #include "DemoImageMathFactory.h"
 
+// This macro creates the entry point allowing the ImFusion SDK to discover
+// and load this plugin at runtime.
 IMFUSION_REGISTER_PLUGIN(ImFusion::DemoImageMathPlugin)
 
 namespace ImFusion
@@ -11,9 +13,9 @@ namespace ImFusion
 
 	DemoImageMathPlugin::~DemoImageMathPlugin() = default;
 
-
-	const ImFusion::AlgorithmFactory* DemoImageMathPlugin::getAlgorithmFactory() { return new DemoImageMathAlgorithmFactory; }
-
-
-	const ImFusion::AlgorithmControllerFactory* DemoImageMathPlugin::getAlgorithmControllerFactory() { return new DemoImageMathControllerFactory; }
+	PluginBase::Status DemoImageMathPlugin::init()
+	{
+		registerFactories(std::make_unique<DemoImageMathAlgorithmFactory>(), std::make_unique<DemoImageMathControllerFactory>(), nullptr);
+		return Status::Success;
+	}
 }

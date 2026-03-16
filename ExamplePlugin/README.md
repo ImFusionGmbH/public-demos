@@ -37,19 +37,9 @@ This base class defines the interface so that the ImFusionLib and the plugin can
 If you need to do any initialization work (e.g. register device code repositories) you should do this in the `DemoPlugin` constructor.
 See files [DemoPlugin.h](DemoPlugin.h) and [DemoPlugin.cpp](DemoPlugin.cpp)
 
-**Note:** In addition to defining the DemoPlugin class, you must implement and export a factory function that will be called by the ImFusionLib in order to create the plugin. 
+**Note:** In addition to defining the DemoPlugin class, you must register the plugin via
 ```cpp
-#ifdef WIN32
-extern "C" __declspec(dllexport) ImFusion::ImFusionPlugin* createPlugin()
-{
-    return new ImFusion::DemoPlugin;
-}
-#else
-extern "C" ImFusion::ImFusionPlugin* createPlugin()
-{
-    return new ImFusion::DemoPlugin;
-}
-#endif
+IMFUSION_REGISTER_PLUGIN(ImFusion::DemoPlugin)
 ```
 
 
@@ -72,4 +62,4 @@ The corresponding `DemoController` class implements a simple GUI for the demo al
 - [DemoController.cpp](DemoController.cpp)
 - [DemoController.ui](DemoController.ui)
 
-**Note:** Observe how both algorithm and controller are registered with the `DemoFactory` in [DemoFactory.cpp](DemoFactory.cpp). 
+**Note:** Observe how both algorithm and controller are registered with the `DemoFactory` in [DemoFactory.cpp](DemoFactory.cpp).

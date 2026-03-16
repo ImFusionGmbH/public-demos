@@ -19,6 +19,8 @@ namespace ImFusion
 	class OpenCVControllerFactory : public AlgorithmControllerFactory
 	{
 	public:
+		OpenCVControllerFactory();
+
 		virtual AlgorithmController* create(Algorithm* a) const;
 	};
 }

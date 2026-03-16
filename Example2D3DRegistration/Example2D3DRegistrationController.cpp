@@ -5,11 +5,12 @@
 #include <ImFusion/Base/DataModel.h>
 #include <ImFusion/Base/FactoryRegistry.h>
 #include <ImFusion/Base/SharedImageSet.h>
-#include <ImFusion/Core/Log.h>
 #include <ImFusion/CT/GUI/XRay2D3DRegistrationAlgorithmController.h>
 #include <ImFusion/CT/GUI/XRay2D3DRegistrationInitializationController.h>
 #include <ImFusion/CT/GUI/XRay2D3DRegistrationInitializationKeyPointsController.h>
 #include <ImFusion/CT/XRay2D3DRegistrationAlgorithm.h>
+#include <ImFusion/Core/Log.h>
+#include <ImFusion/GUI/DisplayWidgetMulti.h>
 #include <ImFusion/GUI/MainWindowBase.h>
 
 #include <QtWidgets/QHBoxLayout>
@@ -43,8 +44,9 @@ namespace ImFusion
 		// Call compute on the algorithm
 		m_alg->compute();
 
-		// Initialize the controller for the XRay2D3DRegistrationAlgorithm created in m_alg->compute() above 
-		m_regAlgCtrl.reset(dynamic_cast<CT::XRay2D3DRegistrationAlgorithmController*>(FactoryRegistry::get().createAlgorithmController(m_alg->regAlg())));
+		// Initialize the controller for the XRay2D3DRegistrationAlgorithm created in m_alg->compute() above
+		m_regAlgCtrl.reset(
+			dynamic_cast<CT::XRay2D3DRegistrationAlgorithmController*>(FactoryRegistry::get().createAlgorithmController(m_alg->regAlg())));
 		m_main->addController(m_regAlgCtrl.get());
 
 		// Add controller for the custom initialization method. Since the custom initialization method internally
@@ -60,7 +62,7 @@ namespace ImFusion
 		kpCtrl->setVisible(false);
 	}
 
-	Example2D3DRegistrationController::~Example2D3DRegistrationController() {}
+	Example2D3DRegistrationController::~Example2D3DRegistrationController() { m_disp->setVisibleData({}); }
 
 	void Example2D3DRegistrationController::init() {}
 }

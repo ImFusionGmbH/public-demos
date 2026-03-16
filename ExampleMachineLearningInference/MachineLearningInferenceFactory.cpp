@@ -13,6 +13,10 @@ namespace ImFusion
 		registerAlgorithm<RunPretrainedModelAlgorithm>("RunPretrainedModel", "Machine Learning;My Demo Machine Learning Algorithm");
 	}
 
+	MachineLearningInferenceControllerFactory::MachineLearningInferenceControllerFactory()
+		: AlgorithmControllerFactory("MachineLearningInference", false)
+	{
+	}
 
 	AlgorithmController* MachineLearningInferenceControllerFactory::create(Algorithm* a) const
 	{
