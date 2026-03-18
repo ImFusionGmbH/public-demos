@@ -30,8 +30,8 @@ namespace ImFusion
 		if (inputImg == nullptr)
 			return false;
 
-		// only accept 2D RGB images
-		if (inputImg->img()->dimension() != 2 || inputImg->img()->channels() != 3)
+		// only accept single-channel 3D volumes
+		if (inputImg->img()->dimension() != 3 || inputImg->img()->channels() != 1)
 			return false;
 
 		// requirements are met, create the algorithm if asked

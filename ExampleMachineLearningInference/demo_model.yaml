@@ -1,39 +1,50 @@
-Version: 4.0
+Version: 8
+Name: Dummy Segmentation
+Description: Dummy model for the public demo
 Type: NeuralNetwork
-Name: fcn_resnet101_segmentation
-Description: Generated from the Python script `generate_demo_model.py`
-PredictionType: Classification
-PredictionOutput: Image
-Engine: torch
-ModelFile: demo_model_traced.pt # Path to the actual model file 
-ForceCPU: false # Set it to true if you want to perform the inference on the CPU instead of the GPU
-Verbose: false # Print many info messages
-MaxBatchSize: 1 # Maximum number of images to run through the network simulatenously
-LabelNames: [aeroplane, bicycle, bird, boat, bottle, bus, car, cat, chair, cow, diningtable, dog, horse, motorbike, person, pottedplant, sheep, sofa, train, tvmonitor ]
+PredictionOutput: [Image]   # The prediction output is an image like the input. Supported outputs are [Image, Vector, Keypoints, BoundingBoxes]
+PredictionType: [Classification]    # Semantic segmentation is a classification problem for every pixel in the input Image. Possible types are [Classification, Regression]
+Verbose: false  # Controls the verbosity level of model logging
+MaxBatchSize: 1
+CloneInputContainer: false
+
+#############################################################################################
+# Configure the backend framework to be used as Engine to perform the actual inference
+#############################################################################################
+Engine:   # Specifies with backend framework needs to be used to run the trained/saved/traced model
+  Name: onnx    # Could be [torch, onnx, tensorrt] from a C++ plugin, or a python engine [pytorch, pyonnxruntime, pyopenvino, coreml, or any custom engine]
+  ModelFile: demo_model.onnx # Path to the actual model file (could be a onnx file), either relative to the current working directory or an absolute path
+  ForceCPU: false   # Set it to true if you want to perform the inference on the CPU instead of the GPU
+  Verbose: false
 
 #############################################################################################
 # Sequence of preprocessing operations run before the network
 # (all available operations are available in the Python documentation of the SDK)
 #############################################################################################
-PreProcessing:    
-  - MakeFloat: {} # We always need to make sure the images are float, but the rest of the preprocessing will be done directly by the algorithm  
-  - AdjustShiftScale: # Normalize intensities from [0;255] to [0;1]
-      scale: 255.0
-      shift: 0.0 
-  - ResampleDims: # Resample to the standard dimension of ImageNet networks
-      target_dims: 228 228 1
-
-#############################################################################################
+PreProcessing:
+- MakeFloat: {}
+# Normalize the image intensity values using percentile-based scaling
+- NormalizePercentile:
+    clamp_values: 0
+    ignore_zeros: 0
+    max_percentile: 0.99
+    min_percentile: 0.01
+    processing_policy: 0
+# Resample the image to a fixed resolution of 3.0mm
+- Resample:
+    resolution: [3.0, 3.0, 3.0]
+# If the image has a non-identity rotation matrix, bake the transformation to the image voxels
+# This is necessary because the engine implementation input is typically a tensor object, without any
+# notion of the image coordinate system.
+- BakeTransformation: {}
 # For pixelwise (fully convolutional) models, it might be necessary to split the input in sub-images
 # because of GPU memory constraints, especially for 3D volumes.
 # Each of those images will be fed into the network and the predictions will be recombined.
-# This section can be removed for imagewise models.
-#############################################################################################
-Sampling:
-  # We do not want to split the image (a whole 2D image should fit on the GPU)
-  - MaxSizeSubdivision: -1
-  # Some network architectures require each sub-image dimension to be a multiple of this number
-  - DimensionDivisor: 64
+# This operation can be removed for imagewise models.
+- SplitIntoPatches:
+    padding_mode: clamp
+    patch_size: [64, 64, 64]
+    patch_step_size: 0.8
 
 #############################################################################################
 # Sequence of preprocessing operations run
@@ -41,5 +52,10 @@ Sampling:
 # (all available operations are available in the Python documentation of the SDK)
 #############################################################################################
 PostProcessing:
-  - ResampleToInput: {}  # Resize the prediction to the original prediction      
-  - ArgMax: {}           # Convert to a label map using the label with the highest probability      
+# Recombine the patches into a single prediction image
+- RecombinePatches:
+    mode: Weighted     
+# Convert the multi-channel probability map to a label map
+- ArgMax: {}    
+# Resample the prediction image back to the original image
+- ResampleToInput: {}
