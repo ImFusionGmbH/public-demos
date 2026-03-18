@@ -8,7 +8,7 @@ The C++ plugin included in this repo will define a demo algorithm that runs such
 ![Screenshot of the demo algorithm running a segmentation model](demo_algorithm.png "Screenshot of the demo algorithm running a segmentation model")
 
 ## Requirements and Build Instructions
-- Installed ImFusion SDK with ImageMathPlugin and TorchPlugin (or OnnxRuntimePlugin)
+- Installed ImFusion SDK with TorchPlugin (or OnnxRuntimePlugin)
 - Qt5 (at least the version that the ImFusion SDK comes with)
 - CMake version 3.2 or newer
 
@@ -36,7 +36,7 @@ Exporting the model with a different version of PyTorch may lead to incompatibil
 ```python
 # For 3D volumes
 dummy_input = torch.rand(1, 1, 64, 64, 64) # batch x channels x slices x height x width
-# For 2D images
+# For 2D RGB images
 dummy_input = torch.rand(1, 3, 256, 256) # batch x channels x height x width
 
 traced_script_module = torch.jit.trace(model, dummy_input)
@@ -48,7 +48,7 @@ traced_script_module.save("traced_model.pt")
 ```python
 # For 3D volumes
 dummy_input = torch.rand(1, 1, 64, 64, 64) # batch x channels x slices x height x width
-# For 2D images
+# For 2D RGB images
 dummy_input = torch.rand(1, 3, 256, 256) # batch x channels x height x width
 
 # Define dynamic axes (that can be resized at inference time)
@@ -60,69 +60,15 @@ torch.onnx.export(model, dummy_input, "traced_model.onnx", input_names=['input']
 
 Other models exported as ONNX (for instance converted from TensorFlow) can be used as long as they follow the same convention as described above.
 
+The script `generate_demo_model.py` shows how to trace a 2D model from torchvision.
+
+
 ## Step 2: Preparing the YAML model file
 
 Once you have exported your model in a suitable format, you need to create a model configuration file with the YAML format.
 This file will contain all the necessary information for the ImFusion framework to run it on an input image.
 
-The section below shows an example of such a file.
-
-```yaml
-Version: 4.0
-Type: NeuralNetwork
-Name: Name of the model (no practical purpose)
-Description: Description of the model (no practical purpose)
-Engine: torch # Could be onnx
-ModelFile: traced_model.pt # Path to the actual model file (could be a onnx file)
-ForceCPU: false # Set it to true if you want to perform the inference on the CPU instead of the GPU
-Verbose: false # Print many info messages
-MaxBatchSize: 1 # Maximum number of images to run through the network simulatenously
-LabelNames: [FirstObject, SecondObject] # Names of the different labels encoded as channels of the output tensor
-
-#############################################################################################
-# Sequence of preprocessing operations run before the network
-# (all available operations are available in the Python documentation of the SDK)
-#############################################################################################
-PreProcessing:
-  - MakeFloat: {} # First convert to float
-  - BakeTransformation: {}  # If the image has a matrix, apply the transformation to the image
-  - Resample: # Resample to a fixed resolution of 1.5mm
-      resolution: 1.5 
-  - NormalizePercentile:  # Normalize image intensities based on the image percentile
-      min: 0.001
-      max: 0.999
-      clip: false
-
-#############################################################################################
-# For pixelwise (fully convolutional) models, it might be necessary to split the input in sub-images
-# because of GPU memory constraints, especially for 3D volumes.
-# Each of those images will be fed into the network and the predictions will be recombined.
-# This section can be removed for imagewise models.
-#############################################################################################
-Sampling:
-  # Maximum size of the sub-image (set to -1 if you never want to split the image)
-  - MaxSizeSubdivision: 96
-  # Some network architectures require each sub-image dimension to be a multiple of this number
-  - DimensionDivisor: 16
-  # Recommended for real-time applications when speed is paramount
-  - SkipUnpadding: false
-  # Sub-images are extracted with overlap in order to avoid border effect - this is the size in pixels of this overlap
-  - PixelsOverlap: 32
-  # Weigh the different contributions at each pixel of overlap regions based on their position
-  - RecombineWeighted: true
-  # Repeat border values or mirror pad when extracting sub-images at to the border
-  - MirrorPadding: false
-
-#############################################################################################
-# Sequence of preprocessing operations run
-# after the network and the recombination of the sub-images
-# (all available operations are available in the Python documentation of the SDK)
-#############################################################################################
-PostProcessing:
-  - ResampleToInput: {} # Resample the prediction image back to the original image
-  - ArgMax: {}  # Convert the multi-channel probability map to a label map      
-```
-
+[An example of such a file](demo_model.yaml) is provided in this repo. More information is available in [the documentation](https://docs.imfusion.com/suite/Machine%20Learning/machinelearningmodel.html).
 
 
 ## Step 3a: Executing a model in the ImFusion Suite
@@ -139,9 +85,16 @@ The aforementioned algorithm is a UI wrapper of the class `MachineLearningModel`
 For more details, have a look at the source code of this sample plugin (in particular `RunPretrainedModelAlgorithm`), which consists in running a segmentation model after pre-processing the input.
 
 In order to reproduce what is shown in the screenshot, build the `MachineLearningInferencePlugin` and start the ImFusionSuite.
-Open the image `horse.png`, and select the new algorithm called _My Demo Machine Learning Algorithm_ in the _Machine Learning_ sub-menu.
+Open the image `ct.imf`, and select the new algorithm called _My Demo Machine Learning Algorithm_ in the _Machine Learning_ sub-menu.
 Select the `demo_model.yaml` and click on Compute.
+The expected input of this algorithm is a 3D CT scan. The applied pre- and post-processing operations are defined in the YAML file [demo_model.yaml](demo_model.yaml).
 
-The segmentation model `demo_model_traced.pt` has been generated via the Python script `generate_demo_model.py`.
 
-The expected input of this algorithm is a 2D RGB images with intensities between [0;255]. The applied pre- and post-processing operations are defined in the YAML file `demo_model.yaml`.
+## Acknowledgements
+
+The data for this tutorial `ct.imf` is taken from:
+	
+National Cancer Institute Clinical Proteomic Tumor Analysis Consortium (CPTAC). (2019).  
+The Clinical Proteomic Tumor Analysis Consortium Uterine Corpus Endometrial Carcinoma Collection (CPTAC-UCEC) (Version 12) [Data set].  
+The Cancer Imaging Archive.  
+https://doi.org/10.7937/K9/TCIA.2018.3R3JUISW
