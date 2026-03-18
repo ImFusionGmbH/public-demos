@@ -10,6 +10,8 @@ Each provides a self-contained example to explore.
 
 You can find more information on our company and what we do on our [website](https://www.imfusion.com).
 
+**NOTE**: Use the provided git tags to select a version of the example projects that matches your version of the ImFusion SDK.
+
 ## Examples
 
 - **AnnotationHandle**: Explains how to add simple interactive handles to `GlPointBasedAnnotation` via a plugin.
