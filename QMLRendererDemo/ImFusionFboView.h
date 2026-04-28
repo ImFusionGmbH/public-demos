@@ -13,7 +13,7 @@ class ImFusionFboView;
 
 
 /// QQuickFramebufferObject::Renderer that uses an ImFusion::DisplayWidgetMulti to render ImFusion
-/// views into a QtQuick-backed FBO.
+/// views into a Qt Quick-backed FBO.
 class ImFusionViewRenderer : public QQuickFramebufferObject::Renderer
 {
 public:
@@ -33,7 +33,7 @@ private:
 };
 
 
-/// QtQuick Wrapper around an ImFusion::DisplayWidgetMulti.
+/// Qt Quick wrapper around an ImFusion::DisplayWidgetMulti.
 ///
 /// A DisplayWidgetMulti can have one or multiple 2D/MPR/3D views showing data. The views can be
 /// freely arranged in layouts.

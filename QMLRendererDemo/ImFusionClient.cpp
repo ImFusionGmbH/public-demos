@@ -51,14 +51,14 @@ void ImFusionClient::qtQuickOpenglContextCreated(QOpenGLContext* context)
 	PluginManager::get().registerPlugins();
 	PluginManager::get().initAllRegisteredPlugins();
 
-	// Make sure to get notified *before* the QML context is destroyed, so that we can properly deinit the ImFusionLib
+	// Make sure to get notified *before* the QML context is destroyed, so that we can properly deinitialize ImFusionLib.
 	connect(context, &QOpenGLContext::aboutToBeDestroyed, this, &ImFusionClient::qtQuickOpenglContextAboutToBeDestroyed);
 }
 
 
 void ImFusionClient::qtQuickOpenglContextAboutToBeDestroyed()
 {
-	// delete everything that has references to OpenGL.
+	// Delete everything that has references to OpenGL.
 	GL::ContextManager::makeCurrent();
 	m_images.clear();
 	Framework::deinit();
