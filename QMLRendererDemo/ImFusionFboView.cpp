@@ -37,7 +37,7 @@ ImFusionViewRenderer::ImFusionViewRenderer(ImFusionFboView* parentView)
 
 ImFusionViewRenderer::~ImFusionViewRenderer()
 {
-	// remove any data that might still be shown in one of the views.
+	// Remove any data that might still be shown in one of the views.
 	m_disp->setVisibleData(ImFusion::DataList());
 }
 
@@ -57,8 +57,8 @@ void ImFusionViewRenderer::render()
 		m_disp = std::make_unique<ImFusion::DisplayWidgetMulti>(true);
 		m_disp->setBackgroundColor(QColor::fromRgbF(0.1, 0.1, 0.15));
 
-		// per default, create 3 MPR views + 1 3D Volume Renderer View
-		// the individual views can be shown/hidden with setViewVisibility()
+		// By default, create 3 MPR views + 1 3D Volume Renderer View.
+		// The individual views can be shown/hidden with setVisible().
 		m_disp->addViewGroup3D(false, true);
 		IMFUSION_ASSERT(m_disp->numberSliceViews() == 3 && m_disp->number3DViews() == 1);
 
@@ -72,13 +72,13 @@ void ImFusionViewRenderer::render()
 	// Called with the FBO bound and the viewport set.
 	if (m_disp && m_window)
 	{
-		// perform the rendering
+		// Perform the rendering.
 		try
 		{
 			ImFusion::GlUtils::resetOpenGlStateDefaults();
 
-			// QML disables GL_POINT_SPRITE by default while the ImFusion SDK expects it to be enabled
-			// Since older versions of resetOpenGlStateDefaults() do not do enable it, we do it here manually.
+			// QML disables GL_POINT_SPRITE by default while the ImFusion SDK expects it to be enabled.
+			// Since older versions of resetOpenGlStateDefaults() do not enable it, we do it here manually.
 			QOpenGLFunctions* glFuncs = QOpenGLContext::currentContext()->functions();
 			glFuncs->glEnable(GL_POINT_SPRITE);
 
@@ -90,7 +90,7 @@ void ImFusionViewRenderer::render()
 			LOG_ERROR("Rendering error: " << e.what());
 		}
 
-		// make sure to reset the global OpenGL state to what QML expects.
+		// Make sure to reset the global OpenGL state to what QML expects.
 		m_parentView->window()->resetOpenGLState();
 	}
 }
@@ -100,7 +100,7 @@ void ImFusionViewRenderer::synchronize(QQuickFramebufferObject* item)
 {
 	if (m_disp && (m_disp->width() != item->width() || m_disp->height() != item->height()))
 	{
-		// update viewport
+		// Update the viewport.
 		m_disp->setWidth(item->width());
 		m_disp->setHeight(item->height());
 		auto rect = QRect(0, 0, item->width(), item->height());
@@ -148,7 +148,7 @@ bool ImFusionFboView::event(QEvent* e)
 
 	if (e->type() == QEvent::HoverMove)
 	{
-		// transform QtQuick QHoverEvent into a QMouseEvent that QtWidgets on the ImFusion SDK side understands.
+		// Transform Qt Quick QHoverEvent into a QMouseEvent that Qt Widgets on the ImFusion SDK side understands.
 		IMFUSION_ASSERT(dynamic_cast<QHoverEvent*>(e) != nullptr);
 		QHoverEvent* he = static_cast<QHoverEvent*>(e);
 		QMouseEvent mouseEvent(QEvent::MouseMove, he->posF(), Qt::NoButton, Qt::NoButton, he->modifiers());
@@ -172,14 +172,14 @@ void ImFusionFboView::setVisibleData(const ImFusion::DataList& dataList)
 
 void ImFusionFboView::onLoadClicked()
 {
-	// remove any data that might still be shown in one of the views.
+	// Remove any data that might still be shown in one of the views.
 	setVisibleData({});
 
 	QString filename = ImFusion::QtHelpers::getOpenFilename(nullptr, "LoadImage", "Load Image");
 	if (!filename.isEmpty())
 	{
-		// Just a temporary solution to have this code here.
-		// For me as a QML novice, this was the easiest way to implement some kind of load button callback functionality.
+		// For simplicity, this demo handles the load button callback here.
+		// Production applications may expose a dedicated QML-facing controller.
 		ImFusionClient::instance().loadImage(filename);
 
 		ImFusion::DataList dl;
@@ -190,7 +190,7 @@ void ImFusionFboView::onLoadClicked()
 		setVisibleData(dl);
 
 
-		// reinitialize views so that they are centered on the shown data.
+		// Reinitialize views so that they are centered on the shown data.
 		ImFusion::Animations::enableAnimations(false);
 		for (auto& view : m_renderer->disp().views())
 		{
@@ -204,7 +204,7 @@ void ImFusionFboView::onLoadClicked()
 
 void ImFusionFboView::onTFToggled()
 {
-	// small example how to change the transfer function used in the 3D view
+	// Small example of how to change the transfer function used in the 3D view.
 	for (auto& sis : ImFusionClient::instance().images())
 	{
 		auto& dop3d = ImFusion::DisplayOptions3d::get(*sis);
@@ -241,7 +241,7 @@ bool ImFusionFboView::eventFilter(QObject* obj, QEvent* e)
 {
 	bool ok = QObject::eventFilter(obj, e);
 
-	// update the quick view when the DisplayWidget was updated
+	// Update the Quick view when the DisplayWidget is updated.
 	if (m_renderer != nullptr && obj == &m_renderer->disp() && e->type() == QEvent::UpdateRequest)
 	{
 		update();

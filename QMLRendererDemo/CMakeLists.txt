@@ -8,7 +8,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-# define and configure the target
+# Define and configure the target.
 set(Sources
 	ImFusionClient.cpp
 	ImFusionFboView.cpp
@@ -46,7 +46,7 @@ imfusion_set_common_target_properties()
 
 
 if(MSVC)
-	# install a post-build step to deploy Qt stuff: https://doc.qt.io/qt-5/windows-deployment.html
+	# Install a post-build step to deploy Qt runtime dependencies: https://doc.qt.io/qt-5/windows-deployment.html
 	option(IMFUSION_RUN_WINDEPLOYQT "Install Qt dependencies in binary dir" ON)
 
 	get_target_property(_qmake_executable Qt5::qmake IMPORTED_LOCATION)
