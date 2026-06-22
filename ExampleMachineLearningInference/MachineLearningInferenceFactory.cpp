@@ -7,14 +7,14 @@
 namespace ImFusion
 {
 	MachineLearningInferenceAlgorithmFactory::MachineLearningInferenceAlgorithmFactory()
-		: AlgorithmFactory("MachineLearningInferencePlugin", false)
+		: AlgorithmFactory("MachineLearningInferencePlugin")
 	{
 		// register the RunPretrainedModelAlgorithm in the sub-category "Machine Learning"
 		registerAlgorithm<RunPretrainedModelAlgorithm>("RunPretrainedModel", "Machine Learning;My Demo Machine Learning Algorithm");
 	}
 
 	MachineLearningInferenceControllerFactory::MachineLearningInferenceControllerFactory()
-		: AlgorithmControllerFactory("MachineLearningInference", false)
+		: AlgorithmControllerFactory("MachineLearningInference")
 	{
 	}
 

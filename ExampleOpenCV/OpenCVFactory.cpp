@@ -7,14 +7,14 @@
 namespace ImFusion
 {
 	OpenCVFactory::OpenCVFactory()
-		: AlgorithmFactory("ExampleOpenCV", false)
+		: AlgorithmFactory("ExampleOpenCV")
 	{
 		// register the CannyEdgeAlgorithm
 		registerAlgorithm<CannyEdgeAlgorithm>("CannyEdge", "OpenCV;Canny edge detection");
 	}
 
 	OpenCVControllerFactory::OpenCVControllerFactory()
-		: AlgorithmControllerFactory("OpenCV", false)
+		: AlgorithmControllerFactory("OpenCV")
 	{
 	}
 

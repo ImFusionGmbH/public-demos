@@ -18,7 +18,7 @@ namespace ImFusion
 	{
 	public:
 		FiberTractAlgorithmFactory()
-			: AlgorithmFactory("TractographyPlugin", false)
+			: AlgorithmFactory("TractographyPlugin")
 		{
 			registerAlgorithm<FiberDataIoAlgorithm>("FiberDataIo", "Fiber Tracts");
 		}
@@ -32,7 +32,7 @@ namespace ImFusion
 	{
 	public:
 		FiberTractAlgorithmControllerFactory()
-			: AlgorithmControllerFactory("TractographyPlugin", false)
+			: AlgorithmControllerFactory("TractographyPlugin")
 		{
 		}
 

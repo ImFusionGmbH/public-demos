@@ -7,13 +7,13 @@
 namespace ImFusion
 {
 	ITKAlgorithmFactory::ITKAlgorithmFactory()
-		: AlgorithmFactory("ITKPlugin", false)
+		: AlgorithmFactory("ITKPlugin")
 	{
 		registerAlgorithm<ITKCannyEdgeAlgorithm>("ITKCannyEdge", "ITK;Canny Edge");
 	}
 
 	ITKControllerFactory::ITKControllerFactory()
-		: AlgorithmControllerFactory("ITK", false)
+		: AlgorithmControllerFactory("ITK")
 	{
 	}
 
