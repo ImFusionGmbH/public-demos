@@ -4,7 +4,8 @@
 #include <ImFusion/CT/XRay2D3DRegistrationInitialization.h>
 #include <ImFusion/CT/XRay2D3DRegistrationInitializationKeyPoints.h>
 
-namespace ImFusion {
+namespace ImFusion
+{
 
 
 	class Custom2D3DRegistrationInitialization : public CT::XRay2D3DRegistrationInitialization
@@ -14,7 +15,11 @@ namespace ImFusion {
 
 		// Implement XRay2D3DRegistrationInitialization interface
 		bool canInitialize() const override { return true; }
-		std::optional<CT::XRay2D3DRegistrationInitialization::InitializationResult> initialize(CT::ConeBeamGeometry& geom, SharedImageSet& shots, const SharedImageSet& volume, MaskEditor* maskAlgorithm) override;
+		std::optional<CT::XRay2D3DRegistrationInitialization::InitializationResult>
+			initialize(SharedImageSet& shots, const SharedImageSet& volume, MaskEditor* maskAlgorithm) override;
+		// ConeBeamGeometry is to be deprecated soon
+		std::optional<CT::XRay2D3DRegistrationInitialization::InitializationResult>
+			initialize(CT::ConeBeamGeometry& geom, SharedImageSet& shots, const SharedImageSet& volume, MaskEditor* maskAlgorithm) override;
 
 		// Additional getter method
 		CT::XRay2D3DRegistrationInitializationKeyPoints* kpAlg() { return m_kpAlg.get(); };

@@ -6,14 +6,14 @@
 namespace ImFusion
 {
 	DemoAlgorithmFactory::DemoAlgorithmFactory()
-		: AlgorithmFactory("ExamplePlugin", false)
+		: AlgorithmFactory("ExamplePlugin")
 	{
 		// register the DemoAlgorithm
 		registerAlgorithm<DemoAlgorithm>("DemoAlgorithm", "Demo;Demo algorithm");
 	}
 
 	DemoControllerFactory::DemoControllerFactory()
-		: AlgorithmControllerFactory("ExamplePlugin", false)
+		: AlgorithmControllerFactory("ExamplePlugin")
 	{
 	}
 

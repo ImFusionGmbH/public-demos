@@ -8,14 +8,14 @@
 namespace ImFusion
 {
 	DemoOpenGLAlgorithmFactory::DemoOpenGLAlgorithmFactory()
-		: AlgorithmFactory("ExampleOpenGL", false)
+		: AlgorithmFactory("ExampleOpenGL")
 	{
 		// register the DemoOpenGLAlgorithm
 		registerAlgorithm<DemoOpenGLAlgorithm>("DemoOpenGLAlgorithm", "Demo;Demo OpenGL algorithm");
 	}
 
 	DemoOpenGLControllerFactory::DemoOpenGLControllerFactory()
-		: AlgorithmControllerFactory("ExampleOpenGL", false)
+		: AlgorithmControllerFactory("ExampleOpenGL")
 	{
 	}
 

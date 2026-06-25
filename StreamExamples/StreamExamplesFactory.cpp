@@ -10,7 +10,7 @@
 namespace ImFusion
 {
 	StreamExamplesAlgorithmFactory::StreamExamplesAlgorithmFactory()
-		: AlgorithmFactory("StreamExamples", false)
+		: AlgorithmFactory("StreamExamples")
 	{
 		// Second arg is the menu path: "Category;Display Name" -> appears under Demo menu
 		registerAlgorithm<DemoStreamDataAlgorithm>("DemoStreamDataAlgorithm", "Demo;Demo Stream Data Algorithm");
@@ -18,12 +18,11 @@ namespace ImFusion
 		// CreateStreamIoAlgorithm wraps a Stream as an Algorithm for the data model.
 		// Template args: <StreamType, autoOpen, autoConnect>
 		// false, false = user must manually open/connect the stream after creation
-		registerAlgorithm<CreateStreamIoAlgorithm<DemoInputImageStream, false, false>>("DemoInputImageStream",
-																								 "IO;Demo Input Image Stream");
+		registerAlgorithm<CreateStreamIoAlgorithm<DemoInputImageStream, false, false>>("DemoInputImageStream", "IO;Demo Input Image Stream");
 	}
 
 	StreamExamplesControllerFactory::StreamExamplesControllerFactory()
-		: AlgorithmControllerFactory("StreamExamples", false)
+		: AlgorithmControllerFactory("StreamExamples")
 	{
 	}
 

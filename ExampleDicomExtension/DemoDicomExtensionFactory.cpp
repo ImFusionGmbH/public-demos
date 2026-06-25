@@ -3,12 +3,12 @@
 namespace ImFusion
 {
 	DemoDicomExtensionAlgorithmFactory::DemoDicomExtensionAlgorithmFactory()
-		: AlgorithmFactory("ExampleDicom", false)
+		: AlgorithmFactory("ExampleDicom")
 	{
 	}
 
 	DemoDicomExtensionControllerFactory::DemoDicomExtensionControllerFactory()
-		: AlgorithmControllerFactory("ExampleDicom", false)
+		: AlgorithmControllerFactory("ExampleDicom")
 	{
 	}
 
