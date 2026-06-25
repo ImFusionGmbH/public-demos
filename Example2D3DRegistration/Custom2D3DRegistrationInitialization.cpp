@@ -1,15 +1,16 @@
 
 #include "Custom2D3DRegistrationInitialization.h"
 
+#include <ImFusion/CT/ConeBeamMetadata.h>
 #include <ImFusion/CT/XRay2D3DRegistrationInitialization.h>
 #include <ImFusion/CT/XRay2D3DRegistrationInitializationKeyPoints.h>
-#include <ImFusion/CT/ConeBeamMetadata.h>
 #include <ImFusion/Core/Log.h>
 
 #undef IMFUSION_LOG_DEFAULT_CATEGORY
 #define IMFUSION_LOG_DEFAULT_CATEGORY "Example2D3DRegistrationController"
 
-namespace ImFusion {
+namespace ImFusion
+{
 
 	// In this constructor, we just created an instance of the key points initialization method we need
 	// for the bundle adjustment later.
@@ -20,11 +21,19 @@ namespace ImFusion {
 	{
 	}
 
+	// ConeBeamGeometry is to be deprecated soon
+	std::optional<CT::XRay2D3DRegistrationInitialization::InitializationResult>
+		Custom2D3DRegistrationInitialization::initialize(CT::ConeBeamGeometry& geom,
+														 SharedImageSet& shots,
+														 const SharedImageSet& volume,
+														 MaskEditor* maskAlgorithm)
+	{
+		return std::nullopt;
+	}
+
 	// This class performs the initialization
-	std::optional<CT::XRay2D3DRegistrationInitialization::InitializationResult> Custom2D3DRegistrationInitialization::initialize(CT::ConeBeamGeometry& geom,
-		SharedImageSet& shots,
-		const SharedImageSet& volume,
-		MaskEditor* maskAlgorithm)
+	std::optional<CT::XRay2D3DRegistrationInitialization::InitializationResult>
+		Custom2D3DRegistrationInitialization::initialize(SharedImageSet& shots, const SharedImageSet& volume, MaskEditor* maskAlgorithm)
 	{
 		if (m_kpAlg == nullptr)    // basic consistency check
 		{
@@ -45,9 +54,11 @@ namespace ImFusion {
 		// To do this, the `toGroundTruth` function calculates the locations of these points so that the
 		// images with the current pose are the same as the images of the key points under the ground truth pose.
 		mat4 currentIsoMatrix = m_regAlg->shotsWithGeom().components().getOrCreate<CT::ConeBeamMetadata>().geometry().isoMatrix();
-		auto toGroundTruth = [this, &currentIsoMatrix](vec3 inputPoint) -> vec3 { return (currentIsoMatrix.inverse() * m_groundTruthPose * inputPoint.homogeneous()).hnormalized().eval(); };
+		auto toGroundTruth = [this, &currentIsoMatrix](vec3 inputPoint) -> vec3 {
+			return (currentIsoMatrix.inverse() * m_groundTruthPose * inputPoint.homogeneous()).hnormalized().eval();
+		};
 
-		// Temporary volume keypoints to compute forward projections onto the x-ray images  
+		// Temporary volume keypoints to compute forward projections onto the x-ray images
 		keyPointsConfig.setParam("Volume/keyPoint_kp0", toGroundTruth(keyPoint0World));
 		keyPointsConfig.setParam("Volume/keyPoint_kp1", toGroundTruth(keyPoint1World));
 		keyPointsConfig.setParam("Volume/keyPoint_kp2", toGroundTruth(keyPoint2World));
@@ -78,7 +89,7 @@ namespace ImFusion {
 		m_kpAlg->configure(&keyPointsConfig);
 
 		// We now run the bundle adjustment. On failure, this returns Utils::Optional<InitializationResult>()
-		std::optional<CT::XRay2D3DRegistrationInitialization::InitializationResult> result = m_kpAlg->initialize(geom, shots, volume, maskAlgorithm);
+		std::optional<CT::XRay2D3DRegistrationInitialization::InitializationResult> result = m_kpAlg->initialize(shots, volume, maskAlgorithm);
 
 		// We can also modify the values of the masks here. The below sets masks that do not
 		// crop away anything.
