@@ -15,7 +15,7 @@ You can find more information on our company and what we do on our [website](htt
 ## Examples
 
 - **AnnotationHandle**: Explains how to add simple interactive handles to `GlPointBasedAnnotation` via a plugin.
-- **BrushStandaloneApplication**: Builds a standalone application with an interactive Brush tool for labeling image-data.
+- **BrushStandaloneApplication**: Builds a standalone application with an interactive Brush tool for labeling medical images.
 - **Example2D3DRegistration**: Demonstrates how to use and customize the x-ray 2D/3D registration algorithm in an example plugin.
 - **ExampleAnatomyPlugin**: Shows how you can use the AnatomyPlugin to represent `AnatomicalStructures` and combine them in a `AnatomicalStructureCollection`.
 - **ExampleDicomBrowser**: Explains how to build a simple DICOM browser using the ImFusionDicom plugin.
@@ -32,7 +32,7 @@ You can find more information on our company and what we do on our [website](htt
 - **QMLRendererDemo**: Explains how to natively integrate the ImFusionLib rendering stack into a QML application.
 - **SlicerExtension**: Basic example demonstrating how the ImFusion SDK can be integrated into 3D-Slicer via an Extension module..
 - **StreamExample**: Shows how to create `Stream`s and to work with their data.
-- **TotalSegmentatorAnatomyPlugin**: Explains how to build a simple custom plugin for the ImFusion SDK, on the example of the TotalMeshSegmentator that creates anatomical structure descriptions.
+- **TotalSegmentatorAnatomyPlugin**: Shows how to integrate  TotalSegmentator in a custom plugin and use it to create ImFusion anatomical structure descriptions.
 - **TractographyPlugin**: Demonstrates how to create a custom data type (fiber tracts, used for instance in Diffusion Tensor Imaging) in the ImFusion SDK and integrate it into the visualization stack using the `GlObject` and `DataDisplayHandler` interfaces.
 
 ## License and Copying
